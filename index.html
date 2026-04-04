@@ -433,35 +433,20 @@
         ]
     },
       {
-        layer: '3', label: 'Cloud & IaC',
-        accent: '#1A5FA8', accentLite: '#E8F2FC',
-        isYours: false,
-        title: 'The store\'s network identity is provisioned as code',
-        subtitle: 'Layer 3 — Cloud infrastructure (Azure / GCP / DC) defined via Terraform',
-        what: 'The store\'s place in the network — its SD-WAN segment, its ACM registration endpoint, its Vault namespace for secrets — is defined as code using Terraform. When a new store opens, a Terraform plan runs and provisions the network configuration, cloud resources and DNS entries before the hardware even arrives. Azure hosts SAP (where inventory data eventually lands). GCP hosts BigQuery (where transaction data eventually lands). This layer is the highway system connecting the store edge to the cloud.',
-        flow: 'Terraform plan runs (new store provisioned)\n→ SD-WAN segment created in vManage\n→ ACM hub endpoint registered\n→ Vault namespace created for store secrets\n→ Azure ExpressRoute routes ready for SAP\n→ GCP Pub/Sub topic ready for POS events',
-        flowLabel: 'Infrastructure provisioning',
-        flowColor: '#E8F2FC',
-        role: 'You interact with this layer when you define the network policy for your MicroShift nodes — what ports, what firewall zones, what SD-WAN QoS priority for POS traffic. The cloud team owns Azure/GCP, but you need to understand the connectivity so your edge nodes can reach Vault, ACM, and the data pipelines.',
-        analogy: 'Think of this as city planning — the roads, power lines and water pipes are laid before the building goes up. Terraform is the city planner who draws the map.',
-        tech: ['Terraform', 'Azure (VNets, ExpressRoute)', 'GCP (Pub/Sub, VPC)', 'Cisco vManage', 'ARM templates'],
-        yours: []
-      },
-      {
         layer: '4', label: 'Kubernetes platform — YOUR DOMAIN',
         accent: '#1B6B3A', accentLite: '#EAF5EF',
         isYours: true,
         title: 'MicroShift starts — the store\'s container brain wakes up',
         subtitle: 'Layer 4 — MicroShift (store edge) + full OpenShift (DC/regional hub)',
-        what: 'MicroShift is installed as an RPM on RHEL for Edge and starts as a systemd service. It gives the store a local Kubernetes API server, CRI-O container runtime, OpenShift Routes (for HTTP traffic), and local LVM storage — all in about 2GB RAM. This is the container orchestration layer for the store. At the DC and regional hub, full OpenShift clusters run with the complete stack — web console, monitoring, OperatorHub. At larger stores, Single Node OpenShift (SNO) runs with more capability. MicroShift, SNO and full OCP all use the same Kubernetes APIs and RHEL base — so a manifest that works on one works on all.',
+        what: 'MicroShift is installed as an RPM on RHEL for Edge and starts as a systemd service. It gives the store a local Kubernetes API server, CRI-O container runtime, OpenShift Routes (for HTTP traffic), and local LVM storage — all in about 2GB RAM. This is the container orchestration layer for the store. At the DC and regional hub, full OpenShift clusters run with the complete stack — web console, monitoring, OperatorHub. At larger stores, Single Node OpenShift (SNO) runs with more capability. MicroShift, SNO and full OCP all use the same Kubernetes APIs and RHEL base — so a manifest that works on one works on all. On top of that, a lightweight service-mesh sidecar pattern at the store lets each pod enforce its own retries and rate-limits so a noisy IoT device can never starve the POS workload.',
         flow: 'RHEL boots → systemd starts microshift.service\n→ MicroShift API server starts on :6443\n→ CRI-O container runtime ready\n→ OpenShift Routes controller starts\n→ LVM storage (LVMS) available\n→ klusterlet registers with ACM hub\n→ Store is now a managed cluster',
         flowLabel: 'MicroShift startup sequence',
         flowColor: '#EAF5EF',
-        role: 'You own MicroShift at every store — the installation, the systemd service config, the LVM storage setup, the network policy. You also work on the full OCP clusters at the DC/hub level as the platform they run on. Write once, run everywhere — same manifest, same RHEL base, same ACM management.',
+        role: 'You own MicroShift at every store — the installation, the systemd service config, the LVM storage setup, the network policy. You also work on the full OCP clusters at the DC/hub level as the platform they run on. Write once, run everywhere — same manifest, same RHEL base, same ACM management. Here you also design the service-mesh sidecars and mTLS policies that give each store node a zero-trust, policy-driven "local API fabric" instead of a pile of loosely connected containers.',
         analogy: 'MicroShift is like a tiny version of the DC data centre, installed inside the store. It has everything needed to run the store apps locally — without needing to phone home to the DC for every operation.',
         tech: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'OCP API :6443', 'SNO (larger stores)', 'Full OCP (DC)'],
         yours: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'SNO (larger stores)']
-      },
+},
       {
         layer: '5', label: 'ACM + fleet mgmt — YOUR DOMAIN',
         accent: '#1B6B3A', accentLite: '#EAF5EF',
