@@ -433,6 +433,21 @@
         ]
     },
       {
+        layer: '3', label: 'Cloud & IaC',
+        accent: '#1A5FA8', accentLite: '#E8F2FC',
+        isYours: false,
+        title: 'The store\'s network identity is provisioned as code',
+        subtitle: 'Layer 3 — Cloud infrastructure (Azure / GCP / DC) defined via Terraform',
+        what: 'The store\'s place in the network — its SD-WAN segment, its ACM registration endpoint, its Vault namespace for secrets — is defined as code using Terraform. When a new store opens, a Terraform plan runs and provisions the network configuration, cloud resources and DNS entries before the hardware even arrives. Azure hosts SAP (where inventory data eventually lands). GCP hosts BigQuery (where transaction data eventually lands). This layer is the highway system connecting the store edge to the cloud.',
+        flow: 'Terraform plan runs (new store provisioned)\n→ SD-WAN segment created in vManage\n→ ACM hub endpoint registered\n→ Vault namespace created for store secrets\n→ Azure ExpressRoute routes ready for SAP\n→ GCP Pub/Sub topic ready for POS events',
+        flowLabel: 'Infrastructure provisioning',
+        flowColor: '#E8F2FC',
+        role: 'You interact with this layer when you define the network policy for your MicroShift nodes — what ports, what firewall zones, what SD-WAN QoS priority for POS traffic. The cloud team owns Azure/GCP, but you need to understand the connectivity so your edge nodes can reach Vault, ACM, and the data pipelines.',
+        analogy: 'Think of this as city planning — the roads, power lines and water pipes are laid before the building goes up. Terraform is the city planner who draws the map.',
+        tech: ['Terraform', 'Azure (VNets, ExpressRoute)', 'GCP (Pub/Sub, VPC)', 'Cisco vManage', 'ARM templates'],
+        yours: []
+      },
+      {
         layer: '4', label: 'Kubernetes platform — YOUR DOMAIN',
         accent: '#1B6B3A', accentLite: '#EAF5EF',
         isYours: true,
@@ -446,7 +461,7 @@
         analogy: 'MicroShift is like a tiny version of the DC data centre, installed inside the store. It has everything needed to run the store apps locally — without needing to phone home to the DC for every operation.',
         tech: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'OCP API :6443', 'SNO (larger stores)', 'Full OCP (DC)'],
         yours: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'SNO (larger stores)']
-},
+    },
       {
         layer: '5', label: 'ACM + fleet mgmt — YOUR DOMAIN',
         accent: '#1B6B3A', accentLite: '#EAF5EF',
@@ -576,7 +591,7 @@
           </div>
 
           <div class="your-role-box">
-            <div class="your-role-label">How this connects to the Edge Infra Linux\'s Engineer\'s role /div>
+            <div class="your-role-label">How this connects to the Edge Infra Linux\'s Engineer\'s role/div>
             <div class="your-role-text">${s.role}</div>
           </div>
 
@@ -588,7 +603,7 @@
           <div class="tech-pills">${techPills}</div>
           ${
             s.yours.length
-              ? '<div class="legend">Green pills = technology I own or directly use.</div>'
+              ? '<div class="legend">Green pills = technology the Edge Infra Linux Engineer own or directly use.</div>'
               : ''
           }
         </div>
