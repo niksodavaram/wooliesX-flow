@@ -1,280 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>WooliesX Experience Mapping – Nireekshan Sodavaram</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <style>
-    :root {
-      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-
-      --color-bg: #f3f4f6;
-      --color-card: #ffffff;
-      --color-text-primary: #111827;
-      --color-text-secondary: #4b5563;
-      --color-text-tertiary: #6b7280;
-      --color-border: #e5e7eb;
-      --color-border-strong: #d1d5db;
-
-      --color-accent-green: #15803d;
-      --color-accent-green-soft: #e5f6ec;
-      --color-accent-blue: #1d4ed8;
-      --color-accent-amber: #b45309;
-
-      --border-radius-md: 10px;
-      --border-radius-lg: 14px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font-sans);
-      background: radial-gradient(circle at top, #e5e7eb 0, #f9fafb 40%, #e5e7eb 100%);
-      color: var(--color-text-primary);
-      padding: 20px 16px;
-    }
-
-    .page {
-      max-width: 980px;
-      margin: 0 auto;
-      background: var(--color-card);
-      padding: 22px 22px 24px;
-      border-radius: var(--border-radius-lg);
-      box-shadow:
-        0 18px 40px rgba(15,23,42,0.12),
-        0 0 0 1px rgba(209,213,219,0.8);
-    }
-
-    .page-header {
-      margin-bottom: 18px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .title {
-      font-size: 22px;
-      font-weight: 650;
-      letter-spacing: 0.01em;
-      margin-bottom: 4px;
-      color: var(--color-text-primary);
-    }
-
-    .subtitle {
-      font-size: 13px;
-      color: var(--color-text-secondary);
-      margin-bottom: 6px;
-    }
-
-    .meta {
-      font-size: 11px;
-      color: var(--color-text-tertiary);
-    }
-
-    a {
-      color: var(--color-accent-blue);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .back-link {
-      font-size: 12px;
-      margin-bottom: 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      color: var(--color-text-secondary);
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      background: #f9fafb;
-    }
-
-    .back-link:hover {
-      background: #eef2ff;
-      border-color: #c7d2fe;
-      text-decoration: none;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 16px;
-    }
-
-    @media (max-width: 800px) {
-      .grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .section {
-      margin-top: 18px;
-      border-radius: var(--border-radius-md);
-      border: 1px solid var(--color-border);
-      padding: 14px 14px 16px;
-      background: #f9fafb;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .section-kicker {
-      font-size: 11px;
-      font-weight: 650;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #6b7280;
-    }
-
-    .section-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      margin-top: 2px;
-    }
-
-    .section-badge {
-      font-size: 10px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      color: #1f2937;
-      background: #e5f6ec;
-      white-space: nowrap;
-    }
-
-    .section-body {
-      font-size: 12px;
-      color: var(--color-text-secondary);
-      line-height: 1.7;
-    }
-
-    .section-body p + p {
-      margin-top: 6px;
-    }
-
-    .story-card {
-      border-radius: var(--border-radius-md);
-      border: 1px solid var(--color-border-strong);
-      padding: 10px 10px 11px;
-      background: #ffffff;
-      box-shadow: 0 8px 18px rgba(15,23,42,0.04);
-    }
-
-    .story-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 3px;
-      color: var(--color-text-primary);
-    }
-
-    .story-role {
-      font-size: 11px;
-      color: var(--color-accent-blue);
-      margin-bottom: 6px;
-    }
-
-    .story-body {
-      font-size: 12px;
-      color: var(--color-text-secondary);
-      line-height: 1.6;
-    }
-
-    .story-why {
-      font-size: 11px;
-      color: var(--color-accent-green);
-      margin-top: 6px;
-    }
-
-    .mapping-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11px;
-      margin-top: 9px;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 10px 20px rgba(15,23,42,0.05);
-    }
-
-    .mapping-table th,
-    .mapping-table td {
-      border: 1px solid var(--color-border);
-      padding: 6px 7px;
-      vertical-align: top;
-    }
-
-    .mapping-table th {
-      background: #f3f4f6;
-      font-weight: 600;
-      color: var(--color-text-secondary);
-      text-align: left;
-    }
-
-    .mapping-table tbody tr:nth-child(odd) {
-      background: #ffffff;
-    }
-
-    .mapping-table tbody tr:nth-child(even) {
-      background: #f9fafb;
-    }
-
-    .mapping-table td {
-      color: var(--color-text-secondary);
-      line-height: 1.6;
-    }
-
-    .phase-list {
-      list-style: none;
-      margin-top: 8px;
-    }
-
-    .phase {
-      border-radius: var(--border-radius-md);
-      border: 1px solid var(--color-border-strong);
-      padding: 8px 9px;
-      background: #ffffff;
-      margin-bottom: 7px;
-      box-shadow: 0 8px 18px rgba(15,23,42,0.04);
-    }
-
-    .phase-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
-    .phase-name {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-    }
-
-    .phase-timing {
-      font-size: 11px;
-      color: var(--color-text-tertiary);
-    }
-
-    .phase-body {
-      font-size: 12px;
-      color: var(--color-text-secondary);
-      line-height: 1.6;
-    }
-
-    .footer-meta {
-      font-size: 11px;
-      color: var(--color-text-tertiary);
+MLO a
       margin-top: 18px;
       line-height: 1.6;
       padding-top: 10px;
@@ -296,11 +20,35 @@
       </div>
     </div>
 
-    <!-- Section A: 4 stories -->
+    <!-- RHEL BANNER — new, sits between header and section A -->
+  <div class="rhel-banner">
+    <div class="rhel-banner-title">RHEL + OpenShift — addressing the question directly</div>
+    <div class="rhel-pills">
+      <div class="rhel-pill">
+        <div class="rp-title">RHEL 5 → 9 in production</div>
+        <div class="rp-body">Saab (NV1+ISM/ASD), NovaStack sovereign cloud, CCG central server, Macquarie HA clusters — SELinux enforcing, CIS benchmarks, LVM, systemd across all roles.</div>
+      </div>
+      <div class="rhel-pill">
+        <div class="rp-title">Kubernetes fleet at scale</div>
+        <div class="rp-body">Rancher: 800-branch fleet at NAB. AKS hybrid control plane: CDR. EKS: core banking at NAB. K8s on OpenStack: NovaStack. ACM hub+spoke model fully understood.</div>
+      </div>
+      <div class="rhel-pill">
+        <div class="rp-title">OpenShift-aligned — now</div>
+        <div class="rp-body">NovaStack: OCP-compatible manifests, RHEL base images, Git-driven config built toward OCP. MicroShift running on RHEL 9.7 home lab this week. CVO / MCO / OLM studied.</div>
+      </div>
+      <div class="rhel-pill">
+        <div class="rp-title">Rancher = ACM — zero gap</div>
+        <div class="rp-body">800-branch hub+spoke K8s fleet at NAB via Rancher. ACM is the same model, RHEL-native, GitOps policy engine on top. Same operational muscle memory, larger scale.</div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Section A: 5 stories -->
     <div class="section">
       <div class="section-header">
         <div>
-          <div class="section-kicker">A · MY 4 STORIES</div>
+          <div class="section-kicker">A · MY 5 STORIES</div>
           <div class="section-title">Why each of these four roles matters for this job</div>
         </div>
         <span class="section-badge">Scale, resilience, compliance</span>
@@ -317,48 +65,45 @@
       <div class="grid" style="margin-top:10px;">
         <div>
           <div class="story-card">
-            <div class="story-title">NAB — 800 branches</div>
-            <div class="story-role">Edge Fleet Engineer · containerised devices, Rancher, F5/NGINX/HAProxy</div>
+            <div class="story-title">Saab Australia — 9LV Warship edge</div>
+            <div class="story-role">Edge Infra Engineer - Nov 2024 - May 2025 · NV1 cleared · real-time systems</div>
             <div class="story-body">
-              Managed ATMs, TCRs, card-swipe, passbook printers and cash machines across ~800 branches.
-              All ran containerised microservices on hardened Ubuntu, orchestrated centrally via Rancher
-              with traditional load balancers in front.
+              Edge infrastructure layer: RHEL + Ubuntu/Debian Linux nodes connecting ship sensors (sonar, radar, AWDISSCNTRL) to HMI/tactical displays via RTI DDS middleware — OODA Loop decision model.
+              ISM/ASD controls, STIGs, CIS Benchmarks on classified Linux stack — Ansible-automated hardening. Defence-grade — harder than any retail compliance requirement.
+              <b>OFFLINE-FIRST design </b>: warship must maintain FULL capability when completely isolated from shore command. No exceptions.
+              GitOps-style config: Git-centred change, automated validation, repeatable compliant builds.
+          </div>
+            <div class="story-why">
+              -> WooliesX: Offline Warship = offline MicroShift store · RTI DDS = Kafka · ISM/ASD classified > PCI-DSS · I have built the harder version of WolliesX problem.
+            </div>
+          <div class="story-card">
+            <div class="story-title">NAB — 600 branches AU Wide</div>
+            <div class="story-role">Senior Edge Fleet Analyst Engineer · Apr 2023 - Sep 2024 · containerised devices, Rancher, F5/NGINX/HAProxy</div>
+            <div class="story-body">
+              Managed ATMs, TCRs, card-swipe, passbook printers and cash machines across ~600 branches.
+              Orchestrated centrally via Rancher (hub+spoke Kubernetes fleet) over MPLS WAN · F5 BIG-IP + NGINX + HAProxy for branch traffic.
+              Kafka for AUSTRAC-compliant event streaming · Ansible fleet-wide OS patching + CIS hardening across all 800 branch edge nodes.
             </div>
             <div class="story-why">
-              Why this matters for WooliesX: proved I can operate a regulated edge fleet at scale.
-              800 NAB branches → 3,000 Woolies stores is the same hub-and-spoke pattern, just larger.
+              -> WooliesX: Rancher = ACM  ~600 branches = 3,000 stores ~MPLS WAM = SD-WAN ~AUSTRAC = PCI DSS · Same Fleet problem, larger Scale
             </div>
           </div>
 
           <div class="story-card" style="margin-top:8px;">
             <div class="story-title">Energy Australia CDR</div>
-            <div class="story-role">Greenfield Platform Engineer · Azure, AKS, CI/CD, policy-as-code</div>
+            <div class="story-role">Greenfield Platform Engineer · Aug 2022 - Apr 2022 · Azure, AKS, CI/CD, policy-as-code</div>
             <div class="story-body">
-              Built the ACCC-mandated Consumer Data Right platform from zero in 8 months, on Azure/AKS.
-              Hybrid control plane (central policy + distributed clusters), GitHub Actions/Azure Pipelines,
-              and policy-as-code gates on every pipeline.
+              Built entire ACCC-mandated CDR platform from zero to production in 8 months — hard government deadline, no existing infrastructure.
+              Designed and owned Azure + AKS hybrid control plane: central policy hub + distributed clusters — architecturally identical to ACM + MicroShift.
+              Policy-as-code gates + ACCC conformance testing in every pipeline · OAuth2/OIDC via Okta · zero compliance failures at go-live.
             </div>
             <div class="story-why">
-              Why this matters for WooliesX: shows I can deliver a greenfield, compliance-heavy platform
-              under a hard date — similar to a time-boxed Windows → RHEL MicroShift migration.
+              -> WooliesX: AKS hybrid control plane = ACM + MicroShift · ACCC compliance mindset = PCI-DSS · greenfield 8 months = migration delivery model.
             </div>
           </div>
         </div>
 
         <div>
-          <div class="story-card">
-            <div class="story-title">Saab Australia — 9LV warship edge</div>
-            <div class="story-role">Edge Infra · NV1 cleared · real-time systems</div>
-            <div class="story-body">
-              Owned the edge infrastructure layer for the 9LV Combat Management System on Hunter-class frigates.
-              Ubuntu/Debian nodes connect sonar, radar and other sensors to tactical displays via RTI DDS, under
-              ISM/ASD, STIGs and CIS hardening.
-            </div>
-            <div class="story-why">
-              Why this matters for WooliesX: a warship must keep fighting when cut off from command.
-              That’s the same offline-first requirement as a store that must keep trading when SD-WAN drops.
-            </div>
-          </div>
 
           <div class="story-card" style="margin-top:8px;">
             <div class="story-title">CCG / Vic Uni — LEON Linux field stations</div>
@@ -520,4 +265,3 @@
     </div>
   </div>
 </body>
-</html>
