@@ -319,36 +319,39 @@
 </head>
 <body>
   <div class="wrap" id="flow-root" tabindex="0" aria-label="WooliesX 9-layer flow">
-    <div class="title">Edge-to-cloud flow for a single POS event</div>
-    <div class="subtitle">
-      WooliesX stack visualised from in-store hardware up to AI and customer experience.
+  ...
+  <div class="footer-meta">
+    Legend: green outline = layers in my direct domain; green tech pills = technologies I own or actively work with.
+    This prototype is implemented with vanilla HTML/CSS/JS and designed to run on a lightweight static host (Vercel).
+  </div>
+
+  <hr style="border:none;border-top:1px solid #e5e7eb;margin:18px 0 10px;" />
+
+  <div style="font-size:11px;color:#6b7280;line-height:1.5;">
+    <div style="margin-bottom:4px;">
+      © 2026 Nireekshan Sodavaram. All rights reserved.
     </div>
-
-    <div class="meta-bar">
-      Prototype created by <strong>Nireekshan Sodavaram</strong> for WooliesX interview on 7 April 2026.
+    <div style="margin-bottom:6px;">
+      This prototype is a personal interpretation of WooliesX’s edge-to-cloud stack
+      and the current Windows/VM/DTCP-style environment being migrated to RHEL +
+      MicroShift. All technology references (including SAP on Azure, Cisco SD-WAN,
+      API gateways, observability stacks and general Windows/VMware concepts) are
+      based solely on publicly available information and my prior experience.
+      No confidential or internal Woolworths/WooliesX artefacts, configs or DTCP
+      details have been used.
     </div>
-
-    <p class="helper-text">
-      This is a narrative map of a single self-checkout scan across 9 layers of the WooliesX stack – with my domain highlighted.
-    </p>
-    <p class="helper-text-secondary">
-      Use the numbered dots, Back/Next buttons, or keyboard (← / → / Home / End) to walk the flow. Green-highlighted pills show technologies I directly own.
-    </p>
-
-    <div class="progress-bar" id="progress"></div>
-    <div class="panel" id="panel"></div>
-
-    <div class="nav-row">
-      <button class="nav-btn" id="btn-back">← Back</button>
-      <span class="step-counter" id="counter"></span>
-      <button class="nav-btn primary" id="btn-next">Next →</button>
-    </div>
-
-    <div class="footer-meta">
-      Legend: green outline = layers in my direct domain; green tech pills = technologies I own or actively work with.
-      This prototype is implemented with vanilla HTML/CSS/JS and designed to run on a lightweight static host (Vercel).
+    <div style="font-size:11px;color:#9ca3af;">
+      Selected public sources informing this view include: Woolworths SAP on Azure
+      case studies and press releases (Microsoft, SAP and industry media),
+      Woolworths network transformation with Cisco SD-WAN (iTnews, 2020),
+      WooliesX and Woolworths engineering / data platform articles describing
+      Azure, GCP, BigQuery and Apigee usage, and general industry documentation
+      on Windows / VMware virtualisation and load balancing patterns. All
+      architecture diagrams and flows here are my own synthesis for interview
+      purposes only.
     </div>
   </div>
+</div> <!-- end .wrap -->
 
   <script>
     const steps = [
@@ -457,9 +460,9 @@
         flow: 'RHEL boots → systemd starts microshift.service\n→ MicroShift API server starts on :6443\n→ CRI-O container runtime ready\n→ OpenShift Routes controller starts\n→ LVM storage (LVMS) available\n→ klusterlet registers with ACM hub\n→ Store is now a managed cluster',
         flowLabel: 'MicroShift startup sequence',
         flowColor: '#EAF5EF',
-        role: 'You own MicroShift at every store — the installation, the systemd service config, the LVM storage setup, the network policy. You also work on the full OCP clusters at the DC/hub level as the platform they run on. Write once, run everywhere — same manifest, same RHEL base, same ACM management. Here you also design the service-mesh sidecars and mTLS policies that give each store node a zero-trust, policy-driven "local API fabric" instead of a pile of loosely connected containers.',
+        role: 'The MicroShift at every store — the installation, the systemd service config, the LVM storage setup, the network policy. The edge infra Linux Engineer also work on the full OCP clusters at the DC/hub level as the platform they run on. Write once, run everywhere — same manifest, same RHEL base, same ACM management. Here you also design the service-mesh sidecars and mTLS policies that give each store node a zero-trust, policy-driven "local API fabric" instead of a pile of loosely connected containers.',
         analogy: 'MicroShift is like a tiny version of the DC data centre, installed inside the store. It has everything needed to run the store apps locally — without needing to phone home to the DC for every operation.',
-        tech: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'OCP API :6443', 'SNO (larger stores)', 'Full OCP (DC)'],
+        tech: ['MicroShift 4.x', 'systemd service', 'Where to CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'OCP API :6443', 'SNO (larger stores)', 'Full OCP (DC)'],
         yours: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'SNO (larger stores)']
     },
       {
@@ -472,7 +475,7 @@
         flow: 'klusterlet registers → ACM sees new cluster\n→ labels: store=NSW-042, tier=supermarket\n→ ArgoCD ApplicationSet matches labels\n→ Kustomize renders store-specific manifests\n→ Vault AVP injects secrets per app\n→ Pods deploy: POS, inventory, cold-chain, loyalty\n→ ACM policy check: CIS compliance = PASS\n→ Grafana fleet dashboard: store NSW-042 = GREEN',
         flowLabel: 'Auto-onboarding flow',
         flowColor: '#EAF5EF',
-        role: 'THIS is your core daily work. You build the ApplicationSet templates, define the Kustomize overlay structure, write the ACM policy definitions, wire up Vault secret injection, and design the GitOps pipeline that makes 3,000 stores deploy themselves from a git commit. This is "infrastructure as a product." On top of shipping workloads, you also use ACM + ArgoCD to manage edge API behaviour: deploying service-mesh gateways and sidecars, enforcing mTLS between services, and pushing rules like "only 100 requests/second from a single cold-chain sensor" or "circuit-break this service if error rate spikes" to every store from a single hub.',
+        role: 'THIS is Edge Infra Lionux Engineer\'s core daily work. You build the ApplicationSet templates, define the Kustomize overlay structure, write the ACM policy definitions, wire up Vault secret injection, and design the GitOps pipeline that makes 3,000 stores deploy themselves from a git commit. This is "infrastructure as a product." On top of shipping workloads, you also use ACM + ArgoCD to manage edge API behaviour: deploying service-mesh gateways and sidecars, enforcing mTLS between services, and pushing rules like "only 100 requests/second from a single cold-chain sensor" or "circuit-break this service if error rate spikes" to every store from a single hub.',
         analogy: 'ACM + ArgoCD is like a self-configuring franchise system. When a new McDonald\'s opens, corporate sends the standard menu, recipes and equipment spec — and the store configures itself. You are the person who designed the standard spec, including the rules for how traffic is allowed to flow inside the kitchen.',
         tech: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine', 'Thanos (metrics)', 'Loki (logs)', 'Grafana'],
         yours: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine']
