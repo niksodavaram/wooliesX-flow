@@ -9,47 +9,75 @@
     :root {
       --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --color-bg: #f9fafb;
-      --color-card: #ffffff;
-      --color-text-primary: #111827;
-      --color-text-secondary: #4b5563;
-      --color-text-tertiary: #9ca3af;
-      --color-border: #e5e7eb;
-      --color-accent-green: #15803d;
-      --color-accent-blue: #1d4ed8;
-      --color-accent-amber: #b45309;
-      --border-radius-md: 8px;
-      --border-radius-lg: 12px;
+
+      /* Backgrounds */
+      --color-bg: #0f172a;            /* slate-900 */
+      --color-bg-alt: #020617;        /* slate-950 */
+      --color-card: #020617;          /* dark card */
+      --color-card-soft: #020617;
+
+      /* Text */
+      --color-text-primary: #e5e7eb;  /* slate-200 */
+      --color-text-secondary: #9ca3af;/* slate-400 */
+      --color-text-tertiary: #6b7280; /* slate-500 */
+
+      /* Borders */
+      --color-border-subtle: #1f2937; /* gray-800 */
+      --color-border-strong: #4b5563; /* gray-600 */
+
+      /* Accent colors */
+      --color-accent-green: #22c55e;  /* emerald-500 */
+      --color-accent-green-soft: #064e3b; /* emerald-900 */
+      --color-accent-blue: #6366f1;   /* indigo-500 */
+      --color-accent-blue-soft: #1e1b4b;  /* indigo-900 */
+      --color-accent-amber: #f59e0b;  /* amber-500 */
+      --color-accent-amber-soft: #78350f; /* amber-900 */
+
+      --border-radius-md: 10px;
+      --border-radius-lg: 14px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: var(--font-sans);
-      background: var(--color-bg);
+      background: radial-gradient(circle at top, #1d283a 0, #020617 48%, #000000 100%);
       color: var(--color-text-primary);
-      padding: 16px;
+      padding: 18px;
     }
+
     .page {
       max-width: 980px;
       margin: 0 auto;
-      background: var(--color-card);
-      padding: 20px 20px 24px;
+      background: linear-gradient(135deg, rgba(15,23,42,0.98), rgba(15,23,42,0.98));
+      padding: 22px 22px 26px;
       border-radius: var(--border-radius-lg);
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      box-shadow:
+        0 24px 70px rgba(15, 23, 42, 0.85),
+        0 0 0 1px rgba(148,163,184,0.18);
+      border: 1px solid rgba(148,163,184,0.35);
     }
+
     .page-header {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(148,163,184,0.25);
     }
+
     .title {
-      font-size: 22px;
-      font-weight: 600;
+      font-size: 23px;
+      font-weight: 650;
+      letter-spacing: 0.02em;
       margin-bottom: 4px;
+      color: #e5e7eb;
     }
+
     .subtitle {
       font-size: 13px;
       color: var(--color-text-secondary);
       margin-bottom: 6px;
     }
+
     .meta {
       font-size: 11px;
       color: var(--color-text-tertiary);
@@ -59,17 +87,27 @@
       color: var(--color-accent-blue);
       text-decoration: none;
     }
+
     a:hover {
       text-decoration: underline;
     }
 
     .back-link {
       font-size: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       display: inline-flex;
       align-items: center;
       gap: 4px;
       color: var(--color-text-secondary);
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: radial-gradient(circle at top left, rgba(79,70,229,0.4), rgba(15,23,42,1));
+    }
+
+    .back-link:hover {
+      border-color: rgba(129,140,248,0.8);
+      background: radial-gradient(circle at top left, rgba(79,70,229,0.6), rgba(15,23,42,1));
     }
 
     .grid {
@@ -77,6 +115,7 @@
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
       gap: 16px;
     }
+
     @media (max-width: 800px) {
       .grid {
         grid-template-columns: minmax(0, 1fr);
@@ -86,9 +125,28 @@
     .section {
       margin-top: 18px;
       border-radius: var(--border-radius-md);
-      border: 1px solid var(--color-border);
+      border: 1px solid rgba(148,163,184,0.4);
       padding: 14px 14px 16px;
+      background:
+        radial-gradient(circle at top left, rgba(79,70,229,0.25), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(16,185,129,0.18), transparent 55%),
+        rgba(15,23,42,0.96);
     }
+
+    .section:nth-of-type(2) {
+      background:
+        radial-gradient(circle at top right, rgba(245,158,11,0.28), transparent 55%),
+        radial-gradient(circle at bottom left, rgba(56,189,248,0.15), transparent 55%),
+        rgba(15,23,42,0.96);
+    }
+
+    .section:nth-of-type(3) {
+      background:
+        radial-gradient(circle at top, rgba(56,189,248,0.22), transparent 55%),
+        radial-gradient(circle at bottom, rgba(79,70,229,0.22), transparent 55%),
+        rgba(15,23,42,0.96);
+    }
+
     .section-header {
       display: flex;
       align-items: baseline;
@@ -96,24 +154,40 @@
       gap: 8px;
       margin-bottom: 8px;
     }
+
     .section-kicker {
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      font-weight: 650;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: #a5b4fc;
     }
+
     .section-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--color-text-primary);
+      color: #e5e7eb;
     }
+
     .section-badge {
       font-size: 10px;
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid var(--color-border);
-      color: var(--color-text-tertiary);
+      border: 1px solid rgba(148,163,184,0.8);
+      color: #cbd5f5;
+      background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,64,175,0.9));
+      box-shadow: 0 0 0 1px rgba(30,64,175,0.45);
+      white-space: nowrap;
+    }
+
+    .section-body {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    .section-body p + p {
+      margin-top: 6px;
     }
 
     .pill-row {
@@ -122,37 +196,33 @@
       gap: 6px;
       margin-bottom: 6px;
     }
+
     .pill {
       font-size: 11px;
-      padding: 3px 8px;
+      padding: 3px 9px;
       border-radius: 999px;
-      border: 1px solid var(--color-border);
-      background: #f3f4f6;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.85);
       color: var(--color-text-secondary);
-    }
-    .pill.green {
-      border-color: #bbf7d0;
-      background: #ecfdf3;
-      color: #166534;
-    }
-    .pill.blue {
-      border-color: #bfdbfe;
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
-    .pill.amber {
-      border-color: #fed7aa;
-      background: #fffbeb;
-      color: #b45309;
+      backdrop-filter: blur(6px);
     }
 
-    .section-body {
-      font-size: 12px;
-      color: var(--color-text-secondary);
-      line-height: 1.6;
+    .pill.green {
+      border-color: rgba(74,222,128,0.7);
+      background: rgba(6,95,70,0.85);
+      color: #bbf7d0;
     }
-    .section-body p + p {
-      margin-top: 6px;
+
+    .pill.blue {
+      border-color: rgba(129,140,248,0.85);
+      background: rgba(30,64,175,0.88);
+      color: #e0e7ff;
+    }
+
+    .pill.amber {
+      border-color: rgba(251,191,36,0.8);
+      background: rgba(120,53,15,0.9);
+      color: #fed7aa;
     }
 
     .two-col {
@@ -161,6 +231,7 @@
       gap: 12px;
       margin-top: 10px;
     }
+
     @media (max-width: 700px) {
       .two-col {
         grid-template-columns: minmax(0, 1fr);
@@ -169,87 +240,148 @@
 
     .story-card {
       border-radius: var(--border-radius-md);
-      border: 1px solid var(--color-border);
+      border: 1px solid rgba(148,163,184,0.5);
       padding: 10px 10px 11px;
-      background: #f9fafb;
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,0.16), transparent 55%),
+        rgba(15,23,42,0.98);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.75);
     }
+
+    .story-card:nth-of-type(2) {
+      background:
+        radial-gradient(circle at top right, rgba(129,140,248,0.18), transparent 55%),
+        rgba(15,23,42,0.98);
+    }
+
     .story-title {
       font-size: 13px;
       font-weight: 600;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
+      color: #e5e7eb;
     }
+
     .story-role {
       font-size: 11px;
-      color: var(--color-text-tertiary);
+      color: #a5b4fc;
       margin-bottom: 6px;
     }
+
     .story-body {
       font-size: 12px;
       color: var(--color-text-secondary);
-      line-height: 1.5;
+      line-height: 1.6;
     }
+
     .story-why {
       font-size: 11px;
-      color: #166534;
-      margin-top: 5px;
+      color: #a7f3d0;
+      margin-top: 6px;
     }
 
     .mapping-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 11px;
-      margin-top: 8px;
+      margin-top: 9px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.75);
     }
+
     .mapping-table th,
     .mapping-table td {
-      border: 1px solid var(--color-border);
-      padding: 6px 6px;
+      border: 1px solid rgba(148,163,184,0.65);
+      padding: 6px 7px;
       vertical-align: top;
     }
+
     .mapping-table th {
-      background: #f3f4f6;
+      background: linear-gradient(135deg, #1d263b, #1e293b);
       font-weight: 600;
-      color: var(--color-text-secondary);
+      color: #e5e7eb;
       text-align: left;
+    }
+
+    .mapping-table tbody tr:nth-child(odd) {
+      background: rgba(15,23,42,0.98);
+    }
+
+    .mapping-table tbody tr:nth-child(even) {
+      background: rgba(15,23,42,0.92);
+    }
+
+    .mapping-table td {
+      color: var(--color-text-secondary);
+      line-height: 1.6;
     }
 
     .phase-list {
       list-style: none;
       margin-top: 8px;
     }
+
     .phase {
       border-radius: var(--border-radius-md);
-      border: 1px solid var(--color-border);
+      border: 1px solid rgba(148,163,184,0.6);
       padding: 8px 9px;
-      background: #f9fafb;
-      margin-bottom: 6px;
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.2), transparent 55%),
+        rgba(15,23,42,0.96);
+      margin-bottom: 7px;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.8);
     }
+
+    .phase:nth-child(2) {
+      background:
+        radial-gradient(circle at top right, rgba(56,189,248,0.22), transparent 55%),
+        rgba(15,23,42,0.96);
+    }
+
+    .phase:nth-child(3) {
+      background:
+        radial-gradient(circle at bottom left, rgba(249,115,22,0.22), transparent 55%),
+        rgba(15,23,42,0.96);
+    }
+
+    .phase:nth-child(4) {
+      background:
+        radial-gradient(circle at bottom right, rgba(129,140,248,0.24), transparent 55%),
+        rgba(15,23,42,0.96);
+    }
+
     .phase-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       gap: 8px;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
+
     .phase-name {
       font-size: 12px;
       font-weight: 600;
+      color: #e5e7eb;
     }
+
     .phase-timing {
       font-size: 11px;
-      color: var(--color-text-tertiary);
+      color: #c4b5fd;
     }
+
     .phase-body {
       font-size: 12px;
       color: var(--color-text-secondary);
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .footer-meta {
       font-size: 11px;
       color: var(--color-text-tertiary);
-      margin-top: 16px;
-      line-height: 1.5;
+      margin-top: 18px;
+      line-height: 1.6;
+      padding-top: 10px;
+      border-top: 1px solid rgba(148,163,184,0.35);
     }
   </style>
 </head>
@@ -437,8 +569,8 @@
         </p>
       </div>
 
-      <ul class="phase-list">
-        <li class="phase">
+      <ul class="phase-listst">
+        >
           <div class="phase-header">
             <div class="phase-name">Phase 1 — Design & 5-store pilot</div>
             <div class="phase-timing">Weeks 1–4</div>
@@ -448,8 +580,8 @@
             and define Kustomize overlays per store tier. Run RHEL + MicroShift in parallel with the existing Windows
             VM in 5 pilot stores.
           </div>
-        </li>
-        <li class="phase">
+        </l/li>
+        >
           <div class="phase-header">
             <div class="phase-name">Phase 2 — Validate flows & harden</div>
             <div class="phase-timing">Weeks 5–8</div>
@@ -458,8 +590,8 @@
             Prove end-to-end: POS → Kafka → BigQuery, inventory → SAP S/4HANA, and cold-chain MQTT → Vertex AI.
             Only when all flows are green and CIS/PCI-DSS baselines pass do we consider Windows removable.
           </div>
-        </li>
-        <li class="phase">
+        </l/li>
+        >
           <div class="phase-header">
             <div class="phase-name">Phase 3 — Canary waves at 50 stores/week</div>
             <div class="phase-timing">Months 3–6</div>
@@ -469,8 +601,8 @@
             if error rates spike. ACM dashboards give fleet-wide compliance and drift visibility before retiring
             the Windows VM per store.
           </div>
-        </li>
-        <li class="phase">
+        </l/li>
+        >
           <div class="phase-header">
             <div class="phase-name">Phase 4 — Full fleet + ZTP by default</div>
             <div class="phase-timing">Months 7–18</div>
