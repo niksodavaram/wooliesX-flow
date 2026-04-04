@@ -410,29 +410,29 @@
                 The Edge Infra Engineer's JOB is to standardise this mess into a single, versioned RHEL 9 "image mode" blueprint for all 3,000+ stores. Image mode (rpm-ostree) makes the OS read-only in production with built‑in rollback: if an update misbehaves, the node simply boots back to the last known-good image.
                 Instead of 3,000 fragile Windows builds, WooliesX gets one golden, Git‑managed RHEL for Edge image: reproducible, auditable, and safe to roll out at scale. This fixes the current stability and cost pain before we even talk about Kubernetes or applications.
             `,
+        flowLabel: 'OS evolution in three controlled steps',
         flow: `
-                Image Builder (DC) builds hardened RHEL image → image is signed and stored in registry
-                → Store server PXE/ZTP boots from image on Dell/VMware or bare metal
-                → RHEL image mode (rpm-ostree) is active, read‑only root FS
-                → SELinux enforcing + CIS hardening + EDR/monitoring baked in from day one
-            `,
-        flowLabel: `
-                OS evolution in three controlled steps:
-                1) Stable Linux next to Windows
-                    - Define TOML blueprint for a virtual guest (.vmdk/.ova)
-                    - Bake in CIS hardening, CrowdStrike, logging, monitoring
-                    - Deploy this RHEL VM alongside existing Windows VMs on Dell/VMware with zero network changes
-                2) Turn the OS into an edge K8s node
-                    - Extend the same TOML to add MicroShift RPMs and a local container registry
-                    - When the VM boots in a store, it’s no longer "just a Linux box" — it exposes a Kubernetes API endpoint
-                    - Everyday Rewards or Milkrun can deploy their first containerised service at the edge without waiting for a big‑bang rewrite
+            1) Stable Linux next to Windows
+            → Define TOML blueprint for a virtual guest (.vmdk / .ova)
+            → Bake in CIS hardening, CrowdStrike, logging, monitoring
+            → Deploy this RHEL VM alongside existing Windows VMs on Dell / VMware
+                with zero network changes
 
-                3) Hand the fleet to ACM + GitOps
-                    - Shift from managing images only to managing full clusters and workloads
-                    - The pipeline moves from pure TOML to containerfiles (bootc / image mode), but stays in Git
-                    - For application teams, nothing changes: they keep committing to Git; behind the scenes you’ve evolved the platform from Windows VMs → hardened RHEL → edge Kubernetes,
-                        with ACM and GitOps as the "fleet brain"
-            `,
+            2) Turn the OS into an edge K8s node
+            → Extend the same TOML to add MicroShift RPMs and a local container registry
+            → When the VM boots in a store it’s no longer "just a Linux box" —
+                it exposes a Kubernetes API endpoint
+            → Everyday Rewards / Milkrun can deploy their first containerised
+                service at the edge without a big‑bang rewrite
+
+            3) Hand the fleet to ACM + GitOps
+            → Shift from managing images only to managing full clusters and workloads
+            → Pipeline evolves from pure TOML to containerfiles (bootc / image mode),
+                but everything stays in Git
+            → For app teams, nothing changes: they keep committing to Git while
+                the platform quietly evolves from Windows VMs → hardened RHEL → edge K8s,
+                with ACM + GitOps as the fleet brain
+        `.trim(),
          flowColor: '#EAF5EF',
 
         role: `
