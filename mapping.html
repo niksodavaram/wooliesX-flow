@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WooliesX Experience Mapping – Nireekshan Sodavaram</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --color-bg: #f9fafb;
+      --color-card: #ffffff;
+      --color-text-primary: #111827;
+      --color-text-secondary: #4b5563;
+      --color-text-tertiary: #9ca3af;
+      --color-border: #e5e7eb;
+      --color-accent-green: #15803d;
+      --color-accent-blue: #1d4ed8;
+      --color-accent-amber: #b45309;
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text-primary);
+      padding: 16px;
+    }
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--color-card);
+      padding: 20px 20px 24px;
+      border-radius: var(--border-radius-lg);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+    .page-header {
+      margin-bottom: 16px;
+    }
+    .title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-bottom: 6px;
+    }
+    .meta {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+    }
+
+    a {
+      color: var(--color-accent-blue);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      font-size: 12px;
+      margin-bottom: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--color-text-secondary);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 16px;
+    }
+    @media (max-width: 800px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .section {
+      margin-top: 18px;
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--color-border);
+      padding: 14px 14px 16px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .section-kicker {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    .section-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-tertiary);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: #f3f4f6;
+      color: var(--color-text-secondary);
+    }
+    .pill.green {
+      border-color: #bbf7d0;
+      background: #ecfdf3;
+      color: #166534;
+    }
+    .pill.blue {
+      border-color: #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    .pill.amber {
+      border-color: #fed7aa;
+      background: #fffbeb;
+      color: #b45309;
+    }
+
+    .section-body {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+    .section-body p + p {
+      margin-top: 6px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+    @media (max-width: 700px) {
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .story-card {
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--color-border);
+      padding: 10px 10px 11px;
+      background: #f9fafb;
+    }
+    .story-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .story-role {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-bottom: 6px;
+    }
+    .story-body {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+    .story-why {
+      font-size: 11px;
+      color: #166534;
+      margin-top: 5px;
+    }
+
+    .mapping-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-top: 8px;
+    }
+    .mapping-table th,
+    .mapping-table td {
+      border: 1px solid var(--color-border);
+      padding: 6px 6px;
+      vertical-align: top;
+    }
+    .mapping-table th {
+      background: #f3f4f6;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      text-align: left;
+    }
+
+    .phase-list {
+      list-style: none;
+      margin-top: 8px;
+    }
+    .phase {
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--color-border);
+      padding: 8px 9px;
+      background: #f9fafb;
+      margin-bottom: 6px;
+    }
+    .phase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+    .phase-name {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .phase-timing {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+    }
+    .phase-body {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    .footer-meta {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a href="/" class="back-link">← Back to 9-layer flow</a>
+
+    <div class="page-header">
+      <div class="title">Experience mapping for WooliesX Edge Infra role</div>
+      <div class="subtitle">
+        How my past edge, platform and defence work maps directly onto WooliesX’s Windows → RHEL MicroShift migration.
+      </div>
+      <div class="meta">
+        Created by <strong>Nireekshan Sodavaram</strong> · Interview with David Kinch, Edge Infra Manager · 7 April 2026
+      </div>
+    </div>
+
+    <!-- Section A: 4 stories -->
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">A · MY 4 STORIES</div>
+          <div class="section-title">Why each of these four roles matters for this job</div>
+        </div>
+        <span class="section-badge">Scale, resilience, compliance</span>
+      </div>
+
+      <div class="section-body">
+        <p>
+          I’ve grouped 15+ years into four anchor stories that match WooliesX’s problem space:
+          running a large, regulated, distributed edge fleet that must keep trading when WAN,
+          hardware or upstream systems fail.
+        </p>
+      </div>
+
+      <div class="grid" style="margin-top:10px;">
+        <div>
+          <div class="story-card">
+            <div class="story-title">NAB — 800 branches</div>
+            <div class="story-role">Edge Fleet Engineer · containerised devices, Rancher, F5/NGINX/HAProxy</div>
+            <div class="story-body">
+              Managed ATMs, TCRs, card-swipe, passbook printers and cash machines across ~800 branches.
+              All ran containerised microservices on hardened Ubuntu, orchestrated centrally via Rancher
+              with traditional load balancers in front.
+            </div>
+            <div class="story-why">
+              Why this matters for WooliesX: proved I can operate a regulated edge fleet at scale.
+              800 NAB branches → 3,000 Woolies stores is the same hub-and-spoke pattern, just larger.
+            </div>
+          </div>
+
+          <div class="story-card" style="margin-top:8px;">
+            <div class="story-title">Energy Australia CDR</div>
+            <div class="story-role">Greenfield Platform Engineer · Azure, AKS, CI/CD, policy-as-code</div>
+            <div class="story-body">
+              Built the ACCC-mandated Consumer Data Right platform from zero in 8 months, on Azure/AKS.
+              Hybrid control plane (central policy + distributed clusters), GitHub Actions/Azure Pipelines,
+              and policy-as-code gates on every pipeline.
+            </div>
+            <div class="story-why">
+              Why this matters for WooliesX: shows I can deliver a greenfield, compliance-heavy platform
+              under a hard date — similar to a time-boxed Windows → RHEL MicroShift migration.
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="story-card">
+            <div class="story-title">Saab Australia — 9LV warship edge</div>
+            <div class="story-role">Edge Infra · NV1 cleared · real-time systems</div>
+            <div class="story-body">
+              Owned the edge infrastructure layer for the 9LV Combat Management System on Hunter-class frigates.
+              Ubuntu/Debian nodes connect sonar, radar and other sensors to tactical displays via RTI DDS, under
+              ISM/ASD, STIGs and CIS hardening.
+            </div>
+            <div class="story-why">
+              Why this matters for WooliesX: a warship must keep fighting when cut off from command.
+              That’s the same offline-first requirement as a store that must keep trading when SD-WAN drops.
+            </div>
+          </div>
+
+          <div class="story-card" style="margin-top:8px;">
+            <div class="story-title">CCG / Vic Uni — LEON Linux field stations</div>
+            <div class="story-role">Distributed Edge Systems · PhD-backed work</div>
+            <div class="story-body">
+              Built 16 LEON Linux base stations (Xilinx ML506 + Aeroflex Gaisler SPARC) across remote NZ/Alaska,
+              tracking 3,000 tagged birds. Edge nodes ran local Bayesian inference and synced back via rsync/SSH
+              when links came up, with Python/Bash/cron automation.
+            </div>
+            <div class="story-why">
+              Why this matters for WooliesX: designed offline-first Linux nodes that self-healed with zero
+              on-site support — exactly the operating model for 3,000 stores with MicroShift and ACM.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section B: mapping table -->
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">B · TECH STACK MAPPING</div>
+          <div class="section-title">How my past stack lines up with the WooliesX target stack</div>
+        </div>
+        <span class="section-badge">Pattern match, not buzzwords</span>
+      </div>
+
+      <div class="section-body">
+        <p>
+          The goal here is to show clear pattern equivalence: what I ran in production before,
+          and the WooliesX technologies it maps to — especially around fleet management, SD-WAN,
+          event streams, hardening and GitOps.
+        </p>
+      </div>
+
+      <table class="mapping-table">
+        <thead>
+          <tr>
+            <th>My past experience</th>
+            <th>WooliesX target stack</th>
+            <th>Maps to</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rancher — Kubernetes fleet orchestration at NAB (800 branches, hub + spokes)</td>
+            <td>Red Hat ACM managing MicroShift / OCP clusters across ~3,000 stores</td>
+            <td>Same fleet pattern: central hub, managed edge clusters, GitOps-native control.</td>
+          </tr>
+          <tr>
+            <td>MPLS WAN connecting NAB branches to DCs</td>
+            <td>Cisco SD-WAN store-to-DC connectivity</td>
+            <td>Same topology; SD-WAN adds ZTP and software-defined routing over the old model.</td>
+          </tr>
+          <tr>
+            <td>AKS hybrid control plane (EnergyAus CDR)</td>
+            <td>ACM hub + MicroShift spoke model</td>
+            <td>Same central-policy / distributed-cluster architecture, just RHEL-native.</td>
+          </tr>
+          <tr>
+            <td>RTI DDS middleware on 9LV warships</td>
+            <td>Kafka event streaming from store edge to cloud</td>
+            <td>Same pub/sub decoupling: sensors/POS → event bus → analytics/AI.</td>
+          </tr>
+          <tr>
+            <td>Offline-first edge nodes (9LV + CCG birds)</td>
+            <td>MicroShift offline resilience at every store</td>
+            <td>Keep working when disconnected, reconcile state on reconnect.</td>
+          </tr>
+          <tr>
+            <td>CIS + ISM/ASD + STIGs at Saab and NAB</td>
+            <td>RHEL 9 CIS hardening + PCI-DSS for POS</td>
+            <td>Same hardening discipline; PCI-DSS is easier once you’ve met defence baselines.</td>
+          </tr>
+          <tr>
+            <td>Ubuntu/Debian fleet management</td>
+            <td>RHEL 9 + MicroShift + RHEL image mode</td>
+            <td>Linux fundamentals transfer; main delta is packaging and SELinux.</td>
+          </tr>
+          <tr>
+            <td>Policy-as-code CI/CD gates in CDR platform</td>
+            <td>DevSecOps in ArgoCD pipelines + ACM policy</td>
+            <td>Same idea: compliance checks and image scanning baked into every rollout.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section C: migration plan -->
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">C · MIGRATION PLAN</div>
+          <div class="section-title">How I’d approach Windows VM → RHEL MicroShift for 3,000+ stores</div>
+        </div>
+        <span class="section-badge">18-month roadmap</span>
+      </div>
+
+      <div class="section-body">
+        <p>
+          This is not a perfect project plan; it’s a high-level sequence that shows how I think
+          about risk, pilot stores, canary waves and compliance when replacing fragile Windows
+          VMs with an immutable RHEL + MicroShift stack.
+        </p>
+      </div>
+
+      <ul class="phase-list">
+        <li class="phase">
+          <div class="phase-header">
+            <div class="phase-name">Phase 1 — Design & 5-store pilot</div>
+            <div class="phase-timing">Weeks 1–4</div>
+          </div>
+          <div class="phase-body">
+            Design the RHEL 9 Image Builder blueprint and LVM layout, stand up the ACM hub and Git repo structure,
+            and define Kustomize overlays per store tier. Run RHEL + MicroShift in parallel with the existing Windows
+            VM in 5 pilot stores.
+          </div>
+        </li>
+        <li class="phase">
+          <div class="phase-header">
+            <div class="phase-name">Phase 2 — Validate flows & harden</div>
+            <div class="phase-timing">Weeks 5–8</div>
+          </div>
+          <div class="phase-body">
+            Prove end-to-end: POS → Kafka → BigQuery, inventory → SAP S/4HANA, and cold-chain MQTT → Vertex AI.
+            Only when all flows are green and CIS/PCI-DSS baselines pass do we consider Windows removable.
+          </div>
+        </li>
+        <li class="phase">
+          <div class="phase-header">
+            <div class="phase-name">Phase 3 — Canary waves at 50 stores/week</div>
+            <div class="phase-timing">Months 3–6</div>
+          </div>
+          <div class="phase-body">
+            Roll out in waves with ArgoCD, each wave ~50 stores. Health gates and SLOs drive automated rollback
+            if error rates spike. ACM dashboards give fleet-wide compliance and drift visibility before retiring
+            the Windows VM per store.
+          </div>
+        </li>
+        <li class="phase">
+          <div class="phase-header">
+            <div class="phase-name">Phase 4 — Full fleet + ZTP by default</div>
+            <div class="phase-timing">Months 7–18</div>
+          </div>
+          <div class="phase-body">
+            All stores run on RHEL + MicroShift, Windows VMs fully decommissioned. New stores boot via zero-touch
+            provisioning from the golden image, and we layer in MCP-style AI self-healing across the fleet.
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-meta">
+      This page is a companion to the interactive 9-layer flow. It summarises my past roles,
+      the 1:1 tech stack mapping, and an 18‑month Windows → RHEL MicroShift migration approach.
+      All vendor and technology references are based solely on public information; no internal
+      Woolworths/WooliesX material has been used.
+    </div>
+  </div>
+</body>
+</html>
