@@ -435,10 +435,7 @@
         `.trim(),
          flowColor: '#EAF5EF',
 
-        role: `
-            This is a classic greenfield‑on‑brownfield migration. The Edge Infra Engineer owns the base image: define the RHEL blueprint, LVM layout (root/var/data), SELinux policies, and CIS/Ansible hardening, then automate zero‑touch provisioning so any store server can boot the same image — no hands on keyboards.
-           The engineer is directly solving the "3,000 fragile Windows VMs" problem by bringing golden‑image and fleet‑patching discipline from NAB/NovaStack into WooliesX. The outcome is simple but powerful: fewer outages at the edge, faster patch cycles, and a platform the app teams actually trust to ship new ideas into stores.
-            `,
+        role: 'This is a classic greenfield‑on‑brownfield migration. The Edge Infra Engineer owns the base image: defines the RHEL blueprint, LVM layout (root/var/data), SELinux policies, and CIS/Ansible hardening, then automate zero‑touch provisioning so any store server can boot the same image — no hands on keyboards. The engineer is directly solving the "3,000 fragile Windows VMs" problem by bringing golden‑image and fleet‑patching discipline from NAB/NovaStack into WooliesX. The outcome is simple but powerful: fewer outages at the edge, faster patch cycles, and a platform the app teams actually trust to ship new ideas into stores',
 
         analogy: `
             RHEL image mode is like running stores from a signed, read‑only SSD. The store can use it, but can’t quietly corrupt it. If an update goes bad, you just flip back to the previous SSD image and keep trading.
