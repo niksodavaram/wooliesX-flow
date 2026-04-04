@@ -402,62 +402,30 @@
         layer: '1', label: 'Physical & Network',
         accent: '#444441', accentLite: '#F1EFE8',
         isYours: false,
-        title: 'A Customer walks up to a self-checkout kiosk',
-        subtitle: 'Layer 1 — Physical hardware + Cisco SD-WAN Network',
-        what: 'The self-checkout kiosk is a physical Dell DTCP (or similar) server sitting in the store. It\'s connected to the store\'s local network, which connects back to the WooliesX hub in Bella Vista DC via a Cisco SD-WAN link — a combination of MPLS and broadband, with 4G/5G as failover. The SD-WAN is always trying to maintain a quality connection, but it can drop. That\'s why everything above must be designed to work even when it does.',
-        flow: 'Customer → self-checkout terminal\n' +
-                'Terminal (Dell DTCP server) → store LAN\n' +
-                'Store LAN → Cisco SD-WAN → dual DC hubs in Western Sydney (two control planes)',
+        title: 'Hardware meets the Wire',
+        subtitle: 'Layer 1 — Dell DTCP + Cisco SD-WAN',
+        what: 'The "Engine Room" of the store. Dell servers run the local stack, connected to the Western Sydney Dual-Hubs via Cisco SD-WAN (MPLS/5G). This layer provides the physical "road" for data to travel.',
+        flow: 'Self-Checkout → Store LAN → Cisco SD-WAN → Dual DC Hubs (Western Sydney)',
         flowLabel: 'Physical path',
         flowColor: '#F1EFE8',
-        role: 'I worked with the network team on MPLS WAN connectivity for 800 NAB branches. Same relationship here — As a Edge Infra Engineer, I will potentially work with the network team on SD-WAN for 3,000 stores. Different technology, identical operational model.',
-        analogy: 'Think of the SD-WAN as the road between the store and the warehouse. Sometimes the road gets busy or has roadworks. An Edge Infra Engineer\'s job is to make sure the store can still run even when the road is blocked.',
-        tech: ['DTCP', 'Dell servers', 'Cisco SD-WAN', 'MPLS + broadband', '4G/5G failover', 'Store LAN'],
+        role: 'I partner with the Network team to ensure SD-WAN QoS prioritizes POS traffic, drawing on my experience managing WAN for 800+ NAB branches.',
+        analogy: 'The physical road to the store. If the road is blocked, the store must still be able to "trade in isolation."',
+        tech: ['Dell DTCP', 'Cisco SD-WAN', '4G/5G Failover', 'MPLS'],
         yours: []
       },
-     {
-        layer: '2', label: 'Host OS — Edge Infra Engineers DOMAIN',
+      {
+        layer: '2', label: 'EDGE INFRA DOMAIN',
         accent: '#1B6B3A', accentLite: '#EAF5EF',
         isYours: true,
-        title: 'RHEL for Edge boots on the store server',
-        subtitle: 'Layer 2 — Host operating system (TODAY: Windows. TARGET: RHEL for Edge)',
-        what: `
-                TODAY each store server is a snowflake Windows VM: hand-built, hard to patch, and different from site to site. One bad GPO or agent update can take checkouts down with no clean rollback path.
-                The Edge Infra Engineer's JOB is to standardise this mess into a single, versioned RHEL 9 "image mode" blueprint for all 3,000+ stores. Image mode (rpm-ostree) makes the OS read-only in production with built‑in rollback: if an update misbehaves, the node simply boots back to the last known-good image.
-                Instead of 3,000 fragile Windows builds, WooliesX gets one golden, Git‑managed RHEL for Edge image: reproducible, auditable, and safe to roll out at scale. This fixes the current stability and cost pain before we even talk about Kubernetes or applications.
-            `,
-        flowLabel: 'OS evolution in three controlled steps',
-        flow: `
-            1) <b>Stable Linux next to Windows</b>
-            → Define TOML blueprint for a virtual guest (.vmdk / .ova);
-            → Bake in CIS hardening, CrowdStrike, logging, monitoring;
-            → Deploy this RHEL VM alongside existing Windows VMs on Dell / VMware
-                with zero network changes.
-
-            2) <b>Turn the OS into an edge K8s node</b>
-            → Extend the same TOML to add MicroShift RPMs and a local container registry;
-            → When the VM boots in a store it’s no longer "just a Linux box" —
-                it exposes a Kubernetes API endpoint;
-            → Everyday Rewards / Milkrun can deploy their first containerised
-                service at the edge without a big‑bang rewrite.
-
-            3) <b>Hand the fleet to ACM + GitOps</b>
-            → Shift from managing images only to managing full clusters and workloads;
-            → Pipeline evolves from pure TOML to containerfiles (bootc / image mode),
-                but everything stays in Git;
-            → For app teams, nothing changes: they keep committing to Git while
-                the platform quietly evolves from Windows VMs → hardened RHEL → edge K8s,
-                with ACM + GitOps as the fleet brain.
-        `.trim(),
-         flowColor: '#EAF5EF',
-
-        role: 'This is a classic greenfield‑on‑brownfield migration. The Edge Infra Engineer owns the base image: defines the RHEL blueprint, LVM layout (root/var/data), SELinux policies, and CIS/Ansible hardening, then automate zero‑touch provisioning so any store server can boot the same image — no hands on keyboards. The engineer is directly solving the "3,000 fragile Windows VMs" problem by bringing golden‑image and fleet‑patching discipline from NAB/NovaStack into WooliesX. The outcome is simple but powerful: fewer outages at the edge, faster patch cycles, and a platform the app teams actually trust to ship new ideas into stores',
-
-        analogy: `
-            RHEL image mode is like running stores from a signed, read‑only SSD. The store can use it, but can’t quietly corrupt it. If an update goes bad, you just flip back to the previous SSD image and keep trading.
-`           ,
-
-        tech: [
+        title: 'RHEL for Edge: The Immutable Foundation',
+        subtitle: 'Layer 2 — From Snowflake Windows VMs to Versioned Blueprints',
+        what: 'Standardising 3,000 "Snowflake" nodes into one immutable RHEL 9 blueprint. By using rpm-ostree, we achieve a read-only OS with atomic rollbacks—fixing fleet stability and configuration drift at the root.',
+        flow: '1) <b>Coexistence: Stable Linux next to Windows</b>\\n→ Define hardened RHEL .vmdk blueprints (CIS, CrowdStrike, Monitoring).\\n→ Deploy as a guest VM alongside legacy Windows with <b>zero network changes</b>.\\n\\n2) <b>Transformation: The Edge K8s Node</b>\\n→ Bake <b>MicroShift</b> into the image to create a local Kubernetes API endpoint.\\n→ Enable teams (Milkrun/Rewards) to deploy containers without an infra rewrite.\\n\\n3) <b>Orchestration: ACM + GitOps Fleet Brain</b>\\n→ Transition to <b>Image Mode (bootc)</b> for a full Container-native lifecycle.\\n→ Use <b>ACM + ArgoCD</b> to manage the 3,000-store fleet as a single "Source of Truth."',
+        flowLabel: 'Migration Roadmap',
+        flowColor: '#EAF5EF',
+        role: 'I own the base image: RHEL blueprints, SELinux policies, and CIS hardening. I am directly solving the "3,000 fragile Windows VMs" problem by bringing golden-image discipline from my NAB and NovaStack experience.',
+        analogy: 'Like running stores from a signed, read-only SSD. The store can use it, but can’t corrupt it. If an update fails, flip back to the previous version and keep trading.',
+                tech: [
             'RHEL 9 image mode',
             'rpm-ostree / ostree',
             'Image Builder',
@@ -476,110 +444,110 @@
             'Ansible hardening',
             'ZTP'
         ]
-    },
+      },
       {
         layer: '3', label: 'Cloud & IaC',
         accent: '#1A5FA8', accentLite: '#E8F2FC',
         isYours: false,
-        title: 'The store\'s network identity is provisioned as code',
-        subtitle: 'Layer 3 — Cloud infrastructure (Azure / GCP / DC) defined via Terraform',
-        what: 'The store\'s place in the network — its SD-WAN segment, its ACM registration endpoint, its Vault namespace for secrets — is defined as code using Terraform. When a new store opens, a Terraform plan runs and provisions the network configuration, cloud resources and DNS entries before the hardware even arrives. Azure hosts SAP (where inventory data eventually lands). GCP hosts BigQuery (where transaction data eventually lands). This layer is the highway system connecting the store edge to the cloud.',
-        flow: 'Terraform plan runs (new store provisioned)\n→ SD-WAN segment created in vManage\n→ ACM hub endpoint registered\n→ Vault namespace created for store secrets\n→ Azure ExpressRoute routes ready for SAP\n→ GCP Pub/Sub topic ready for POS events',
-        flowLabel: 'Infrastructure provisioning',
+        title: 'The Network Identity as Code',
+        subtitle: 'Layer 3 — Azure / GCP / DC defined via Terraform',
+        what: 'The store’s "Digital Passport." Terraform defines the SD-WAN segments, ACM endpoints, and Vault namespaces before the hardware even arrives at a new site.',
+        flow: 'Terraform Plan → SD-WAN Segment → ACM Hub Registration → Vault Secret Namespace',
+        flowLabel: 'Infra Provisioning',
         flowColor: '#E8F2FC',
-        role: 'The Edge Infra Linux Engineer interacts with this layer when they define the network policy for the MicroShift nodes — what ports, what firewall zones, what SD-WAN QoS priority for POS traffic. The cloud team owns Azure/GCP, but you need to understand the connectivity so your edge nodes can reach Vault, ACM, and the data pipelines.',
-        analogy: 'Think of this as city planning — the roads, power lines and water pipes are laid before the building goes up. Terraform is the city planner who draws the map.',
-        tech: ['Terraform', 'Azure (VNets, ExpressRoute)', 'GCP (Pub/Sub, VPC)', 'Cisco vManage', 'ARM templates'],
-        yours: []
+        role: 'I define the firewall zones and network policies for the MicroShift nodes so they can securely reach the central Auth and Data hubs.',
+        analogy: 'City planning. The pipes and power lines are mapped out before the building is even constructed.',
+        tech: ['Terraform', 'Azure ExpressRoute', 'GCP VPC', 'Vault'],
+        yours: ['Terraform', 'Vault']
       },
       {
-        layer: '4', label: 'Kubernetes platform — EDGE INFRA LINUX ENGINEER\'S DOMAIN',
+        layer: '4', label: 'Cluster Management',
         accent: '#1B6B3A', accentLite: '#EAF5EF',
         isYours: true,
-        title: 'MicroShift starts — the store\'s container brain wakes up',
-        subtitle: 'Layer 4 — MicroShift (store edge) + full OpenShift (DC/regional hub)',
-        what: 'MicroShift is installed as an RPM on RHEL for Edge and starts as a systemd service. It gives the store a local Kubernetes API server, CRI-O container runtime, OpenShift Routes (for HTTP traffic), and local LVM storage — all in about 2GB RAM. This is the container orchestration layer for the store. At the DC and regional hub, full OpenShift clusters run with the complete stack — web console, monitoring, OperatorHub. At larger stores, Single Node OpenShift (SNO) runs with more capability. MicroShift, SNO and full OCP all use the same Kubernetes APIs and RHEL base — so a manifest that works on one works on all. On top of that, a lightweight service-mesh sidecar pattern at the store lets each pod enforce its own retries and rate-limits so a noisy IoT device can never starve the POS workload.',
-        flow: 'RHEL boots → systemd starts microshift.service\n→ MicroShift API server starts on :6443\n→ CRI-O container runtime ready\n→ OpenShift Routes controller starts\n→ LVM storage (LVMS) available\n→ klusterlet registers with ACM hub\n→ Store is now a managed cluster',
-        flowLabel: 'MicroShift startup sequence',
+        title: 'The Fleet Brain (ACM)',
+        subtitle: 'Layer 4 — Red Hat Advanced Cluster Management',
+        what: 'A single pane of glass for 3,000+ clusters. ACM enforces "Policy-as-Code," ensuring every store in Australia and New Zealand is compliant and updated simultaneously.',
+        flow: 'ACM Hub → Policy Push → 3,000 MicroShift Nodes → Compliance Audit',
+        flowLabel: 'Fleet Orchestration',
         flowColor: '#EAF5EF',
-        role: 'The MicroShift at every store — the installation, the systemd service config, the LVM storage setup, the network policy. The edge infra Linux Engineer also work on the full OCP clusters at the DC/hub level as the platform they run on. Write once, run everywhere — same manifest, same RHEL base, same ACM management. Here you also design the service-mesh sidecars and mTLS policies that give each store node a zero-trust, policy-driven "local API fabric" instead of a pile of loosely connected containers.',
-        analogy: 'MicroShift is like a tiny version of the DC data centre, installed inside the store. It has everything needed to run the store apps locally — without needing to phone home to the DC for every operation.',
-        tech: ['MicroShift 4.x', 'systemd service', 'Where to CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'OCP API :6443', 'SNO (larger stores)', 'Full OCP (DC)'],
-        yours: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'SNO (larger stores)']
-    },
+        role: 'I configure the ACM Hub to manage the "Loop" of the fleet. This is the modern version of the central hub I built for the 3,000-node CCG Bird Project.',
+        analogy: 'The General directing 3,000 soldiers. Instead of shouting at each one, the General issues a single order that everyone follows.',
+        tech: ['Red Hat ACM', 'Multi-cluster Hub', 'Policy-as-Code', 'Submariner'],
+        yours: ['Red Hat ACM', 'Multi-cluster Hub', 'Governance']
+      },
       {
-        layer: '5', label: 'ACM + fleet mgmt — EDGE INFRA LINUX ENGINEER\'S DOMAIN',
+        layer: '5', label: 'ACM + FLEET MGMT — EDGE INFRA DOMAIN',
         accent: '#1B6B3A', accentLite: '#EAF5EF',
         isYours: true,
-        title: 'ACM detects the new store and ArgoCD deploys all workloads',
-        subtitle: 'Layer 5 — Red Hat ACM hub + GitOps (ArgoCD) + RHEL image management',
-        what: 'The moment MicroShift\'s klusterlet agent registers with the ACM hub, ACM sees a new managed cluster with labels like store=NSW-042 and tier=supermarket. ArgoCD\'s ApplicationSet controller matches these labels against templates in GitHub and immediately starts syncing workloads — POS app, inventory service, cold chain monitor, loyalty app — all deploy automatically. Vault injects the store-specific secrets (payment keys, SAP credentials) at deploy time. The whole process from "hardware powered on" to "store running" takes about 25 minutes with zero human intervention. ACM also continuously checks policy compliance — if the store drifts from its baseline (e.g. someone manually changed a config), ACM detects it and auto-remediates. At the same time, ACM is the place where we push fleet-wide API and service-mesh policies so every store node gets the same mTLS, rate-limit and circuit-breaking behaviour.',
-        flow: 'klusterlet registers → ACM sees new cluster\n→ labels: store=NSW-042, tier=supermarket\n→ ArgoCD ApplicationSet matches labels\n→ Kustomize renders store-specific manifests\n→ Vault AVP injects secrets per app\n→ Pods deploy: POS, inventory, cold-chain, loyalty\n→ ACM policy check: CIS compliance = PASS\n→ GRAFANA fleet dashboard: store NSW-042 = GREEN',
+        title: 'The Zero-Touch Moment: 3,000 Stores Auto-Deploy',
+        subtitle: 'Layer 5 — Red Hat ACM hub + GitOps (ArgoCD)',
+        what: 'The moment MicroShift registers with the ACM hub, ArgoCD detects its labels (e.g., store=NSW-042) and immediately starts syncing workloads—POS, inventory, and loyalty apps—automatically. The whole process from power-on to store-running takes minutes with zero human intervention.',
+        flow: 'klusterlet registers → ACM sees new cluster\\n→ labels: store=NSW-042, tier=supermarket\\n→ ArgoCD ApplicationSet matches labels\\n→ Vault AVP injects secrets per app\\n→ Pods deploy: POS, inventory, loyalty\\n→ ACM policy check: CIS compliance = PASS',
         flowLabel: 'Auto-onboarding flow',
         flowColor: '#EAF5EF',
-        role: 'THIS is Edge Infra Linux Engineer\'s core daily work. You build the ApplicationSet templates, define the Kustomize overlay structure, write the ACM policy definitions, wire up Vault secret injection, and design the GitOps pipeline that makes 3,000 stores deploy themselves from a git commit. This is "infrastructure as a product." On top of shipping workloads, you also use ACM + ArgoCD to manage edge API behaviour: deploying service-mesh gateways and sidecars, enforcing mTLS between services, and pushing rules like "only 100 requests/second from a single cold-chain sensor" or "circuit-break this service if error rate spikes" to every store from a single hub.',
-        analogy: 'ACM + ArgoCD is like a self-configuring franchise system. When a new McDonald\'s opens, corporate sends the standard menu, recipes and equipment spec — and the store configures itself. You are the person who designed the standard spec, including the rules for how traffic is allowed to flow inside the kitchen.',
-        tech: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine', 'THANOS (metrics)', 'Loki (logs)', 'GRAFANA'],
-        yours: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine']
-    },
+        role: 'I build the ApplicationSet templates, Kustomize overlays, and ACM policies that make 3,000 stores autonomous. This is "infrastructure as a product."',
+        analogy: 'A self-configuring franchise. When a new store opens, it reads the "Corporate Manual" (Git) and configures its own kitchen perfectly.',
+        tech: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps'],
+        yours: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps']
+      },
       {
-        layer: '6', label: 'Enterprise apps',
+        layer: '6', label: 'Enterprise Apps',
         accent: '#7B3FA0', accentLite: '#F3EEFB',
         isYours: false,
-        title: 'The tin of beans is scanned — POS records the sale',
-        subtitle: 'Layer 6 — SAP S/4HANA (Azure) + Blue Yonder WMS + Kronos workforce',
-        what: 'The POS container on MicroShift records the transaction locally and immediately publishes two events: (1) a sales event to the Kafka topic on the hub, and (2) an inventory movement to the SAP integration layer. SAP S/4HANA on Azure receives the inventory update via OData API through Azure Service Bus — the stock count for that tin of beans decrements by 1 in the system of record. Blue Yonder\'s warehouse management system uses this data to plan replenishment. If the stock drops below a threshold, a replenishment order fires automatically.',
-        flow: 'POS container scans barcode\n→ records transaction in local SQLite/DB\n→ publishes to Kafka topic (hub): sales_event\n→ publishes inventory movement to SAP\n  → Azure Service Bus → SAP OData API\n  → SAP S/4HANA MM: stock count -1\n→ Blue Yonder: check reorder threshold\n→ if below threshold: replenishment order raised',
+        title: 'The Tin of Beans hits the Ledger',
+        subtitle: 'Layer 6 — SAP S/4HANA (Azure) + Blue Yonder WMS',
+        what: 'The POS container on MicroShift records the transaction locally and immediately publishes an inventory movement to SAP. S/4HANA on Azure decrements stock by 1, triggering replenishment planning.',
+        flow: 'POS Scan → local SQLite/DB\\n→ Azure Service Bus → SAP OData API\\n→ SAP S/4HANA MM: stock count -1\\n→ Blue Yonder: replenishment order raised',
         flowLabel: 'POS → SAP inventory flow',
         flowColor: '#F3EEFB',
-        role: 'If the MicroShift POS container crashes, the SAP inventory count for that store goes stale. The Edge Infra Linux Engineer don\'t own SAP, but they own the container that feeds it. That\'s why the POS workload on MicroShift is mission-critical — it\'s the real-time data source for a billion-dollar ERP system.',
-        analogy: 'SAP is the accountant. The MicroShift store is the cash register. The accountant only knows what the cash register reports. A broken cash register means the accountant has wrong numbers.',
-        tech: ['SAP S/4HANA on Azure', 'Azure Service Bus', 'OData API', 'Blue Yonder WMS', 'Kafka (hub)', 'ExpressRoute'],
+        role: 'I own the container platform that feeds SAP. If MicroShift fails, the inventory count goes stale. My job is ensuring this real-time data source stays alive.',
+        analogy: 'SAP is the accountant; the Edge Node is the cash register. A broken register means the accountant has the wrong numbers.',
+        tech: ['SAP S/4HANA on Azure', 'Azure Service Bus', 'Blue Yonder WMS', 'ExpressRoute'],
         yours: []
       },
       {
         layer: '7', label: 'Data & AI',
         accent: '#8B4A00', accentLite: '#FEF5E7',
         isYours: false,
-        title: 'The transaction lands in BigQuery — AI makes decisions',
-        subtitle: 'Layer 7 — GCP BigQuery (~90% of data) + Vertex AI + Looker',
-        what: 'The Kafka event from the store hub flows through GCP Pub/Sub into a Dataflow pipeline and lands in BigQuery within seconds. BigQuery holds about 90% of WooliesX\'s data — every transaction from every store, every hour of every day. Vertex AI models continuously analyse this data: demand forecasting (how many tins of beans will NSW-042 sell next Tuesday?), range optimisation (which products to stock in which stores), promotional effectiveness (did that half-price special actually increase basket size?). These AI decisions flow back down the stack to affect what gets ordered, what gets staffed, and what promotions each customer sees.',
-        flow: 'Kafka (hub) → GCP Pub/Sub\n→ Dataflow pipeline → BigQuery\n→ Vertex AI demand forecast model runs\n→ prediction: "reorder 400 tins by Thursday"\n→ SAP MM receives reorder recommendation\n→ Blue Yonder dispatches from DC\n→ Looker dashboard: store manager sees trend',
-        flowLabel: 'Transaction → AI decision flow',
+        title: 'Transaction lands in BigQuery — AI makes decisions',
+        subtitle: 'Layer 7 — GCP BigQuery + Vertex AI',
+        what: 'The Kafka event from the store flows into BigQuery within seconds. Vertex AI models analyze this data for demand forecasting: "How many tins will NSW-042 sell next Tuesday?" Predictions flow back down to affect ordering.',
+        flow: 'Kafka (hub) → GCP Pub/Sub\\n→ BigQuery → Vertex AI forecast\\n→ prediction: "reorder 400 tins"\\n→ SAP MM receives recommendation',
+        flowLabel: 'Data → AI decision flow',
         flowColor: '#FEF5E7',
-        role: 'The MicroShift POS node is the origin of this entire data pipeline. A store with broken edge infrastructure = a gap in BigQuery = a blind spot in the AI model = wrong replenishment decisions = empty shelves. The connection between your Linux work and the AI layer is direct, even if it\'s not obvious.',
-        analogy: 'BigQuery + Vertex AI is like the brain of the operation. The store edge nodes are the nervous system — the sensors feeding the brain. A damaged nerve means the brain makes decisions based on incomplete information.',
-        tech: ['GCP BigQuery', 'Vertex AI', 'Dataflow', 'GCP Pub/Sub', 'Looker', 'ML models', 'GCP 5-year partnership'],
+        role: 'The MicroShift node is the origin of this data pipeline. A broken edge node creates a blind spot in the AI model, leading to empty shelves.',
+        analogy: 'BigQuery is the brain; the Edge Nodes are the nervous system. A damaged nerve means the brain makes decisions based on incomplete info.',
+        tech: ['GCP BigQuery', 'Vertex AI', 'Dataflow', 'GCP Pub/Sub'],
         yours: []
       },
       {
-        layer: '8', label: 'APIs & composable services',
+        layer: '8', label: 'APIs & Composable Services',
         accent: '#444441', accentLite: '#F1EFE8',
         isYours: false,
-        title: 'Everyday Rewards points are calculated and the API responds',
-        subtitle: 'Layer 8 — API gateway + BFF microservices + commercetools + Apigee',
-        what: 'When the customer scans their Everyday Rewards card at checkout, the POS container calls an API on the hub OpenShift cluster. That API (running as a microservice on OpenShift) calls Apigee X — the API gateway that handles ~180M requests/month for the loyalty platform. Apigee routes the request to the Everyday Rewards service, which queries the customer\'s points balance from the GCP data platform, calculates the new points earned from this transaction, and returns the result. The customer sees "You earned 47 points" on the checkout screen within 2 seconds. At the store edge, a lightweight service-mesh gateway and sidecars enforce the same types of policies (authentication, mTLS, rate limits, circuit-breaking) so the platform feels consistent from edge to cloud.',
-        flow: 'POS container → HTTP request to hub\n→ OpenShift ingress → microservice\n→ Apigee X (API gateway) :443\n→ Everyday Rewards service\n→ GCP: query customer points balance\n→ calculate new points (transaction value)\n→ update balance in GCP\n→ response: "47 points earned"\n→ POS container: display on screen',
+        title: 'Rewards Points calculated in < 2 seconds',
+        subtitle: 'Layer 8 — API gateway + BFF microservices + Apigee',
+        what: 'When a Rewards card is scanned, the POS calls a central Hub API. Apigee X routes the request to the Loyalty service, which queries GCP for points balance and returns the new total instantly.',
+        flow: 'POS container → Hub API → Apigee X\\n→ Everyday Rewards service\\n→ GCP: query balance\\n→ response: "47 points earned"\\n→ POS display',
         flowLabel: 'Loyalty points API flow',
         flowColor: '#F1EFE8',
-        role: 'The OpenShift microservices running this API on the hub cluster are the same platform as your MicroShift store nodes — same RHEL base, same GitOps deployment, same ACM management. Understanding this layer helps you see why the whole platform must be consistent from edge to hub, and why the edge API gateways and service mesh policies you design must align with what Apigee enforces centrally.',
-        analogy: 'Apigee is like a post office sorting centre. Requests come in from 3,000 store edges and millions of app users, and Apigee routes each one to the right service. Your job is to make sure the store post offices (MicroShift + edge gateway) can reach the sorting centre reliably and speak the same security and traffic-control language.',
-        tech: ['Apigee X (Google Cloud)', 'OpenShift microservices', 'commercetools', 'Bloomreach', 'Algolia', 'Cybersource', 'BFF layer'],
+        role: 'I manage the Edge Service Mesh policies that align with what Apigee enforces centrally, ensuring secure and fast mTLS communication.',
+        analogy: 'Apigee is a sorting centre; my job is making sure the store "post offices" (MicroShift) speak the same security language.',
+        tech: ['Apigee X', 'OpenShift microservices', 'commercetools', 'Service Mesh'],
         yours: []
-    },
+      },
       {
-        layer: '9', label: 'Customer experience',
-        accent: '#444441', accentLite: '#F1EFE8',
+        layer: '9', label: 'Customer Experience',
+        accent: '#1B6B3A', accentLite: '#EAF5EF',
         isYours: false,
-        title: 'The customer sees "Transaction complete — 47 points earned"',
-        subtitle: 'Layer 9 — POS / 1Store, self-checkout, Scan&Go, Woolworths app, Everyday Rewards',
-        what: 'The self-checkout screen shows the receipt and the loyalty points. The customer\'s Woolworths app updates with their new points balance within a few seconds. If the customer is using Scan&Go on their phone, the whole transaction happened entirely on the app — the MicroShift store node processed the scan, validated the basket, processed the payment via Cybersource, and updated SAP and BigQuery — all without the customer going near a traditional checkout. This is the customer experience that WooliesX is building — frictionless, personalised, and resilient.',
-        flow: 'Self-checkout screen: "Transaction complete"\n→ receipt printed / digital receipt sent\n→ Everyday Rewards app: points updated\n→ Woolworths app: purchase history updated\n→ SAP: revenue recorded\n→ BigQuery: transaction in analytics\n→ Vertex AI: customer preference model updated\n→ Next visit: personalised offer generated',
-        flowLabel: 'Customer-visible outcome',
-        flowColor: '#F1EFE8',
-        role: 'Every second of this customer experience depended on the MicroShift node at the bottom of the stack being healthy. The customer never sees RHEL. They never see MicroShift. They never see ACM. But if any of those are broken, they see an error screen and cannot pay. That is your impact.',
-        analogy: 'You are the engine room of a ship. The passengers on deck enjoy a smooth voyage and never think about what\'s below. But without the engine room working perfectly, the ship stops.',
-        tech: ['1Store / POS', 'Self-checkout kiosks', 'Scan&Go', 'AI scales', 'Woolworths app', 'Everyday Rewards', 'Milkrun / Metro'],
+        title: 'The "Why": A Happy Customer',
+        subtitle: 'Layer 9 — Business Impact & Brand Trust',
+        what: 'The customer sees "Transaction complete" and earns their points. Whether they use a kiosk or Scan&Go, the invisible infrastructure I build makes this frictionless second possible.',
+        flow: 'Self-checkout: "Transaction complete"\\n→ Points updated\\n→ SAP revenue recorded\\n→ BigQuery analytics updated\\n→ Personalized offer generated',
+        flowLabel: 'Customer Outcome',
+        flowColor: '#EAF5EF',
+        role: 'Every second of this experience depends on the MicroShift node at the bottom being healthy. If the infra is broken, the customer cannot pay.',
+        analogy: 'I am the engine room of a ship. Passengers enjoy the voyage and never see the engines, but without them, the ship stops.',
+        tech: ['1Store / POS', 'Self-checkout kiosks', 'Scan&Go', 'Everyday Rewards'],
         yours: []
       }
     ];
