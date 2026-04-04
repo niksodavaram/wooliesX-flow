@@ -334,15 +334,25 @@
     <p class="helper-text-secondary">
       Use the numbered dots, Back/Next buttons, or keyboard (← / → / Home / End) to walk the flow. Green-highlighted pills show technologies I directly own.
     </p>
-    <p class="helper-text-secondary">
-        <b>For a deeper dive into how my past experience maps to this stack and the Windows → RHEL MicroShift migration,</b>
-        see the 
-        <a href="/mapping.html" style="color:#7c3aed;font-weight:600;">
-            Experience Mapping Guide</a>.
-    </p>
-    <p class="helper-text-secondary">
-        Visual diagrams: see the <a href="/diagrams.html">zero-touch onboarding and edge architecture diagrams</a>.
-    </p>
+    <!-- High-Visibility Resource Box -->
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 18px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <p style="font-size: 13px; color: #475569; margin-bottom: 12px; line-height: 1.4;">
+            🚀 <b>Deep Dive into My Strategy & Experience:</b><br>
+            Click the buttons below to see how my background at NAB/Saab maps to the WooliesX migration.
+        </p>
+        
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <!-- Primary Button -->
+            <a href="/mapping.html" style="background: #7c3aed; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; transition: all 0.2s ease;">
+                View Experience Mapping Guide →
+            </a>
+
+            <!-- Secondary Button -->
+            <a href="/diagrams.html" style="background: white; color: #7c3aed; border: 1px solid #7c3aed; padding: 9px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; transition: all 0.2s ease;">
+                Architecture & ZTP Diagrams
+            </a>
+        </div>
+    </div>
 
     <div class="progress-bar" id="progress"></div>
     <div class="panel" id="panel"></div>
@@ -504,12 +514,12 @@
         title: 'ACM detects the new store and ArgoCD deploys all workloads',
         subtitle: 'Layer 5 — Red Hat ACM hub + GitOps (ArgoCD) + RHEL image management',
         what: 'The moment MicroShift\'s klusterlet agent registers with the ACM hub, ACM sees a new managed cluster with labels like store=NSW-042 and tier=supermarket. ArgoCD\'s ApplicationSet controller matches these labels against templates in GitHub and immediately starts syncing workloads — POS app, inventory service, cold chain monitor, loyalty app — all deploy automatically. Vault injects the store-specific secrets (payment keys, SAP credentials) at deploy time. The whole process from "hardware powered on" to "store running" takes about 25 minutes with zero human intervention. ACM also continuously checks policy compliance — if the store drifts from its baseline (e.g. someone manually changed a config), ACM detects it and auto-remediates. At the same time, ACM is the place where we push fleet-wide API and service-mesh policies so every store node gets the same mTLS, rate-limit and circuit-breaking behaviour.',
-        flow: 'klusterlet registers → ACM sees new cluster\n→ labels: store=NSW-042, tier=supermarket\n→ ArgoCD ApplicationSet matches labels\n→ Kustomize renders store-specific manifests\n→ Vault AVP injects secrets per app\n→ Pods deploy: POS, inventory, cold-chain, loyalty\n→ ACM policy check: CIS compliance = PASS\n→ Grafana fleet dashboard: store NSW-042 = GREEN',
+        flow: 'klusterlet registers → ACM sees new cluster\n→ labels: store=NSW-042, tier=supermarket\n→ ArgoCD ApplicationSet matches labels\n→ Kustomize renders store-specific manifests\n→ Vault AVP injects secrets per app\n→ Pods deploy: POS, inventory, cold-chain, loyalty\n→ ACM policy check: CIS compliance = PASS\n→ GRAFANA fleet dashboard: store NSW-042 = GREEN',
         flowLabel: 'Auto-onboarding flow',
         flowColor: '#EAF5EF',
-        role: 'THIS is Edge Infra Lionux Engineer\'s core daily work. You build the ApplicationSet templates, define the Kustomize overlay structure, write the ACM policy definitions, wire up Vault secret injection, and design the GitOps pipeline that makes 3,000 stores deploy themselves from a git commit. This is "infrastructure as a product." On top of shipping workloads, you also use ACM + ArgoCD to manage edge API behaviour: deploying service-mesh gateways and sidecars, enforcing mTLS between services, and pushing rules like "only 100 requests/second from a single cold-chain sensor" or "circuit-break this service if error rate spikes" to every store from a single hub.',
+        role: 'THIS is Edge Infra Linux Engineer\'s core daily work. You build the ApplicationSet templates, define the Kustomize overlay structure, write the ACM policy definitions, wire up Vault secret injection, and design the GitOps pipeline that makes 3,000 stores deploy themselves from a git commit. This is "infrastructure as a product." On top of shipping workloads, you also use ACM + ArgoCD to manage edge API behaviour: deploying service-mesh gateways and sidecars, enforcing mTLS between services, and pushing rules like "only 100 requests/second from a single cold-chain sensor" or "circuit-break this service if error rate spikes" to every store from a single hub.',
         analogy: 'ACM + ArgoCD is like a self-configuring franchise system. When a new McDonald\'s opens, corporate sends the standard menu, recipes and equipment spec — and the store configures itself. You are the person who designed the standard spec, including the rules for how traffic is allowed to flow inside the kitchen.',
-        tech: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine', 'Thanos (metrics)', 'Loki (logs)', 'Grafana'],
+        tech: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine', 'THANOS (metrics)', 'Loki (logs)', 'GRAFANA'],
         yours: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine']
     },
       {
@@ -626,7 +636,7 @@
           </div>
 
           <div class="your-role-box">
-            <div class="your-role-label">How this connects to the Edge Infra Linux\'s Engineer\'s role </div>
+            <div class="your-role-label">How this connects to the Edge Infra Linux Engineer\'s role </div>
             <div class="your-role-text">${s.role}</div>
           </div>
 
