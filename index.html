@@ -353,35 +353,85 @@
   <script>
     const steps = [
       {
-        layer: '1', label: 'Physical & network',
+        layer: '1', label: 'Physical & Network',
         accent: '#444441', accentLite: '#F1EFE8',
         isYours: false,
-        title: 'A customer walks up to a self-checkout kiosk',
-        subtitle: 'Layer 1 — Physical hardware + Cisco SD-WAN network',
-        what: 'The self-checkout kiosk is a physical Dell (or similar) server sitting in the store. It\'s connected to the store\'s local network, which connects back to the WooliesX hub in Bella Vista DC via a Cisco SD-WAN link — a combination of MPLS and broadband, with 4G/5G as failover. The SD-WAN is always trying to maintain a quality connection, but it can drop. That\'s why everything above must be designed to work even when it does.',
-        flow: 'Customer → self-checkout terminal\nTerminal (Dell server) → store LAN\nStore LAN → Cisco SD-WAN → Bella Vista DC',
+        title: 'A Customer walks up to a self-checkout kiosk',
+        subtitle: 'Layer 1 — Physical hardware + Cisco SD-WAN Network',
+        what: 'The self-checkout kiosk is a physical Dell DTCP (or similar) server sitting in the store. It\'s connected to the store\'s local network, which connects back to the WooliesX hub in Bella Vista DC via a Cisco SD-WAN link — a combination of MPLS and broadband, with 4G/5G as failover. The SD-WAN is always trying to maintain a quality connection, but it can drop. That\'s why everything above must be designed to work even when it does.',
+        flow: 'Customer → self-checkout terminal\nTerminal (Dell DTCP server) → store LAN\nStore LAN → Cisco SD-WAN → Bella Vista DC',
         flowLabel: 'Physical path',
         flowColor: '#F1EFE8',
-        role: 'You worked with the network team on MPLS WAN connectivity for 800 NAB branches. Same relationship here — you work with the network team on SD-WAN for 3,000 stores. Different technology, identical operational model.',
-        analogy: 'Think of the SD-WAN as the road between the store and the warehouse. Sometimes the road gets busy or has roadworks. Your job is to make sure the store can still run even when the road is blocked.',
-        tech: ['Dell servers', 'Cisco SD-WAN', 'MPLS + broadband', '4G/5G failover', 'Store LAN'],
+        role: 'I worked with the network team on MPLS WAN connectivity for 800 NAB branches. Same relationship here — As a Edge Infra Engineer, I will potentially work with the network team on SD-WAN for 3,000 stores. Different technology, identical operational model.',
+        analogy: 'Think of the SD-WAN as the road between the store and the warehouse. Sometimes the road gets busy or has roadworks. An Edge Infra Engineer\'s job is to make sure the store can still run even when the road is blocked.',
+        tech: ['DTCP', 'Dell servers', 'Cisco SD-WAN', 'MPLS + broadband', '4G/5G failover', 'Store LAN'],
         yours: []
       },
-      {
-        layer: '2', label: 'Host OS — YOUR DOMAIN',
+     {
+        layer: '2', label: 'Host OS — Edge Infra Engineers DOMAIN',
         accent: '#1B6B3A', accentLite: '#EAF5EF',
         isYours: true,
         title: 'RHEL for Edge boots on the store server',
         subtitle: 'Layer 2 — Host operating system (TODAY: Windows. TARGET: RHEL for Edge)',
-        what: 'TODAY the store server runs a Windows VM — fragile, expensive, inconsistent across stores, no rollback if a patch breaks something. YOUR JOB is to replace this with RHEL 9 in "image mode" (using ostree/rpm-ostree). Image mode means the OS is IMMUTABLE — it\'s read-only in production. If a bad update is deployed, the system automatically rolls back to the last known good state without anyone touching it. You build the golden RHEL image using Red Hat Image Builder, check it into GitHub, and every store gets the identical OS.',
-        flow: 'Image Builder (DC) → builds RHEL image → signs it\n→ stores it in image registry\n→ store server boots from image via ZTP\n→ RHEL image mode (ostree) active\n→ SELinux enforcing, CIS benchmarks applied',
-        flowLabel: 'OS provisioning flow',
-        flowColor: '#EAF5EF',
-        role: 'This is your greenfield migration project. You define the RHEL blueprint, configure LVM layout (root / var / data), apply SELinux policies, harden to CIS benchmarks via Ansible, and deliver a reproducible OS image that any store server can boot from — zero manual steps.',
-        analogy: 'Think of RHEL image mode like a read-only USB stick for the OS. The store runs from it, but cannot accidentally corrupt it. If something goes wrong, it reboots from the previous stick automatically.',
-        tech: ['RHEL 9 image mode', 'rpm-ostree / ostree', 'Image Builder', 'CIS benchmarks', 'SELinux enforcing', 'LVM layout', 'Ansible hardening', 'ZTP (zero-touch provisioning)'],
-        yours: ['RHEL 9 image mode', 'Image Builder', 'CIS benchmarks', 'SELinux enforcing', 'Ansible hardening', 'ZTP']
-      },
+        what: `
+                TODAY each store server is a snowflake Windows VM: hand-built, hard to patch, and different from site to site. One bad GPO or agent update can take checkouts down with no clean rollback path.
+                The Edge Infra Engineer's JOB is to standardise this mess into a single, versioned RHEL 9 "image mode" blueprint for all 3,000+ stores. Image mode (rpm-ostree) makes the OS read-only in production with built‑in rollback: if an update misbehaves, the node simply boots back to the last known-good image.
+                Instead of 3,000 fragile Windows builds, WooliesX gets one golden, Git‑managed RHEL for Edge image: reproducible, auditable, and safe to roll out at scale. This fixes the current stability and cost pain before we even talk about Kubernetes or applications.
+            `,
+        flow: `
+                Image Builder (DC) builds hardened RHEL image → image is signed and stored in registry
+                → Store server PXE/ZTP boots from image on Dell/VMware or bare metal
+                → RHEL image mode (rpm-ostree) is active, read‑only root FS
+                → SELinux enforcing + CIS hardening + EDR/monitoring baked in from day one
+            `,
+        flowLabel: `
+                OS evolution in three controlled steps:
+                1) Stable Linux next to Windows
+                    - Define TOML blueprint for a virtual guest (.vmdk/.ova)
+                    - Bake in CIS hardening, CrowdStrike, logging, monitoring
+                    - Deploy this RHEL VM alongside existing Windows VMs on Dell/VMware with zero network changes
+                2) Turn the OS into an edge K8s node
+                    - Extend the same TOML to add MicroShift RPMs and a local container registry
+                    - When the VM boots in a store, it’s no longer "just a Linux box" — it exposes a Kubernetes API endpoint
+                    - Everyday Rewards or Milkrun can deploy their first containerised service at the edge without waiting for a big‑bang rewrite
+
+                3) Hand the fleet to ACM + GitOps
+                    - Shift from managing images only to managing full clusters and workloads
+                    - The pipeline moves from pure TOML to containerfiles (bootc / image mode), but stays in Git
+                    - For application teams, nothing changes: they keep committing to Git; behind the scenes you’ve evolved the platform from Windows VMs → hardened RHEL → edge Kubernetes,
+                        with ACM and GitOps as the "fleet brain"
+            `,
+         flowColor: '#EAF5EF',
+
+        role: `
+            This is a classic greenfield‑on‑brownfield migration. The Edge Infra Engineer owns the base image: define the RHEL blueprint, LVM layout (root/var/data), SELinux policies, and CIS/Ansible hardening, then automate zero‑touch provisioning so any store server can boot the same image — no hands on keyboards.
+            You are directly solving the "3,000 fragile Windows VMs" problem by bringing golden‑image and fleet‑patching discipline from NAB/NovaStack into WooliesX. The outcome is simple but powerful: fewer outages at the edge, faster patch cycles, and a platform the app teams actually trust to ship new ideas into stores.
+            `,
+
+        analogy: `
+            RHEL image mode is like running stores from a signed, read‑only SSD. The store can use it, but can’t quietly corrupt it. If an update goes bad, you just flip back to the previous SSD image and keep trading.
+`           ,
+
+        tech: [
+            'RHEL 9 image mode',
+            'rpm-ostree / ostree',
+            'Image Builder',
+            'CIS benchmarks',
+            'SELinux enforcing',
+            'LVM layout',
+            'Ansible hardening',
+            'ZTP (zero-touch provisioning)'
+        ],
+
+        yours: [
+            'RHEL 9 image mode',
+            'Image Builder',
+            'CIS benchmarks',
+            'SELinux enforcing',
+            'Ansible hardening',
+            'ZTP'
+        ]
+    },
       {
         layer: '3', label: 'Cloud & IaC',
         accent: '#1A5FA8', accentLite: '#E8F2FC',
