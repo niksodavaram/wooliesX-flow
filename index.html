@@ -412,26 +412,26 @@
             `,
         flowLabel: 'OS evolution in three controlled steps',
         flow: `
-            1) Stable Linux next to Windows
-            → Define TOML blueprint for a virtual guest (.vmdk / .ova)
-            → Bake in CIS hardening, CrowdStrike, logging, monitoring
+            1) <b>Stable Linux next to Windows</b>
+            → Define TOML blueprint for a virtual guest (.vmdk / .ova);
+            → Bake in CIS hardening, CrowdStrike, logging, monitoring;
             → Deploy this RHEL VM alongside existing Windows VMs on Dell / VMware
-                with zero network changes
+                with zero network changes.
 
-            2) Turn the OS into an edge K8s node
-            → Extend the same TOML to add MicroShift RPMs and a local container registry
+            2) <b>Turn the OS into an edge K8s node</b>
+            → Extend the same TOML to add MicroShift RPMs and a local container registry;
             → When the VM boots in a store it’s no longer "just a Linux box" —
-                it exposes a Kubernetes API endpoint
+                it exposes a Kubernetes API endpoint;
             → Everyday Rewards / Milkrun can deploy their first containerised
-                service at the edge without a big‑bang rewrite
+                service at the edge without a big‑bang rewrite.
 
-            3) Hand the fleet to ACM + GitOps
-            → Shift from managing images only to managing full clusters and workloads
+            3) <b>Hand the fleet to ACM + GitOps</b>
+            → Shift from managing images only to managing full clusters and workloads;
             → Pipeline evolves from pure TOML to containerfiles (bootc / image mode),
-                but everything stays in Git
+                but everything stays in Git;
             → For app teams, nothing changes: they keep committing to Git while
                 the platform quietly evolves from Windows VMs → hardened RHEL → edge K8s,
-                with ACM + GitOps as the fleet brain
+                with ACM + GitOps as the fleet brain.
         `.trim(),
          flowColor: '#EAF5EF',
 
