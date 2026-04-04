@@ -1,284 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WooliesX 9-Layer Flow – Nireekshan Sodavaram</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--font-sans); }
-  .wrap { padding: 1rem 0; }
-
-  .progress-bar { display: flex; align-items: center; gap: 0; margin-bottom: 1.25rem; }
-  .step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; cursor: pointer; flex-shrink: 0; transition: all 0.2s; border: 2px solid transparent; }
-  .step-dot.done { background: #1B6B3A; color: white; border-color: #1B6B3A; }
-  .step-dot.active { background: white; color: #1B6B3A; border-color: #1B6B3A; box-shadow: 0 0 0 3px #EAF5EF; }
-  .step-dot.future { background: var(--color-background-secondary); color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); }
-  .step-line { flex: 1; height: 2px; background: var(--color-border-tertiary); }
-  .step-line.done { background: #1B6B3A; }
-
-  .panel { border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); overflow: hidden; }
-  .panel-header { padding: 14px 18px; display: flex; align-items: flex-start; gap: 14px; }
-  .layer-badge { font-size: 10px; font-weight: 500; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; margin-top: 2px; }
-  .your-badge { font-size: 10px; font-weight: 500; padding: 3px 9px; border-radius: 20px; background: #1B6B3A; color: white; flex-shrink: 0; margin-top: 2px; }
-  .panel-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); line-height: 1.3; }
-  .panel-subtitle { font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; }
-
-  .panel-body { padding: 0 18px 16px; }
-  .what-happens { font-size: 13px; color: var(--color-text-primary); line-height: 1.7; margin-bottom: 12px; }
-
-  .flow-box { border-radius: var(--border-radius-md); padding: 10px 14px; margin-bottom: 8px; }
-  .flow-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
-  .flow-content { font-size: 12px; font-family: var(--font-mono); line-height: 1.6; color: var(--color-text-primary); }
-
-  .your-role-box { border-radius: var(--border-radius-md); padding: 10px 14px; margin-top: 10px; border-left: 3px solid #1B6B3A; background: #EAF5EF; }
-  .your-role-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #1B6B3A; margin-bottom: 3px; }
-  .your-role-text { font-size: 12px; color: #1B5530; line-height: 1.6; }
-
-  .analogy-box { border-radius: var(--border-radius-md); padding: 10px 14px; margin-top: 8px; background: var(--color-background-secondary); }
-  .analogy-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-bottom: 3px; }
-  .analogy-text { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; font-style: italic; }
-
-  .tech-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-  .tech-pill { font-size: 11px; padding: 3px 9px; border-radius: 20px; background: var(--color-background-secondary); color: var(--color-text-secondary); border: 0.5px solid var(--color-border-tertiary); }
-  .tech-pill.yours { background: #EAF5EF; color: #1B6B3A; border-color: #7DC89A; }
-
-  .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
-  .nav-btn { font-size: 12px; padding: 7px 18px; cursor: pointer; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); transition: background 0.15s; }
-  .nav-btn:hover { background: var(--color-background-secondary); }
-  .nav-btn.primary { background: #1B6B3A; color: white; border-color: #1B6B3A; }
-  .nav-btn.primary:hover { background: #2D9050; }
-  .nav-btn:disabled { opacity: 0.3; cursor: default; }
-  .step-counter { font-size: 12px; color: var(--color-text-secondary); }
-
-  .cascade-warning { border-radius: var(--border-radius-md); padding: 10px 14px; margin-top: 8px; background: #FCEDE8; border-left: 3px solid #8B2500; }
-  .cascade-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #8B2500; margin-bottom: 3px; }
-  .cascade-text { font-size: 12px; color: #5A1800; line-height: 1.6; }
-</style>
-
-<div class="wrap">
-  <div style="font-size:13px; color:var(--color-text-secondary); margin-bottom:14px; line-height:1.6;">
-    Follow one customer action — scanning a tin of beans at self-checkout — as it travels through all 9 layers of the WooliesX stack. Click the dots or use Next/Back.
-  </div>
-
-   <p style="font-size:12px;color:#6b7280;margin-bottom:14px;">
-    Prototype created by Nireekshan Sodavaram for WooliesX interview on 7 April 2026.
-  </p>
-
-  <div class="progress-bar" id="progress"></div>
-  <div class="panel" id="panel"></div>
-
-  <div class="nav-row">
-    <button class="nav-btn" id="btn-back" onclick="move(-1)">← Back</button>
-    <span class="step-counter" id="counter"></span>
-    <button class="nav-btn primary" id="btn-next" onclick="move(1)">Next →</button>
-  </div>
-</div>
-
-<script>
-const steps = [
-  {
-    layer: '1', label: 'Physical & network',
-    accent: '#444441', accentLite: '#F1EFE8',
-    isYours: false,
-    title: 'A customer walks up to a self-checkout kiosk',
-    subtitle: 'Layer 1 — Physical hardware + Cisco SD-WAN network',
-    what: 'The self-checkout kiosk is a physical Dell (or similar) server sitting in the store. It\'s connected to the store\'s local network, which connects back to the WooliesX hub in Bella Vista DC via a Cisco SD-WAN link — a combination of MPLS and broadband, with 4G/5G as failover. The SD-WAN is always trying to maintain a quality connection, but it can drop. That\'s why everything above must be designed to work even when it does.',
-    flow: 'Customer → self-checkout terminal\nTerminal (Dell server) → store LAN\nStore LAN → Cisco SD-WAN → Bella Vista DC',
-    flowLabel: 'Physical path',
-    flowColor: '#F1EFE8',
-    role: 'You worked with the network team on MPLS WAN connectivity for 800 NAB branches. Same relationship here — you work with the network team on SD-WAN for 3,000 stores. Different technology, identical operational model.',
-    analogy: 'Think of the SD-WAN as the road between the store and the warehouse. Sometimes the road gets busy or has roadworks. Your job is to make sure the store can still run even when the road is blocked.',
-    tech: ['Dell servers', 'Cisco SD-WAN', 'MPLS + broadband', '4G/5G failover', 'Store LAN'],
-    yours: []
-  },
-  {
-    layer: '2', label: 'Host OS — YOUR DOMAIN',
-    accent: '#1B6B3A', accentLite: '#EAF5EF',
-    isYours: true,
-    title: 'RHEL for Edge boots on the store server',
-    subtitle: 'Layer 2 — Host operating system (TODAY: Windows. TARGET: RHEL for Edge)',
-    what: 'TODAY the store server runs a Windows VM — fragile, expensive, inconsistent across stores, no rollback if a patch breaks something. YOUR JOB is to replace this with RHEL 9 in "image mode" (using ostree/rpm-ostree). Image mode means the OS is IMMUTABLE — it\'s read-only in production. If a bad update is deployed, the system automatically rolls back to the last known good state without anyone touching it. You build the golden RHEL image using Red Hat Image Builder, check it into GitHub, and every store gets the identical OS.',
-    flow: 'Image Builder (DC) → builds RHEL image → signs it\n→ stores it in image registry\n→ store server boots from image via ZTP\n→ RHEL image mode (ostree) active\n→ SELinux enforcing, CIS benchmarks applied',
-    flowLabel: 'OS provisioning flow',
-    flowColor: '#EAF5EF',
-    role: 'This is your greenfield migration project. You define the RHEL blueprint, configure LVM layout (root / var / data), apply SELinux policies, harden to CIS benchmarks via Ansible, and deliver a reproducible OS image that any store server can boot from — zero manual steps.',
-    analogy: 'Think of RHEL image mode like a read-only USB stick for the OS. The store runs from it, but cannot accidentally corrupt it. If something goes wrong, it reboots from the previous stick automatically.',
-    tech: ['RHEL 9 image mode', 'rpm-ostree / ostree', 'Image Builder', 'CIS benchmarks', 'SELinux enforcing', 'LVM layout', 'Ansible hardening', 'ZTP (zero-touch provisioning)'],
-    yours: ['RHEL 9 image mode', 'Image Builder', 'CIS benchmarks', 'SELinux enforcing', 'Ansible hardening', 'ZTP']
-  },
-  {
-    layer: '3', label: 'Cloud & IaC',
-    accent: '#1A5FA8', accentLite: '#E8F2FC',
-    isYours: false,
-    title: 'The store\'s network identity is provisioned as code',
-    subtitle: 'Layer 3 — Cloud infrastructure (Azure / GCP / DC) defined via Terraform',
-    what: 'The store\'s place in the network — its SD-WAN segment, its ACM registration endpoint, its Vault namespace for secrets — is defined as code using Terraform. When a new store opens, a Terraform plan runs and provisions the network configuration, cloud resources and DNS entries before the hardware even arrives. Azure hosts SAP (where inventory data eventually lands). GCP hosts BigQuery (where transaction data eventually lands). This layer is the highway system connecting the store edge to the cloud.',
-    flow: 'Terraform plan runs (new store provisioned)\n→ SD-WAN segment created in vManage\n→ ACM hub endpoint registered\n→ Vault namespace created for store secrets\n→ Azure ExpressRoute routes ready for SAP\n→ GCP Pub/Sub topic ready for POS events',
-    flowLabel: 'Infrastructure provisioning',
-    flowColor: '#E8F2FC',
-    role: 'You interact with this layer when you define the network policy for your MicroShift nodes — what ports, what firewall zones, what SD-WAN QoS priority for POS traffic. The cloud team owns Azure/GCP, but you need to understand the connectivity so your edge nodes can reach Vault, ACM, and the data pipelines.',
-    analogy: 'Think of this as city planning — the roads, power lines and water pipes are laid before the building goes up. Terraform is the city planner who draws the map.',
-    tech: ['Terraform', 'Azure (VNets, ExpressRoute)', 'GCP (Pub/Sub, VPC)', 'Cisco vManage', 'ARM templates'],
-    yours: []
-  },
-  {
-    layer: '4', label: 'Kubernetes platform — YOUR DOMAIN',
-    accent: '#1B6B3A', accentLite: '#EAF5EF',
-    isYours: true,
-    title: 'MicroShift starts — the store\'s container brain wakes up',
-    subtitle: 'Layer 4 — MicroShift (store edge) + full OpenShift (DC/regional hub)',
-    what: 'MicroShift is installed as an RPM on RHEL for Edge and starts as a systemd service. It gives the store a local Kubernetes API server, CRI-O container runtime, OpenShift Routes (for HTTP traffic), and local LVM storage — all in about 2GB RAM. This is the container orchestration layer for the store. At the DC and regional hub, full OpenShift clusters run with the complete stack — web console, monitoring, OperatorHub. At larger stores, Single Node OpenShift (SNO) runs with more capability. MicroShift, SNO and full OCP all use the same Kubernetes APIs and RHEL base — so a manifest that works on one works on all.',
-    flow: 'RHEL boots → systemd starts microshift.service\n→ MicroShift API server starts on :6443\n→ CRI-O container runtime ready\n→ OpenShift Routes controller starts\n→ LVM storage (LVMS) available\n→ klusterlet registers with ACM hub\n→ Store is now a managed cluster',
-    flowLabel: 'MicroShift startup sequence',
-    flowColor: '#EAF5EF',
-    role: 'You own MicroShift at every store — the installation, the systemd service config, the LVM storage setup, the network policy. You also work on the full OCP clusters at the DC/hub level as the platform they run on. Write once, run everywhere — same manifest, same RHEL base, same ACM management.',
-    analogy: 'MicroShift is like a tiny version of the DC data centre, installed inside the store. It has everything needed to run the store apps locally — without needing to phone home to the DC for every operation.',
-    tech: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'OCP API :6443', 'SNO (larger stores)', 'Full OCP (DC)'],
-    yours: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'SNO (larger stores)']
-  },
-  {
-    layer: '5', label: 'ACM + fleet mgmt — YOUR DOMAIN',
-    accent: '#1B6B3A', accentLite: '#EAF5EF',
-    isYours: true,
-    title: 'ACM detects the new store and ArgoCD deploys all workloads',
-    subtitle: 'Layer 5 — Red Hat ACM hub + GitOps (ArgoCD) + RHEL image management',
-    what: 'The moment MicroShift\'s klusterlet agent registers with the ACM hub, ACM sees a new managed cluster with labels like store=NSW-042 and tier=supermarket. ArgoCD\'s ApplicationSet controller matches these labels against templates in GitHub and immediately starts syncing workloads — POS app, inventory service, cold chain monitor, loyalty app — all deploy automatically. Vault injects the store-specific secrets (payment keys, SAP credentials) at deploy time. The whole process from "hardware powered on" to "store running" takes about 25 minutes with zero human intervention. ACM also continuously checks policy compliance — if the store drifts from its baseline (e.g. someone manually changed a config), ACM detects it and auto-remediates.',
-    flow: 'klusterlet registers → ACM sees new cluster\n→ labels: store=NSW-042, tier=supermarket\n→ ArgoCD ApplicationSet matches labels\n→ Kustomize renders store-specific manifests\n→ Vault AVP injects secrets per app\n→ Pods deploy: POS, inventory, cold-chain, loyalty\n→ ACM policy check: CIS compliance = PASS\n→ Grafana fleet dashboard: store NSW-042 = GREEN',
-    flowLabel: 'Auto-onboarding flow',
-    flowColor: '#EAF5EF',
-    role: 'THIS is your core daily work. You build the ApplicationSet templates, define the Kustomize overlay structure, write the ACM policy definitions, wire up Vault secret injection, and design the GitOps pipeline that makes 3,000 stores deploy themselves from a git commit. This is "infrastructure as a product."',
-    analogy: 'ACM + ArgoCD is like a self-configuring franchise system. When a new McDonald\'s opens, corporate sends the standard menu, recipes and equipment spec — and the store configures itself. You are the person who designed the standard spec.',
-    tech: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine', 'Thanos (metrics)', 'Loki (logs)', 'Grafana'],
-    yours: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine']
-  },
-  {
-    layer: '6', label: 'Enterprise apps',
-    accent: '#7B3FA0', accentLite: '#F3EEFB',
-    isYours: false,
-    title: 'The tin of beans is scanned — POS records the sale',
-    subtitle: 'Layer 6 — SAP S/4HANA (Azure) + Blue Yonder WMS + Kronos workforce',
-    what: 'The POS container on MicroShift records the transaction locally and immediately publishes two events: (1) a sales event to the Kafka topic on the hub, and (2) an inventory movement to the SAP integration layer. SAP S/4HANA on Azure receives the inventory update via OData API through Azure Service Bus — the stock count for that tin of beans decrements by 1 in the system of record. Blue Yonder\'s warehouse management system uses this data to plan replenishment. If the stock drops below a threshold, a replenishment order fires automatically.',
-    flow: 'POS container scans barcode\n→ records transaction in local SQLite/DB\n→ publishes to Kafka topic (hub): sales_event\n→ publishes inventory movement to SAP\n  → Azure Service Bus → SAP OData API\n  → SAP S/4HANA MM: stock count -1\n→ Blue Yonder: check reorder threshold\n→ if below threshold: replenishment order raised',
-    flowLabel: 'POS → SAP inventory flow',
-    flowColor: '#F3EEFB',
-    role: 'If your MicroShift POS container crashes, the SAP inventory count for that store goes stale. You don\'t own SAP, but you own the container that feeds it. That\'s why the POS workload on MicroShift is mission-critical — it\'s the real-time data source for a billion-dollar ERP system.',
-    analogy: 'SAP is the accountant. Your MicroShift store is the cash register. The accountant only knows what the cash register reports. A broken cash register means the accountant has wrong numbers.',
-    tech: ['SAP S/4HANA on Azure', 'Azure Service Bus', 'OData API', 'Blue Yonder WMS', 'Kafka (hub)', 'ExpressRoute'],
-    yours: []
-  },
-  {
-    layer: '7', label: 'Data & AI',
-    accent: '#8B4A00', accentLite: '#FEF5E7',
-    isYours: false,
-    title: 'The transaction lands in BigQuery — AI makes decisions',
-    subtitle: 'Layer 7 — GCP BigQuery (~90% of data) + Vertex AI + Looker',
-    what: 'The Kafka event from the store hub flows through GCP Pub/Sub into a Dataflow pipeline and lands in BigQuery within seconds. BigQuery holds about 90% of WooliesX\'s data — every transaction from every store, every hour of every day. Vertex AI models continuously analyse this data: demand forecasting (how many tins of beans will NSW-042 sell next Tuesday?), range optimisation (which products to stock in which stores), promotional effectiveness (did that half-price special actually increase basket size?). These AI decisions flow back down the stack to affect what gets ordered, what gets staffed, and what promotions each customer sees.',
-    flow: 'Kafka (hub) → GCP Pub/Sub\n→ Dataflow pipeline → BigQuery\n→ Vertex AI demand forecast model runs\n→ prediction: "reorder 400 tins by Thursday"\n→ SAP MM receives reorder recommendation\n→ Blue Yonder dispatches from DC\n→ Looker dashboard: store manager sees trend',
-    flowLabel: 'Transaction → AI decision flow',
-    flowColor: '#FEF5E7',
-    role: 'Your MicroShift POS node is the origin of this entire data pipeline. A store with broken edge infrastructure = a gap in BigQuery = a blind spot in the AI model = wrong replenishment decisions = empty shelves. The connection between your Linux work and the AI layer is direct, even if it\'s not obvious.',
-    analogy: 'BigQuery + Vertex AI is like the brain of the operation. Your store edge nodes are the nervous system — the sensors feeding the brain. A damaged nerve means the brain makes decisions based on incomplete information.',
-    tech: ['GCP BigQuery', 'Vertex AI', 'Dataflow', 'GCP Pub/Sub', 'Looker', 'ML models', 'GCP 5-year partnership'],
-    yours: []
-  },
-  {
-    layer: '8', label: 'APIs & composable services',
-    accent: '#444441', accentLite: '#F1EFE8',
-    isYours: false,
-    title: 'Everyday Rewards points are calculated and the API responds',
-    subtitle: 'Layer 8 — API gateway + BFF microservices + commercetools + Apigee',
-    what: 'When the customer scans their Everyday Rewards card at checkout, the POS container calls an API on the hub OpenShift cluster. That API (running as a microservice on OpenShift) calls Apigee X — the API gateway that handles ~180M requests/month for the loyalty platform. Apigee routes the request to the Everyday Rewards service, which queries the customer\'s points balance from the GCP data platform, calculates the new points earned from this transaction, and returns the result. The customer sees "You earned 47 points" on the checkout screen within 2 seconds.',
-    flow: 'POS container → HTTP request to hub\n→ OpenShift ingress → microservice\n→ Apigee X (API gateway) :443\n→ Everyday Rewards service\n→ GCP: query customer points balance\n→ calculate new points (transaction value)\n→ update balance in GCP\n→ response: "47 points earned"\n→ POS container: display on screen',
-    flowLabel: 'Loyalty points API flow',
-    flowColor: '#F1EFE8',
-    role: 'The OpenShift microservices running this API on the hub cluster are the same platform as your MicroShift store nodes — same RHEL base, same GitOps deployment, same ACM management. Understanding this layer helps you see why the whole platform must be consistent from edge to hub.',
-    analogy: 'Apigee is like a post office sorting centre. Requests come in from 3,000 store edges and millions of app users, and Apigee routes each one to the right service. Your job is to make sure the store post offices (MicroShift) can reach the sorting centre reliably.',
-    tech: ['Apigee X (Google Cloud)', 'OpenShift microservices', 'commercetools', 'Bloomreach', 'Algolia', 'Cybersource', 'BFF layer'],
-    yours: []
-  },
-  {
-    layer: '9', label: 'Customer experience',
-    accent: '#444441', accentLite: '#F1EFE8',
-    isYours: false,
-    title: 'The customer sees "Transaction complete — 47 points earned"',
-    subtitle: 'Layer 9 — POS / 1Store, self-checkout, Scan&Go, Woolworths app, Everyday Rewards',
-    what: 'The self-checkout screen shows the receipt and the loyalty points. The customer\'s Woolworths app updates with their new points balance within a few seconds. If the customer is using Scan&Go on their phone, the whole transaction happened entirely on the app — the MicroShift store node processed the scan, validated the basket, processed the payment via Cybersource, and updated SAP and BigQuery — all without the customer going near a traditional checkout. This is the customer experience that WooliesX is building — frictionless, personalised, and resilient.',
-    flow: 'Self-checkout screen: "Transaction complete"\n→ receipt printed / digital receipt sent\n→ Everyday Rewards app: points updated\n→ Woolworths app: purchase history updated\n→ SAP: revenue recorded\n→ BigQuery: transaction in analytics\n→ Vertex AI: customer preference model updated\n→ Next visit: personalised offer generated',
-    flowLabel: 'Customer-visible outcome',
-    flowColor: '#F1EFE8',
-    role: 'Every second of this customer experience depended on your MicroShift node at the bottom of the stack being healthy. The customer never sees RHEL. They never see MicroShift. They never see ACM. But if any of those are broken, they see an error screen and cannot pay. That is your impact.',
-    analogy: 'You are the engine room of a ship. The passengers on deck enjoy a smooth voyage and never think about what\'s below. But without the engine room working perfectly, the ship stops.',
-    tech: ['1Store / POS', 'Self-checkout kiosks', 'Scan&Go', 'AI scales', 'Woolworths app', 'Everyday Rewards', 'Milkrun / Metro'],
-    yours: []
-  }
-];
-
-let current = 0;
-
-function render() {
-  const s = steps[current];
-
-  const prog = document.getElementById('progress');
-  prog.innerHTML = '';
-  steps.forEach((st, i) => {
-    if (i > 0) {
-      const line = document.createElement('div');
-      line.className = 'step-line' + (i <= current ? ' done' : '');
-      prog.appendChild(line);
+  <!-- Base tokens -->
+  <style>
+    :root {
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --color-text-primary: #111827;
+      --color-text-secondary: #4b5563;
+      --color-text-tertiary: #9ca3af;
+      --color-background-primary: #ffffff;
+      --color-background-secondary: #f3f4f6;
+      --color-border-secondary: #d1d5db;
+      --color-border-tertiary: #e5e7eb;
+      --border-radius-md: 6px;
+      --border-radius-lg: 10px;
     }
-    const dot = document.createElement('div');
-    dot.className = 'step-dot ' + (i < current ? 'done' : i === current ? 'active' : 'future');
-    dot.textContent = st.layer;
-    dot.title = 'Layer ' + st.layer;
-    dot.onclick = () => { current = i; render(); };
-    prog.appendChild(dot);
-  });
 
-  const panel = document.getElementById('panel');
-  panel.style.borderColor = s.isYours ? s.accent : 'var(--color-border-tertiary)';
-  panel.style.borderWidth = s.isYours ? '2px' : '0.5px';
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: #f9fafb;
+      color: var(--color-text-primary);
+      padding: 16px;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 1.5rem;
+      background: var(--color-background-primary);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
 
-  const techPills = s.tech.map(t =>
-    `<span class="tech-pill ${s.yours.includes(t) ? 'yours' : ''}">${t}</span>`
-  ).join('');
+    .title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-bottom: 10px;
+    }
 
-  panel.innerHTML = `
-    <div class="panel-header" style="background:${s.accentLite};">
-      <div>
-        <div class="panel-title">${s.title}</div>
-        <div class="panel-subtitle">${s.subtitle}</div>
-      </div>
-      ${s.isYours ? '<span class="your-badge" style="margin-left:auto;">YOUR DOMAIN</span>' : `<span class="layer-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);margin-left:auto;">Layer ${s.layer}</span>`}
+    .meta-bar {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-bottom: 12px;
+    }
+
+    .helper-text {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+    .helper-text-secondary {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 1.25rem;
+    }
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      border: 2px solid transparent;
+      background: var(--color-background-secondary);
+      color: var(--color-text-tertiary);
+    }
+    .step-dot.done {
+      background: #1B6B3A;
+      color: white;
+      border-color: #1B6B3A;
+    }
+    .step-dot.active {
+      background: white;
+      color: #1B6B3A;
+      border-color: #1B6B3A;
+      box-shadow: 0 0 0 3px #EAF5EF;
+    }
+    .step-dot.future {
+      background: var(--color-background-secondary);
+      color: var(--color-text-tertiary);
+      border-color: var(--color-border-tertiary);
+    }
+    .step-dot:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+    }
+
+    .step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--color-border-tertiary);
+      transition: background 0.15s ease;
+    }
+    .step-line.done {
+      background: #1B6B3A;
+    }
+
+    .panel {
+      border-radius: var(--border-radius-lg);
+      border: 0.5px solid var(--color-border-tertiary);
+      overflow: hidden;
+      transition: border-color 0.2s ease, border-width 0.2s ease;
+    }
+    .panel-header {
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .layer-badge {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .your-badge {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: #1B6B3A;
+      color: white;
+      flex-shrink: 0;
+      margin-top: 2px;
+      margin-left: auto;
+    }
+    .panel-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      line-height: 1.3;
+    }
+    .panel-subtitle {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-top: 3px;
+    }
+
+    .panel-body {
+      padding: 0 18px 16px;
+      animation: fadeInUp 0.18s ease;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .what-happens {
+      font-size: 13px;
+      color: var(--color-text-primary);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .flow-box {
+      border-radius: var(--border-radius-md);
+      padding: 10px 14px;
+      margin-bottom: 8px;
+    }
+    .flow-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .flow-content {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      line-height: 1.6;
+      color: var(--color-text-primary);
+      white-space: normal;
+    }
+
+    .your-role-box {
+      border-radius: var(--border-radius-md);
+      padding: 10px 14px;
+      margin-top: 10px;
+      border-left: 3px solid #1B6B3A;
+      background: #EAF5EF;
+    }
+    .your-role-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #1B6B3A;
+      margin-bottom: 3px;
+    }
+    .your-role-text {
+      font-size: 12px;
+      color: #1B5530;
+      line-height: 1.6;
+    }
+
+    .analogy-box {
+      border-radius: var(--border-radius-md);
+      padding: 10px 14px;
+      margin-top: 8px;
+      background: var(--color-background-secondary);
+    }
+    .analogy-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+      margin-bottom: 3px;
+    }
+    .analogy-text {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .tech-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .tech-pill {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: var(--color-background-secondary);
+      color: var(--color-text-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+    }
+    .tech-pill.yours {
+      background: #EAF5EF;
+      color: #1B6B3A;
+      border-color: #7DC89A;
+    }
+
+    .legend {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      font-size: 12px;
+      padding: 7px 18px;
+      cursor: pointer;
+      border-radius: var(--border-radius-md);
+      border: 0.5px solid var(--color-border-secondary);
+      background: var(--color-background-primary);
+      color: var(--color-text-primary);
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--color-background-secondary);
+      transform: translateY(-0.5px);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+    }
+    .nav-btn.primary {
+      background: #1B6B3A;
+      color: white;
+      border-color: #1B6B3A;
+    }
+    .nav-btn.primary:hover:not(:disabled) {
+      background: #2D9050;
+    }
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+    .step-counter {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .footer-meta {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="flow-root" tabindex="0" aria-label="WooliesX 9-layer flow">
+    <div class="title">Edge-to-cloud flow for a single POS event</div>
+    <div class="subtitle">
+      WooliesX stack visualised from in-store hardware up to AI and customer experience.
     </div>
-    <div class="panel-body">
-      <p class="what-happens">${s.what}</p>
 
-      <div class="flow-box" style="background:${s.accentLite}; border:0.5px solid ${s.isYours ? s.accent : 'var(--color-border-tertiary)'};">
-        <div class="flow-label" style="color:${s.accent};">${s.flowLabel}</div>
-        <div class="flow-content">${s.flow.replace(/\n/g, '<br>')}</div>
-      </div>
-
-      <div class="your-role-box">
-        <div class="your-role-label">How this connects to your role</div>
-        <div class="your-role-text">${s.role}</div>
-      </div>
-
-      <div class="analogy-box">
-        <div class="analogy-label">Plain English analogy</div>
-        <div class="analogy-text">${s.analogy}</div>
-      </div>
-
-      <div class="tech-pills">${techPills}</div>
-      ${s.yours.length ? '<div style="font-size:11px;color:#1B6B3A;margin-top:4px;">Green pills = technology you own or directly use</div>' : ''}
+    <div class="meta-bar">
+      Prototype created by <strong>Nireekshan Sodavaram</strong> for WooliesX interview on 7 April 2026.
     </div>
-  `;
 
-  document.getElementById('btn-back').disabled = current === 0;
-  document.getElementById('btn-next').disabled = current === steps.length - 1;
-  document.getElementById('btn-next').textContent = current === steps.length - 1 ? 'Done ✓' : 'Next →';
-  document.getElementById('counter').textContent = `Layer ${s.layer} of 9`;
-}
+    <p class="helper-text">
+      This is a narrative map of a single self-checkout scan across 9 layers of the WooliesX stack – with my domain highlighted.
+    </p>
+    <p class="helper-text-secondary">
+      Use the numbered dots, Back/Next buttons, or keyboard (← / → / Home / End) to walk the flow. Green-highlighted pills show technologies I directly own.
+    </p>
 
-function move(dir) {
-  current = Math.max(0, Math.min(steps.length - 1, current + dir));
-  render();
-}
+    <div class="progress-bar" id="progress"></div>
+    <div class="panel" id="panel"></div>
 
-render();
-</script>
+    <div class="nav-row">
+      <button class="nav-btn" id="btn-back">← Back</button>
+      <span class="step-counter" id="counter"></span>
+      <button class="nav-btn primary" id="btn-next">Next →</button>
+    </div>
+
+    <div class="footer-meta">
+      Legend: green outline = layers in my direct domain; green tech pills = technologies I own or actively work with.
+      This prototype is implemented with vanilla HTML/CSS/JS and designed to run on a lightweight static host (Vercel).
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        layer: '1', label: 'Physical & network',
+        accent: '#444441', accentLite: '#F1EFE8',
+        isYours: false,
+        title: 'A customer walks up to a self-checkout kiosk',
+        subtitle: 'Layer 1 — Physical hardware + Cisco SD-WAN network',
+        what: 'The self-checkout kiosk is a physical Dell (or similar) server sitting in the store. It\'s connected to the store\'s local network, which connects back to the WooliesX hub in Bella Vista DC via a Cisco SD-WAN link — a combination of MPLS and broadband, with 4G/5G as failover. The SD-WAN is always trying to maintain a quality connection, but it can drop. That\'s why everything above must be designed to work even when it does.',
+        flow: 'Customer → self-checkout terminal\nTerminal (Dell server) → store LAN\nStore LAN → Cisco SD-WAN → Bella Vista DC',
+        flowLabel: 'Physical path',
+        flowColor: '#F1EFE8',
+        role: 'You worked with the network team on MPLS WAN connectivity for 800 NAB branches. Same relationship here — you work with the network team on SD-WAN for 3,000 stores. Different technology, identical operational model.',
+        analogy: 'Think of the SD-WAN as the road between the store and the warehouse. Sometimes the road gets busy or has roadworks. Your job is to make sure the store can still run even when the road is blocked.',
+        tech: ['Dell servers', 'Cisco SD-WAN', 'MPLS + broadband', '4G/5G failover', 'Store LAN'],
+        yours: []
+      },
+      {
+        layer: '2', label: 'Host OS — YOUR DOMAIN',
+        accent: '#1B6B3A', accentLite: '#EAF5EF',
+        isYours: true,
+        title: 'RHEL for Edge boots on the store server',
+        subtitle: 'Layer 2 — Host operating system (TODAY: Windows. TARGET: RHEL for Edge)',
+        what: 'TODAY the store server runs a Windows VM — fragile, expensive, inconsistent across stores, no rollback if a patch breaks something. YOUR JOB is to replace this with RHEL 9 in "image mode" (using ostree/rpm-ostree). Image mode means the OS is IMMUTABLE — it\'s read-only in production. If a bad update is deployed, the system automatically rolls back to the last known good state without anyone touching it. You build the golden RHEL image using Red Hat Image Builder, check it into GitHub, and every store gets the identical OS.',
+        flow: 'Image Builder (DC) → builds RHEL image → signs it\n→ stores it in image registry\n→ store server boots from image via ZTP\n→ RHEL image mode (ostree) active\n→ SELinux enforcing, CIS benchmarks applied',
+        flowLabel: 'OS provisioning flow',
+        flowColor: '#EAF5EF',
+        role: 'This is your greenfield migration project. You define the RHEL blueprint, configure LVM layout (root / var / data), apply SELinux policies, harden to CIS benchmarks via Ansible, and deliver a reproducible OS image that any store server can boot from — zero manual steps.',
+        analogy: 'Think of RHEL image mode like a read-only USB stick for the OS. The store runs from it, but cannot accidentally corrupt it. If something goes wrong, it reboots from the previous stick automatically.',
+        tech: ['RHEL 9 image mode', 'rpm-ostree / ostree', 'Image Builder', 'CIS benchmarks', 'SELinux enforcing', 'LVM layout', 'Ansible hardening', 'ZTP (zero-touch provisioning)'],
+        yours: ['RHEL 9 image mode', 'Image Builder', 'CIS benchmarks', 'SELinux enforcing', 'Ansible hardening', 'ZTP']
+      },
+      {
+        layer: '3', label: 'Cloud & IaC',
+        accent: '#1A5FA8', accentLite: '#E8F2FC',
+        isYours: false,
+        title: 'The store\'s network identity is provisioned as code',
+        subtitle: 'Layer 3 — Cloud infrastructure (Azure / GCP / DC) defined via Terraform',
+        what: 'The store\'s place in the network — its SD-WAN segment, its ACM registration endpoint, its Vault namespace for secrets — is defined as code using Terraform. When a new store opens, a Terraform plan runs and provisions the network configuration, cloud resources and DNS entries before the hardware even arrives. Azure hosts SAP (where inventory data eventually lands). GCP hosts BigQuery (where transaction data eventually lands). This layer is the highway system connecting the store edge to the cloud.',
+        flow: 'Terraform plan runs (new store provisioned)\n→ SD-WAN segment created in vManage\n→ ACM hub endpoint registered\n→ Vault namespace created for store secrets\n→ Azure ExpressRoute routes ready for SAP\n→ GCP Pub/Sub topic ready for POS events',
+        flowLabel: 'Infrastructure provisioning',
+        flowColor: '#E8F2FC',
+        role: 'You interact with this layer when you define the network policy for your MicroShift nodes — what ports, what firewall zones, what SD-WAN QoS priority for POS traffic. The cloud team owns Azure/GCP, but you need to understand the connectivity so your edge nodes can reach Vault, ACM, and the data pipelines.',
+        analogy: 'Think of this as city planning — the roads, power lines and water pipes are laid before the building goes up. Terraform is the city planner who draws the map.',
+        tech: ['Terraform', 'Azure (VNets, ExpressRoute)', 'GCP (Pub/Sub, VPC)', 'Cisco vManage', 'ARM templates'],
+        yours: []
+      },
+      {
+        layer: '4', label: 'Kubernetes platform — YOUR DOMAIN',
+        accent: '#1B6B3A', accentLite: '#EAF5EF',
+        isYours: true,
+        title: 'MicroShift starts — the store\'s container brain wakes up',
+        subtitle: 'Layer 4 — MicroShift (store edge) + full OpenShift (DC/regional hub)',
+        what: 'MicroShift is installed as an RPM on RHEL for Edge and starts as a systemd service. It gives the store a local Kubernetes API server, CRI-O container runtime, OpenShift Routes (for HTTP traffic), and local LVM storage — all in about 2GB RAM. This is the container orchestration layer for the store. At the DC and regional hub, full OpenShift clusters run with the complete stack — web console, monitoring, OperatorHub. At larger stores, Single Node OpenShift (SNO) runs with more capability. MicroShift, SNO and full OCP all use the same Kubernetes APIs and RHEL base — so a manifest that works on one works on all.',
+        flow: 'RHEL boots → systemd starts microshift.service\n→ MicroShift API server starts on :6443\n→ CRI-O container runtime ready\n→ OpenShift Routes controller starts\n→ LVM storage (LVMS) available\n→ klusterlet registers with ACM hub\n→ Store is now a managed cluster',
+        flowLabel: 'MicroShift startup sequence',
+        flowColor: '#EAF5EF',
+        role: 'You own MicroShift at every store — the installation, the systemd service config, the LVM storage setup, the network policy. You also work on the full OCP clusters at the DC/hub level as the platform they run on. Write once, run everywhere — same manifest, same RHEL base, same ACM management.',
+        analogy: 'MicroShift is like a tiny version of the DC data centre, installed inside the store. It has everything needed to run the store apps locally — without needing to phone home to the DC for every operation.',
+        tech: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'OCP API :6443', 'SNO (larger stores)', 'Full OCP (DC)'],
+        yours: ['MicroShift 4.x', 'systemd service', 'CRI-O runtime', 'OpenShift Routes', 'LVMS storage', 'SNO (larger stores)']
+      },
+      {
+        layer: '5', label: 'ACM + fleet mgmt — YOUR DOMAIN',
+        accent: '#1B6B3A', accentLite: '#EAF5EF',
+        isYours: true,
+        title: 'ACM detects the new store and ArgoCD deploys all workloads',
+        subtitle: 'Layer 5 — Red Hat ACM hub + GitOps (ArgoCD) + RHEL image management',
+        what: 'The moment MicroShift\'s klusterlet agent registers with the ACM hub, ACM sees a new managed cluster with labels like store=NSW-042 and tier=supermarket. ArgoCD\'s ApplicationSet controller matches these labels against templates in GitHub and immediately starts syncing workloads — POS app, inventory service, cold chain monitor, loyalty app — all deploy automatically. Vault injects the store-specific secrets (payment keys, SAP credentials) at deploy time. The whole process from "hardware powered on" to "store running" takes about 25 minutes with zero human intervention. ACM also continuously checks policy compliance — if the store drifts from its baseline (e.g. someone manually changed a config), ACM detects it and auto-remediates.',
+        flow: 'klusterlet registers → ACM sees new cluster\n→ labels: store=NSW-042, tier=supermarket\n→ ArgoCD ApplicationSet matches labels\n→ Kustomize renders store-specific manifests\n→ Vault AVP injects secrets per app\n→ Pods deploy: POS, inventory, cold-chain, loyalty\n→ ACM policy check: CIS compliance = PASS\n→ Grafana fleet dashboard: store NSW-042 = GREEN',
+        flowLabel: 'Auto-onboarding flow',
+        flowColor: '#EAF5EF',
+        role: 'THIS is your core daily work. You build the ApplicationSet templates, define the Kustomize overlay structure, write the ACM policy definitions, wire up Vault secret injection, and design the GitOps pipeline that makes 3,000 stores deploy themselves from a git commit. This is "infrastructure as a product."',
+        analogy: 'ACM + ArgoCD is like a self-configuring franchise system. When a new McDonald\'s opens, corporate sends the standard menu, recipes and equipment spec — and the store configures itself. You are the person who designed the standard spec.',
+        tech: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine', 'Thanos (metrics)', 'Loki (logs)', 'Grafana'],
+        yours: ['Red Hat ACM', 'ArgoCD ApplicationSet', 'Kustomize overlays', 'Vault AVP', 'GitOps (GitHub)', 'Policy engine']
+      },
+      {
+        layer: '6', label: 'Enterprise apps',
+        accent: '#7B3FA0', accentLite: '#F3EEFB',
+        isYours: false,
+        title: 'The tin of beans is scanned — POS records the sale',
+        subtitle: 'Layer 6 — SAP S/4HANA (Azure) + Blue Yonder WMS + Kronos workforce',
+        what: 'The POS container on MicroShift records the transaction locally and immediately publishes two events: (1) a sales event to the Kafka topic on the hub, and (2) an inventory movement to the SAP integration layer. SAP S/4HANA on Azure receives the inventory update via OData API through Azure Service Bus — the stock count for that tin of beans decrements by 1 in the system of record. Blue Yonder\'s warehouse management system uses this data to plan replenishment. If the stock drops below a threshold, a replenishment order fires automatically.',
+        flow: 'POS container scans barcode\n→ records transaction in local SQLite/DB\n→ publishes to Kafka topic (hub): sales_event\n→ publishes inventory movement to SAP\n  → Azure Service Bus → SAP OData API\n  → SAP S/4HANA MM: stock count -1\n→ Blue Yonder: check reorder threshold\n→ if below threshold: replenishment order raised',
+        flowLabel: 'POS → SAP inventory flow',
+        flowColor: '#F3EEFB',
+        role: 'If your MicroShift POS container crashes, the SAP inventory count for that store goes stale. You don\'t own SAP, but you own the container that feeds it. That\'s why the POS workload on MicroShift is mission-critical — it\'s the real-time data source for a billion-dollar ERP system.',
+        analogy: 'SAP is the accountant. Your MicroShift store is the cash register. The accountant only knows what the cash register reports. A broken cash register means the accountant has wrong numbers.',
+        tech: ['SAP S/4HANA on Azure', 'Azure Service Bus', 'OData API', 'Blue Yonder WMS', 'Kafka (hub)', 'ExpressRoute'],
+        yours: []
+      },
+      {
+        layer: '7', label: 'Data & AI',
+        accent: '#8B4A00', accentLite: '#FEF5E7',
+        isYours: false,
+        title: 'The transaction lands in BigQuery — AI makes decisions',
+        subtitle: 'Layer 7 — GCP BigQuery (~90% of data) + Vertex AI + Looker',
+        what: 'The Kafka event from the store hub flows through GCP Pub/Sub into a Dataflow pipeline and lands in BigQuery within seconds. BigQuery holds about 90% of WooliesX\'s data — every transaction from every store, every hour of every day. Vertex AI models continuously analyse this data: demand forecasting (how many tins of beans will NSW-042 sell next Tuesday?), range optimisation (which products to stock in which stores), promotional effectiveness (did that half-price special actually increase basket size?). These AI decisions flow back down the stack to affect what gets ordered, what gets staffed, and what promotions each customer sees.',
+        flow: 'Kafka (hub) → GCP Pub/Sub\n→ Dataflow pipeline → BigQuery\n→ Vertex AI demand forecast model runs\n→ prediction: "reorder 400 tins by Thursday"\n→ SAP MM receives reorder recommendation\n→ Blue Yonder dispatches from DC\n→ Looker dashboard: store manager sees trend',
+        flowLabel: 'Transaction → AI decision flow',
+        flowColor: '#FEF5E7',
+        role: 'Your MicroShift POS node is the origin of this entire data pipeline. A store with broken edge infrastructure = a gap in BigQuery = a blind spot in the AI model = wrong replenishment decisions = empty shelves. The connection between your Linux work and the AI layer is direct, even if it\'s not obvious.',
+        analogy: 'BigQuery + Vertex AI is like the brain of the operation. Your store edge nodes are the nervous system — the sensors feeding the brain. A damaged nerve means the brain makes decisions based on incomplete information.',
+        tech: ['GCP BigQuery', 'Vertex AI', 'Dataflow', 'GCP Pub/Sub', 'Looker', 'ML models', 'GCP 5-year partnership'],
+        yours: []
+      },
+      {
+        layer: '8', label: 'APIs & composable services',
+        accent: '#444441', accentLite: '#F1EFE8',
+        isYours: false,
+        title: 'Everyday Rewards points are calculated and the API responds',
+        subtitle: 'Layer 8 — API gateway + BFF microservices + commercetools + Apigee',
+        what: 'When the customer scans their Everyday Rewards card at checkout, the POS container calls an API on the hub OpenShift cluster. That API (running as a microservice on OpenShift) calls Apigee X — the API gateway that handles ~180M requests/month for the loyalty platform. Apigee routes the request to the Everyday Rewards service, which queries the customer\'s points balance from the GCP data platform, calculates the new points earned from this transaction, and returns the result. The customer sees "You earned 47 points" on the checkout screen within 2 seconds.',
+        flow: 'POS container → HTTP request to hub\n→ OpenShift ingress → microservice\n→ Apigee X (API gateway) :443\n→ Everyday Rewards service\n→ GCP: query customer points balance\n→ calculate new points (transaction value)\n→ update balance in GCP\n→ response: "47 points earned"\n→ POS container: display on screen',
+        flowLabel: 'Loyalty points API flow',
+        flowColor: '#F1EFE8',
+        role: 'The OpenShift microservices running this API on the hub cluster are the same platform as your MicroShift store nodes — same RHEL base, same GitOps deployment, same ACM management. Understanding this layer helps you see why the whole platform must be consistent from edge to hub.',
+        analogy: 'Apigee is like a post office sorting centre. Requests come in from 3,000 store edges and millions of app users, and Apigee routes each one to the right service. Your job is to make sure the store post offices (MicroShift) can reach the sorting centre reliably.',
+        tech: ['Apigee X (Google Cloud)', 'OpenShift microservices', 'commercetools', 'Bloomreach', 'Algolia', 'Cybersource', 'BFF layer'],
+        yours: []
+      },
+      {
+        layer: '9', label: 'Customer experience',
+        accent: '#444441', accentLite: '#F1EFE8',
+        isYours: false,
+        title: 'The customer sees "Transaction complete — 47 points earned"',
+        subtitle: 'Layer 9 — POS / 1Store, self-checkout, Scan&Go, Woolworths app, Everyday Rewards',
+        what: 'The self-checkout screen shows the receipt and the loyalty points. The customer\'s Woolworths app updates with their new points balance within a few seconds. If the customer is using Scan&Go on their phone, the whole transaction happened entirely on the app — the MicroShift store node processed the scan, validated the basket, processed the payment via Cybersource, and updated SAP and BigQuery — all without the customer going near a traditional checkout. This is the customer experience that WooliesX is building — frictionless, personalised, and resilient.',
+        flow: 'Self-checkout screen: "Transaction complete"\n→ receipt printed / digital receipt sent\n→ Everyday Rewards app: points updated\n→ Woolworths app: purchase history updated\n→ SAP: revenue recorded\n→ BigQuery: transaction in analytics\n→ Vertex AI: customer preference model updated\n→ Next visit: personalised offer generated',
+        flowLabel: 'Customer-visible outcome',
+        flowColor: '#F1EFE8',
+        role: 'Every second of this customer experience depended on your MicroShift node at the bottom of the stack being healthy. The customer never sees RHEL. They never see MicroShift. They never see ACM. But if any of those are broken, they see an error screen and cannot pay. That is your impact.',
+        analogy: 'You are the engine room of a ship. The passengers on deck enjoy a smooth voyage and never think about what\'s below. But without the engine room working perfectly, the ship stops.',
+        tech: ['1Store / POS', 'Self-checkout kiosks', 'Scan&Go', 'AI scales', 'Woolworths app', 'Everyday Rewards', 'Milkrun / Metro'],
+        yours: []
+      }
+    ];
+
+    let current = 0;
+
+    function render() {
+      const s = steps[current];
+
+      const prog = document.getElementById('progress');
+      prog.innerHTML = '';
+      steps.forEach((st, i) => {
+        if (i > 0) {
+          const line = document.createElement('div');
+          line.className = 'step-line' + (i <= current ? ' done' : '');
+          prog.appendChild(line);
+        }
+        const dot = document.createElement('div');
+        dot.className = 'step-dot ' + (i < current ? 'done' : i === current ? 'active' : 'future');
+        dot.textContent = st.layer;
+        dot.title = 'Layer ' + st.layer + ': ' + st.label;
+        dot.setAttribute('role', 'button');
+        dot.setAttribute('aria-label', 'Go to layer ' + st.layer);
+        dot.onclick = () => { current = i; render(); };
+        prog.appendChild(dot);
+      });
+
+      const panel = document.getElementById('panel');
+      panel.style.borderColor = s.isYours ? s.accent : 'var(--color-border-tertiary)';
+      panel.style.borderWidth = s.isYours ? '2px' : '0.5px';
+
+      const techPills = s.tech.map(t =>
+        `<span class="tech-pill ${s.yours.includes(t) ? 'yours' : ''}">${t}</span>`
+      ).join('');
+
+      panel.innerHTML = `
+        <div class="panel-header" style="background:${s.accentLite};">
+          <div>
+            <div class="panel-title">${s.title}</div>
+            <div class="panel-subtitle">${s.subtitle}</div>
+          </div>
+          ${
+            s.isYours
+              ? '<span class="your-badge">YOUR DOMAIN</span>'
+              : '<span class="layer-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);margin-left:auto;">Layer ' + s.layer + '</span>'
+          }
+        </div>
+        <div class="panel-body">
+          <p class="what-happens">${s.what}</p>
+
+          <div class="flow-box" style="background:${s.flowColor}; border:0.5px solid ${s.isYours ? s.accent : 'var(--color-border-tertiary)'};">
+            <div class="flow-label" style="color:${s.accent};">${s.flowLabel}</div>
+            <div class="flow-content">${s.flow.replace(/\\n/g, '<br>')}</div>
+          </div>
+
+          <div class="your-role-box">
+            <div class="your-role-label">How this connects to your role</div>
+            <div class="your-role-text">${s.role}</div>
+          </div>
+
+          <div class="analogy-box">
+            <div class="analogy-label">Plain English analogy</div>
+            <div class="analogy-text">${s.analogy}</div>
+          </div>
+
+          <div class="tech-pills">${techPills}</div>
+          ${
+            s.yours.length
+              ? '<div class="legend">Green pills = technology I own or directly use.</div>'
+              : ''
+          }
+        </div>
+      `;
+
+      const backBtn = document.getElementById('btn-back');
+      const nextBtn = document.getElementById('btn-next');
+      const counter = document.getElementById('counter');
+
+      backBtn.disabled = current === 0;
+      nextBtn.disabled = current === steps.length - 1;
+      nextBtn.textContent = current === steps.length - 1 ? 'Done ✓' : 'Next →';
+      counter.textContent = `Layer ${s.layer} of ${steps.length}`;
+    }
+
+    function move(dir) {
+      const nextIndex = Math.max(0, Math.min(steps.length - 1, current + dir));
+      if (nextIndex !== current) {
+        current = nextIndex;
+        render();
+      }
+    }
+
+    // Keyboard navigation: ← / → / Home / End
+    document.addEventListener('keydown', (e) => {
+      // Allow arrow keys and Home/End regardless of focus, but you could
+      // scope this to when #flow-root is focused if you prefer.
+      switch (e.key) {
+        case 'ArrowLeft':
+          e.preventDefault();
+          move(-1);
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          move(1);
+          break;
+        case 'Home':
+          e.preventDefault();
+          current = 0;
+          render();
+          break;
+        case 'End':
+          e.preventDefault();
+          current = steps.length - 1;
+          render();
+          break;
+      }
+    });
+
+    // Wire up buttons
+    document.getElementById('btn-back').addEventListener('click', () => move(-1));
+    document.getElementById('btn-next').addEventListener('click', () => move(1));
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
