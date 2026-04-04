@@ -376,7 +376,7 @@
       </div>
     </div>
   </div>
-  
+
   <script>
     const steps = [
       {
@@ -386,7 +386,9 @@
         title: 'A Customer walks up to a self-checkout kiosk',
         subtitle: 'Layer 1 — Physical hardware + Cisco SD-WAN Network',
         what: 'The self-checkout kiosk is a physical Dell DTCP (or similar) server sitting in the store. It\'s connected to the store\'s local network, which connects back to the WooliesX hub in Bella Vista DC via a Cisco SD-WAN link — a combination of MPLS and broadband, with 4G/5G as failover. The SD-WAN is always trying to maintain a quality connection, but it can drop. That\'s why everything above must be designed to work even when it does.',
-        flow: 'Customer → self-checkout terminal\nTerminal (Dell DTCP server) → store LAN\nStore LAN → Cisco SD-WAN → Bella Vista DC',
+        flow: 'Customer → self-checkout terminal\n' +
+                'Terminal (Dell DTCP server) → store LAN\n' +
+                'Store LAN → Cisco SD-WAN → dual DC hubs in Western Sydney (two control planes)',
         flowLabel: 'Physical path',
         flowColor: '#F1EFE8',
         role: 'I worked with the network team on MPLS WAN connectivity for 800 NAB branches. Same relationship here — As a Edge Infra Engineer, I will potentially work with the network team on SD-WAN for 3,000 stores. Different technology, identical operational model.',
@@ -432,7 +434,7 @@
 
         role: `
             This is a classic greenfield‑on‑brownfield migration. The Edge Infra Engineer owns the base image: define the RHEL blueprint, LVM layout (root/var/data), SELinux policies, and CIS/Ansible hardening, then automate zero‑touch provisioning so any store server can boot the same image — no hands on keyboards.
-            You are directly solving the "3,000 fragile Windows VMs" problem by bringing golden‑image and fleet‑patching discipline from NAB/NovaStack into WooliesX. The outcome is simple but powerful: fewer outages at the edge, faster patch cycles, and a platform the app teams actually trust to ship new ideas into stores.
+           The engineer is directly solving the "3,000 fragile Windows VMs" problem by bringing golden‑image and fleet‑patching discipline from NAB/NovaStack into WooliesX. The outcome is simple but powerful: fewer outages at the edge, faster patch cycles, and a platform the app teams actually trust to ship new ideas into stores.
             `,
 
         analogy: `
