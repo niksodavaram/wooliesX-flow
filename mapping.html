@@ -284,58 +284,6 @@
       line-height: 1.6;
     }
 
-    /* ── PHASES ── */
-    .phase-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-top: 9px;
-    }
-
-    @media (max-width: 700px) {
-      .phase-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    .phase-card {
-      border-radius: 8px;
-      padding: 9px 10px;
-      color: white;
-    }
-
-    .phase-card:nth-child(1) { background: #15803d; }
-    .phase-card:nth-child(2) { background: #1d4ed8; }
-    .phase-card:nth-child(3) { background: #b45309; }
-    .phase-card:nth-child(4) { background: #4b5563; }
-
-    .phase-num {
-      font-size: 9.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 0.85;
-    }
-
-    .phase-timing {
-      font-size: 10px;
-      opacity: 0.9;
-      margin-bottom: 3px;
-    }
-
-    .phase-name {
-      font-size: 11.5px;
-      font-weight: 700;
-      background: rgba(0,0,0,0.18);
-      padding: 3px 7px;
-      border-radius: 5px;
-      margin-bottom: 5px;
-    }
-
-    .phase-card p {
-      font-size: 10.5px;
-      line-height: 1.6;
-      opacity: 0.95;
-    }
-
     .footer-meta {
       font-size: 11px;
       color: var(--color-text-tertiary);
@@ -412,19 +360,6 @@
       <div class="grid" style="margin-top:10px;">
         <div>
           <div class="story-card">
-            <div class="story-title">NovaStack — sovereign OpenStack / K8s</div>
-            <div class="story-role">Principal Engineer · May 2025 – Present</div>
-            <div class="story-body">
-              Built a sovereign private‑cloud stack on OpenStack with Kubernetes on top. RHEL‑based images, Git‑driven
-              configuration and OCP‑compatible manifests as a stepping stone toward OpenShift. Designed HA control planes,
-              storage and network for regulated workloads needing strict data residency.
-            </div>
-            <div class="story-why why-green">
-              → WooliesX: RHEL as the base everywhere, Kubernetes as the fabric and Git as the truth.
-              Same opinionated, compliance‑friendly design you want at store edge.
-            </div>
-          </div>
-          <div class="story-card">
             <div class="story-title">Saab Australia — 9LV warship edge</div>
             <div class="story-role">Edge Infra Engineer · Nov 2024 – May 2025 · NV1 cleared · real-time systems</div>
             <div class="story-body">
@@ -454,9 +389,7 @@
               Same fleet problem, just larger scale.
             </div>
           </div>
-        </div>
 
-        <div>
           <div class="story-card">
             <div class="story-title">Energy Australia — CDR platform</div>
             <div class="story-role">Greenfield Platform Engineer · Aug 2022 – Apr 2023</div>
@@ -471,6 +404,23 @@
               Greenfield 8‑month delivery = practical migration playbook.
             </div>
           </div>
+        </div>
+
+        <div>
+          <div class="story-card">
+            <div class="story-title">NovaStack — sovereign OpenStack / K8s</div>
+            <div class="story-role">Principal Engineer · 2021 – 2022</div>
+            <div class="story-body">
+              Built a sovereign private‑cloud stack on OpenStack with Kubernetes on top. RHEL‑based images, Git‑driven
+              configuration and OCP‑compatible manifests as a stepping stone toward OpenShift. Designed HA control planes,
+              storage and network for regulated workloads needing strict data residency.
+            </div>
+            <div class="story-why why-green">
+              → WooliesX: RHEL as the base everywhere, Kubernetes as the fabric and Git as the truth.
+              Same opinionated, compliance‑friendly design you want at store edge.
+            </div>
+          </div>
+
           <div class="story-card">
             <div class="story-title">CCG / Vic Uni — LEON Linux field stations</div>
             <div class="story-role">Distributed Edge Systems · PhD‑backed work</div>
@@ -559,69 +509,9 @@
       </table>
     </div>
 
-    <!-- Section C: migration plan -->
-    <div class="section">
-      <div class="section-header">
-        <div>
-          <div class="section-kicker">C · MIGRATION PLAN</div>
-          <div class="section-title">How I’d approach Windows VM → RHEL MicroShift for 3,000+ stores</div>
-        </div>
-        <span class="section-badge">18‑month roadmap</span>
-      </div>
-
-      <div class="section-body">
-        <p>
-          This is not a perfect project plan; it’s a high‑level sequence that shows how I think
-          about risk, pilot stores, canary waves and compliance when replacing fragile Windows
-          VMs with an immutable RHEL + MicroShift stack.
-        </p>
-      </div>
-
-      <div class="phase-grid">
-        <div class="phase-card">
-          <div class="phase-num">Phase 1</div>
-          <div class="phase-timing">Weeks 1–4</div>
-          <div class="phase-name">Design & 5‑store pilot</div>
-          <p>
-            Design the RHEL 9 Image Builder blueprint and LVM layout, stand up the ACM hub and Git repo structure,
-            and define Kustomize overlays per store tier. Run RHEL + MicroShift in parallel with the existing
-            Windows VM in 5 pilot stores.
-          </p>
-        </div>
-        <div class="phase-card">
-          <div class="phase-num">Phase 2</div>
-          <div class="phase-timing">Weeks 5–8</div>
-          <div class="phase-name">Validate flows & harden</div>
-          <p>
-            Prove end‑to‑end flows: POS → Kafka → BigQuery, inventory → SAP S/4HANA, and cold‑chain MQTT → Vertex AI.
-            Only when all flows are green and CIS/PCI‑DSS baselines pass do we consider Windows removable.
-          </p>
-        </div>
-        <div class="phase-card">
-          <div class="phase-num">Phase 3</div>
-          <div class="phase-timing">Months 3–6</div>
-          <div class="phase-name">Canary waves at 50 stores/week</div>
-          <p>
-            Roll out in waves with ArgoCD, each wave ~50 stores. Health gates and SLOs drive automated rollback
-            if error rates spike. ACM dashboards give fleet‑wide compliance and drift visibility before retiring
-            the Windows VM per store.
-          </p>
-        </div>
-        <div class="phase-card">
-          <div class="phase-num">Phase 4</div>
-          <div class="phase-timing">Months 7–18</div>
-          <div class="phase-name">Full fleet + ZTP by default</div>
-          <p>
-            All stores run on RHEL + MicroShift, Windows VMs fully decommissioned. New stores boot via zero‑touch
-            provisioning from the golden image, and we layer in MCP‑style AI self‑healing across the fleet.
-          </p>
-        </div>
-      </div>
-    </div>
-
     <div class="footer-meta">
       This page is a companion to the interactive 9‑layer flow. It summarises my past roles,
-      the 1:1 tech stack mapping, and an 18‑month Windows → RHEL MicroShift migration approach.
+      the 1:1 tech stack mapping, and how they line up with the RHEL + MicroShift edge platform.
       All vendor and technology references are based solely on public information; no internal
       Woolworths/WooliesX material has been used.
     </div>
