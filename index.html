@@ -319,40 +319,64 @@
 </head>
 <body>
   <div class="wrap" id="flow-root" tabindex="0" aria-label="WooliesX 9-layer flow">
-  ...
-  <div class="footer-meta">
-    Legend: green outline = layers in my direct domain; green tech pills = technologies I own or actively work with.
-    This prototype is implemented with vanilla HTML/CSS/JS and designed to run on a lightweight static host (Vercel).
+    <div class="title">Edge-to-cloud flow for a single POS event</div>
+    <div class="subtitle">
+      WooliesX stack visualised from in-store hardware up to AI and customer experience.
+    </div>
+
+    <div class="meta-bar">
+      Prototype created by <strong>Nireekshan Sodavaram</strong> for WooliesX interview on 7 April 2026.
+    </div>
+
+    <p class="helper-text">
+      This is a narrative map of a single self-checkout scan across 9 layers of the WooliesX stack – with my domain highlighted.
+    </p>
+    <p class="helper-text-secondary">
+      Use the numbered dots, Back/Next buttons, or keyboard (← / → / Home / End) to walk the flow. Green-highlighted pills show technologies I directly own.
+    </p>
+
+    <div class="progress-bar" id="progress"></div>
+    <div class="panel" id="panel"></div>
+
+    <div class="nav-row">
+      <button class="nav-btn" id="btn-back">← Back</button>
+      <span class="step-counter" id="counter"></span>
+      <button class="nav-btn primary" id="btn-next">Next →</button>
+    </div>
+
+    <div class="footer-meta">
+      Legend: green outline = layers in my direct domain; green tech pills = technologies I own or actively work with.
+      This prototype is implemented with vanilla HTML/CSS/JS and designed to run on a lightweight static host (Vercel).
+    </div>
+
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:18px 0 10px;" />
+
+    <div style="font-size:11px;color:#6b7280;line-height:1.5;">
+      <div style="margin-bottom:4px;">
+        © 2026 Nireekshan Sodavaram. All rights reserved.
+      </div>
+      <div style="margin-bottom:6px;">
+        This prototype is a personal interpretation of WooliesX’s edge-to-cloud stack
+        and the current Windows/VM/DTCP-style environment being migrated to RHEL +
+        MicroShift. All technology references (including SAP on Azure, Cisco SD-WAN,
+        API gateways, observability stacks and general Windows/VMware concepts) are
+        based solely on publicly available information and my prior experience.
+        No confidential or internal Woolworths/WooliesX artefacts, configs or DTCP
+        details have been used.
+      </div>
+      <div style="font-size:11px;color:#9ca3af;">
+        Selected public sources informing this view include: Woolworths SAP on Azure
+        case studies and press releases (Microsoft, SAP and industry media),
+        Woolworths network transformation with Cisco SD-WAN (iTnews, 2020),
+        WooliesX and Woolworths engineering / data platform articles describing
+        Azure, GCP, BigQuery and Apigee usage, and general industry documentation
+        on Windows / VMware virtualisation and load balancing patterns. All
+        architecture diagrams and flows here are my own synthesis for interview
+        purposes only.
+      </div>
+    </div>
   </div>
-
-  <hr style="border:none;border-top:1px solid #e5e7eb;margin:18px 0 10px;" />
-
-  <div style="font-size:11px;color:#6b7280;line-height:1.5;">
-    <div style="margin-bottom:4px;">
-      © 2026 Nireekshan Sodavaram. All rights reserved.
-    </div>
-    <div style="margin-bottom:6px;">
-      This prototype is a personal interpretation of WooliesX’s edge-to-cloud stack
-      and the current Windows/VM/DTCP-style environment being migrated to RHEL +
-      MicroShift. All technology references (including SAP on Azure, Cisco SD-WAN,
-      API gateways, observability stacks and general Windows/VMware concepts) are
-      based solely on publicly available information and my prior experience.
-      No confidential or internal Woolworths/WooliesX artefacts, configs or DTCP
-      details have been used.
-    </div>
-    <div style="font-size:11px;color:#9ca3af;">
-      Selected public sources informing this view include: Woolworths SAP on Azure
-      case studies and press releases (Microsoft, SAP and industry media),
-      Woolworths network transformation with Cisco SD-WAN (iTnews, 2020),
-      WooliesX and Woolworths engineering / data platform articles describing
-      Azure, GCP, BigQuery and Apigee usage, and general industry documentation
-      on Windows / VMware virtualisation and load balancing patterns. All
-      architecture diagrams and flows here are my own synthesis for interview
-      purposes only.
-    </div>
-  </div>
-</div> <!-- end .wrap -->
-
+  
   <script>
     const steps = [
       {
