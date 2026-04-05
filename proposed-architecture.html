@@ -1,103 +1,118 @@
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-
-  .wrap{font-family:var(--font-sans);padding:1rem 0}
-
-  .title{
-    font-size:16px;
-    font-weight:600;
-    color:var(--color-text-primary);
-    margin-bottom:4px;
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
   }
 
-  .sub{
-    font-size:13px;
-    color:var(--color-text-secondary);
-    margin-bottom:14px;
-    line-height:1.6;
+  .wrap {
+    font-family: var(--font-sans);
+    padding: 1rem 0
   }
 
-  .arch{display:flex;flex-direction:column;gap:3px}
-
-  .tier{
-    border-radius:10px;
-    padding:11px 14px;
-    border:0.5px solid transparent;
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
   }
 
-  .tier-label{
-    font-size:11px;
-    font-weight:600;
-    text-transform:uppercase;
-    letter-spacing:0.09em;
-    margin-bottom:7px;
+  .sub {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.6;
   }
 
-  .tier-row{display:flex;flex-wrap:wrap;gap:6px}
-
-  .box{
-    border-radius:7px;
-    padding:8px 11px;
-    flex:1;
-    min-width:120px;
-    box-shadow:0 4px 8px rgba(15,23,42,0.06);
+  .arch {
+    display: flex;
+    flex-direction: column;
+    gap: 3px
   }
 
-  .box-title{
-    font-size:13px;
-    font-weight:600;
-    line-height:1.35;
+  .tier {
+    border-radius: 10px;
+    padding: 11px 14px;
+    border: 0.5px solid transparent;
   }
 
-  .box-sub{
-    font-size:11.5px;
-    margin-top:3px;
-    line-height:1.5;
-    opacity:0.9;
-    font-weight:600;
+  .tier-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 7px;
   }
 
-  .arrow-row{
-    text-align:center;
-    font-size:11px;
-    color:var(--color-text-tertiary);
-    padding:2px 0;
-    font-weight:600;
+  .tier-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px
   }
 
-  .legend{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-    margin-top:12px;
-    padding-top:10px;
-    border-top:0.5px solid var(--color-border-tertiary);
+  .box {
+    border-radius: 7px;
+    padding: 8px 11px;
+    flex: 1;
+    min-width: 120px;
+    box-shadow: 0 4px 8px rgba(15, 23, 42, 0.06);
   }
 
-  .leg{
-    display:flex;
-    align-items:center;
-    gap:5px;
-    font-size:11px;
-    color:var(--color-text-secondary);
+  .box-title {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
   }
 
-  .leg-dot{
-    width:10px;
-    height:10px;
-    border-radius:3px;
-    flex-shrink:0;
+  .box-sub {
+    font-size: 11.5px;
+    margin-top: 3px;
+    line-height: 1.5;
+    opacity: 0.9;
+    font-weight: 600;
   }
 
-  .new-badge{
-    font-size:9px;
-    font-weight:600;
-    padding:1px 5px;
-    border-radius:10px;
-    background:#EAF3DE;
-    color:#3B6D11;
-    margin-left:4px;
-    vertical-align:middle;
+  .arrow-row {
+    text-align: center;
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    padding: 2px 0;
+    font-weight: 600;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 0.5px solid var(--color-border-tertiary);
+  }
+
+  .leg {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+  }
+
+  .leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .new-badge {
+    font-size: 9px;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 10px;
+    background: #EAF3DE;
+    color: #3B6D11;
+    margin-left: 4px;
+    vertical-align: middle;
   }
 </style>
 
@@ -121,6 +136,10 @@
   <div class="sub">
     How the existing WooliesX stack (GCP, Azure, SAP, SD-WAN) connects with the new RHEL + MicroShift edge platform.
     Green layers = new. Blue = existing cloud. Gray = network. Orange = central control. Purple = regional relays.
+  </div>
+  <div class="sub" style="font-size:11px;color:var(--color-text-tertiary);margin-top:4px;">
+    This diagram is based only on public information and my own assumptions and experience. No private or internal
+    WooliesX material has been used or copied.
   </div>
 
   <div class="arch">
