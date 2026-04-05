@@ -1,49 +1,295 @@
-
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-.wrap{font-family:var(--font-sans);padding:0.75rem 0}
-.header{border-radius:8px;padding:10px 16px;margin-bottom:12px;background:#27500A;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.header-title{font-size:13px;font-weight:500;color:#C0DD97}
-.header-sub{font-size:11px;color:#7DC89A}
-.timer-badge{background:rgba(0,0,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;color:#C0DD97;white-space:nowrap}
-.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}
-.nav-btn{background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:6px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--color-text-primary);cursor:pointer;transition:background 0.15s}
-.nav-btn:hover{background:var(--color-background-tertiary)}
-.nav-btn:disabled{opacity:0.3;cursor:default}
-.step-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
-.dot{width:22px;height:22px;border-radius:50%;border:1.5px solid transparent;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;cursor:pointer;transition:all 0.2s}
-.dot.active{border-color:white;transform:scale(1.15)}
-.dot.done{opacity:0.6}
-.flow{display:flex;flex-direction:column;align-items:center;gap:0}
-.step-row{display:flex;align-items:center;justify-content:center;gap:0;width:100%}
-.step-card{border-radius:8px;padding:10px 14px;width:260px;cursor:pointer;transition:all 0.18s;border:1.5px solid transparent;position:relative}
-.step-card:hover{filter:brightness(1.08)}
-.step-card.active{box-shadow:0 0 0 2px white, 0 4px 16px rgba(0,0,0,0.25)}
-.step-card.inactive{opacity:0.35;filter:grayscale(0.4)}
-.step-num{position:absolute;left:-38px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;border:1.5px solid transparent}
-.step-title{font-size:13px;font-weight:500;margin-bottom:3px}
-.step-sub{font-size:11px;line-height:1.5;opacity:0.85}
-.side-nodes{display:flex;flex-direction:column;gap:4px;margin-left:10px;width:148px}
-.side-card{border-radius:6px;padding:7px 10px;cursor:pointer;transition:all 0.18s;border:0.5px solid transparent}
-.side-card:hover{filter:brightness(1.1)}
-.side-card.inactive{opacity:0.25;filter:grayscale(0.5)}
-.side-title{font-size:11px;font-weight:500}
-.side-sub{font-size:10px;opacity:0.8;margin-top:1px}
-.arrow-down{display:flex;justify-content:center;align-items:center;height:18px;width:260px}
-.arrow-side{display:flex;align-items:center;margin-left:10px;width:148px;height:18px}
-.connector-line{stroke-dasharray:none}
-.detail-panel{margin-top:10px;border-radius:8px;padding:12px 14px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);min-height:60px;transition:all 0.2s}
-.detail-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:5px}
-.detail-body{font-size:12px;color:var(--color-text-secondary);line-height:1.65}
-.detail-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
-.tag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
-.footer-bar{margin-top:10px;border-radius:6px;padding:8px 14px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
-.foot-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
-.foot-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0
+    }
+
+    .wrap {
+        font-family: var(--font-sans);
+        padding: 0.75rem 0
+    }
+
+    .header {
+        border-radius: 8px;
+        padding: 10px 16px;
+        margin-bottom: 12px;
+        background: #27500A;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px
+    }
+
+    .header-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: #C0DD97
+    }
+
+    .header-sub {
+        font-size: 11px;
+        color: #7DC89A
+    }
+
+    .timer-badge {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 20px;
+        padding: 3px 10px;
+        font-size: 11px;
+        color: #C0DD97;
+        white-space: nowrap
+    }
+
+    .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        gap: 8px
+    }
+
+    .nav-btn {
+        background: var(--color-background-secondary);
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: 6px;
+        padding: 5px 14px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        cursor: pointer;
+        transition: background 0.15s
+    }
+
+    .nav-btn:hover {
+        background: var(--color-background-tertiary)
+    }
+
+    .nav-btn:disabled {
+        opacity: 0.3;
+        cursor: default
+    }
+
+    .step-dots {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        justify-content: center
+    }
+
+    .dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 1.5px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s
+    }
+
+    .dot.active {
+        border-color: white;
+        transform: scale(1.15)
+    }
+
+    .dot.done {
+        opacity: 0.6
+    }
+
+    .flow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0
+    }
+
+    .step-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        width: 100%
+    }
+
+    .step-card {
+        border-radius: 8px;
+        padding: 10px 14px;
+        width: 260px;
+        cursor: pointer;
+        transition: all 0.18s;
+        border: 1.5px solid transparent;
+        position: relative
+    }
+
+    .step-card:hover {
+        filter: brightness(1.08)
+    }
+
+    .step-card.active {
+        box-shadow: 0 0 0 2px white, 0 4px 16px rgba(0, 0, 0, 0.25)
+    }
+
+    .step-card.inactive {
+        opacity: 0.35;
+        filter: grayscale(0.4)
+    }
+
+    .step-num {
+        position: absolute;
+        left: -38px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 500;
+        border: 1.5px solid transparent
+    }
+
+    .step-title {
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 3px
+    }
+
+    .step-sub {
+        font-size: 11px;
+        line-height: 1.5;
+        opacity: 0.85
+    }
+
+    .side-nodes {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-left: 10px;
+        width: 148px
+    }
+
+    .side-card {
+        border-radius: 6px;
+        padding: 7px 10px;
+        cursor: pointer;
+        transition: all 0.18s;
+        border: 0.5px solid transparent
+    }
+
+    .side-card:hover {
+        filter: brightness(1.1)
+    }
+
+    .side-card.inactive {
+        opacity: 0.25;
+        filter: grayscale(0.5)
+    }
+
+    .side-title {
+        font-size: 11px;
+        font-weight: 500
+    }
+
+    .side-sub {
+        font-size: 10px;
+        opacity: 0.8;
+        margin-top: 1px
+    }
+
+    .arrow-down {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 18px;
+        width: 260px
+    }
+
+    .arrow-side {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        width: 148px;
+        height: 18px
+    }
+
+    .connector-line {
+        stroke-dasharray: none
+    }
+
+    .detail-panel {
+        margin-top: 10px;
+        border-radius: 8px;
+        padding: 12px 14px;
+        border: 0.5px solid var(--color-border-secondary);
+        background: var(--color-background-secondary);
+        min-height: 60px;
+        transition: all 0.2s
+    }
+
+    .detail-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 5px
+    }
+
+    .detail-body {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        line-height: 1.65
+    }
+
+    .detail-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 7px
+    }
+
+    .tag {
+        font-size: 10px;
+        font-weight: 500;
+        padding: 2px 8px;
+        border-radius: 20px
+    }
+
+    .footer-bar {
+        margin-top: 10px;
+        border-radius: 6px;
+        padding: 8px 14px;
+        background: var(--color-background-secondary);
+        border: 0.5px solid var(--color-border-tertiary);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center
+    }
+
+    .foot-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        color: var(--color-text-secondary)
+    }
+
+    .foot-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 2px;
+        flex-shrink: 0
+    }
 </style>
 
 <div class="wrap">
-  <a href="/" style="
+    <a href="/" style="
     display:inline-flex;
     align-items:center;
     gap:4px;
@@ -56,240 +302,248 @@
     color:#4b5563;
     text-decoration:none;
   ">
-    ← Back to 9-layer flow
-  </a>
-
-  <div class="header">
+        ← Back to 9-layer flow
+    </a>
     <!-- existing ZTP header... -->
-<div class="header">
-  <div>
-    <div class="header-title">Zero-touch store onboarding — Windows VM → MicroShift</div>
-    <div class="header-sub">Hardware arrives → store live · fully automated · no on-site engineer</div>
-  </div>
-  <div class="timer-badge">⏱ ~25 min total</div>
-</div>
+    <div class="header">
+        <div>
+            <div class="header-title">Zero-touch store onboarding — Windows VM → MicroShift</div>
+            <div class="header-sub">Hardware arrives → store live · fully automated · no on-site engineer</div>
+        </div>
+        <div class="timer-badge">⏱ ~25 min total</div>
+    </div>
 
-<div class="nav">
-  <button class="nav-btn" id="btn-prev" onclick="move(-1)" disabled>← Back</button>
-  <div class="step-dots" id="dots"></div>
-  <button class="nav-btn" id="btn-next" onclick="move(1)">Next →</button>
-</div>
+    <div class="nav">
+        <button class="nav-btn" id="btn-prev" onclick="move(-1)" disabled>← Back</button>
+        <div class="step-dots" id="dots"></div>
+        <button class="nav-btn" id="btn-next" onclick="move(1)">Next →</button>
+    </div>
 
-<div class="flow" id="flow"></div>
+    <div class="flow" id="flow"></div>
 
-<div class="detail-panel" id="detail">
-  <div class="detail-title" id="d-title"></div>
-  <div class="detail-body" id="d-body"></div>
-  <div class="detail-tags" id="d-tags"></div>
-</div>
+    <div class="detail-panel" id="detail">
+        <div class="detail-title" id="d-title"></div>
+        <div class="detail-body" id="d-body"></div>
+        <div class="detail-tags" id="d-tags"></div>
+    </div>
 
-<div class="footer-bar">
-  <div class="foot-item"><div class="foot-dot" style="background:#8B4A00"></div>SD-WAN ZTP</div>
-  <div class="foot-item"><div class="foot-dot" style="background:#712B13"></div>RHEL image</div>
-  <div class="foot-item"><div class="foot-dot" style="background:#3C3489"></div>MicroShift / ACM</div>
-  <div class="foot-item"><div class="foot-dot" style="background:#085041"></div>GitOps deploy</div>
-  <div class="foot-item"><div class="foot-dot" style="background:#27500A"></div>Security + live</div>
-  <div class="foot-item" style="font-size:10px;color:var(--color-text-tertiary)">-- side services</div>
-</div>
+    <div class="footer-bar">
+        <div class="foot-item">
+            <div class="foot-dot" style="background:#8B4A00"></div>SD-WAN ZTP
+        </div>
+        <div class="foot-item">
+            <div class="foot-dot" style="background:#712B13"></div>RHEL image
+        </div>
+        <div class="foot-item">
+            <div class="foot-dot" style="background:#3C3489"></div>MicroShift / ACM
+        </div>
+        <div class="foot-item">
+            <div class="foot-dot" style="background:#085041"></div>GitOps deploy
+        </div>
+        <div class="foot-item">
+            <div class="foot-dot" style="background:#27500A"></div>Security + live
+        </div>
+        <div class="foot-item" style="font-size:10px;color:var(--color-text-tertiary)">-- side services</div>
+    </div>
 
 </div>
 
 <script>
-const steps = [
-  {
-    num:1, label:'Hardware registered',
-    bg:'#2C2C2A', border:'#888780', numBg:'#444441', numBorder:'#888780',
-    title:'Store hardware registered',
-    sub:'MAC address + store ID in CMDB · BMC / IPMI enrolled in vManage',
-    detail:'The store server\'s MAC address and store ID (e.g. NSW-042) are pre-registered in the CMDB before the hardware ships. The BMC / IPMI interface is enrolled in Cisco vManage so the device is known to the network before it powers on. This is the only human step — everything after this is automatic.',
-    tags:['CMDB','vManage','BMC / IPMI','pre-registration'],
-    tagBg:'#444441', tagColor:'#D3D1C7',
-    side:null, arrowColor:'#888780'
-  },
-  {
-    num:2, label:'SD-WAN ZTP fires',
-    bg:'#633806', border:'#EF9F27', numBg:'#8B4A00', numBorder:'#EF9F27',
-    title:'SD-WAN zero-touch provisioning fires',
-    sub:'vManage pushes SD-WAN config · IPSec tunnel to DC established',
-    detail:'The moment the server powers on and gets a DHCP lease, Cisco vManage recognises the MAC address and automatically pushes the SD-WAN configuration. An IPSec tunnel is established back to the Bella Vista DC within minutes. The device now has a secure, software-defined network path — without anyone touching a router.',
-    tags:['Cisco vManage','IPSec tunnel','ZTP','MPLS + broadband'],
-    tagBg:'#633806', tagColor:'#FAC775',
-    side:{title:'PXE / DHCP boot', sub:'RHEL ISO served via HTTP', bg:'#2C2C2A', border:'#888780', detail:'Simultaneously, the server PXE boots over the newly established network path. DHCP assigns an IP and points the device at the Image Builder HTTP server, which serves the signed RHEL ISO for installation.'},
-    arrowColor:'#EF9F27'
-  },
-  {
-    num:3, label:'RHEL image deployed',
-    bg:'#4A1B0C', border:'#F0997B', numBg:'#712B13', numBorder:'#F0997B',
-    title:'Signed RHEL image deployed via Image Builder',
-    sub:'Image Builder custom ISO · Kickstart + MicroShift RPMs embedded',
-    detail:'The golden RHEL image — built from an Image Builder TOML blueprint with CIS Level 2 hardening, SELinux enforcing, LVM layout, and MicroShift RPMs pre-baked — is written to disk via Kickstart. The image is signed and immutable (ostree). If anything goes wrong, greenboot health checks trigger an automatic rollback to the previous good image in under 5 minutes.',
-    tags:['RHEL Image Builder','ostree / image mode','Kickstart','MicroShift RPMs','SELinux enforcing','CIS Level 2'],
-    tagBg:'#4A1B0C', tagColor:'#F5C4B3',
-    side:{title:'Vault bootstrap', sub:'Node token issued :8200', bg:'#173404', border:'#97C459', detail:'On first boot, the node calls Vault and is issued a scoped token using the store ID as the identity. All subsequent secret injection (POS credentials, DB passwords, API keys) uses this token. Zero secrets are baked into the image.'},
-    arrowColor:'#F0997B'
-  },
-  {
-    num:4, label:'MicroShift starts',
-    bg:'#26215C', border:'#AFA9EC', numBg:'#3C3489', numBorder:'#AFA9EC',
-    title:'MicroShift starts — klusterlet auto-registers to ACM',
-    sub:'klusterlet registers to ACM hub · store ID label applied to cluster',
-    detail:'systemd starts microshift.service. Within seconds, the ACM klusterlet agent reaches out to the central ACM hub at Bella Vista DC and registers the cluster. The store ID label (e.g. store=NSW-042, tier=supermarket) is applied automatically from the Image Builder blueprint. ACM now knows this cluster exists and begins governance.',
-    tags:['systemd','microshift.service','ACM klusterlet','cluster labels','governance'],
-    tagBg:'#26215C', tagColor:'#CECBF6',
-    side:{title:'cert-manager', sub:'TLS cert auto-issued', bg:'#2C2C2A', border:'#888780', detail:'cert-manager issues a TLS certificate for the store node automatically on registration, signed by the internal PKI. All inter-service communication within the store is encrypted from first boot.'},
-    arrowColor:'#AFA9EC'
-  },
-  {
-    num:5, label:'ArgoCD ApplicationSet fires',
-    bg:'#04342C', border:'#5DCAA5', numBg:'#085041', numBorder:'#5DCAA5',
-    title:'ArgoCD ApplicationSet fires — workloads targeted by label',
-    sub:'Cluster label matched to template · store-specific Kustomize overlay rendered',
-    detail:'ACM notifies ArgoCD that a new cluster with label store=NSW-042 has joined. The ApplicationSet generator matches it to the supermarket template and renders the store-specific Kustomize overlay from the GitHub manifest repo (stores/NSW-042/). ArgoCD begins syncing all workload manifests to the new cluster — no manual configuration.',
-    tags:['ArgoCD ApplicationSet','Kustomize overlay','label matching','GitOps','zero manual config'],
-    tagBg:'#04342C', tagColor:'#9FE1CB',
-    side:{title:'GitHub manifest', sub:'stores/NSW-042 overlay', bg:'#2C2C2A', border:'#888780', detail:'The Git repository holds Kustomize base manifests for each store tier (supermarket, metro, liquor) and a per-store overlay folder. The overlay contains store-specific config: SAP cost centre, local IP ranges, loyalty region. ArgoCD reads this and renders the final manifests.'},
-    arrowColor:'#5DCAA5'
-  },
-  {
-    num:6, label:'Store workloads deployed',
-    bg:'#042C53', border:'#85B7EB', numBg:'#0C447C', numBorder:'#85B7EB',
-    title:'All store workloads deployed and running',
-    sub:'POS · inventory · self-checkout · cold chain · loyalty · Vault secrets injected',
-    detail:'ArgoCD deploys all containerised workloads to the MicroShift cluster: POS system (payment + till, offline-capable), inventory service (real-time stock + shelf scanning), self-checkout kiosk UI with weight sensor, cold chain monitor (fridge temp MQTT alerts on :1883), and the Everyday Rewards loyalty app. Vault automatically injects the correct secrets into each app at start-up.',
-    tags:['POS offline-capable','inventory','self-checkout','cold chain MQTT','Everyday Rewards','Vault secrets'],
-    tagBg:'#042C53', tagColor:'#B5D4F4',
-    side:{title:'Keycloak SSO', sub:'Staff auth configured', bg:'#173404', border:'#97C459', detail:'Keycloak configures SSO for all store staff-facing applications automatically. Store manager login, team member POS auth, and admin dashboard access all use the central identity provider — no local password management.'},
-    arrowColor:'#85B7EB'
-  },
-  {
-    num:7, label:'Observability activated',
-    bg:'#26215C', border:'#AFA9EC', numBg:'#3C3489', numBorder:'#AFA9EC',
-    title:'Observability stack activates automatically',
-    sub:'Prometheus scrapes pods → Thanos · Promtail ships logs → Loki',
-    detail:'The metrics-collector (Prometheus + node exporter) starts scraping all pods and the RHEL OS layer. Metrics are remote_written to the regional Thanos Receive instance. Promtail ships pod and kernel logs to the Loki aggregator. Within minutes of workload deployment, this store appears on the central Grafana fleet dashboard — green, amber or red — without any manual dashboard configuration.',
-    tags:['Prometheus','node exporter','Thanos remote_write','Promtail → Loki','Grafana fleet view','automatic'],
-    tagBg:'#26215C', tagColor:'#CECBF6',
-    side:{title:'Grafana fleet view', sub:'Store appears automatically', bg:'#26215C', border:'#AFA9EC', detail:'The Grafana fleet dashboard uses Thanos Query to run a single PromQL query across all 3,000 store clusters simultaneously. The new store appears as a green tile the moment its first metric scrape arrives. No manual panel configuration needed.'},
-    arrowColor:'#AFA9EC'
-  },
-  {
-    num:8, label:'Store live — zero touch',
-    bg:'#173404', border:'#97C459', numBg:'#27500A', numBorder:'#97C459',
-    title:'Store live — zero human touch from power-on',
-    sub:'ACM compliance green · all workloads running · ~25 min total',
-    detail:'The store is fully trading. ACM shows compliance: green. All workloads are running. The Grafana fleet dashboard shows the store tile as green. If anything breaks at any point, ostree rolls back the OS automatically in under 5 minutes. ArgoCD rolls back the workloads. No engineer needs to visit the store. This same process runs for every new store opening — 25 minutes from plugging in the hardware to the first transaction.',
-    tags:['ACM compliance ✓','all pods running','Grafana green','ostree rollback ready','< 5 min rollback','zero engineer visit'],
-    tagBg:'#173404', tagColor:'#C0DD97',
-    side:null, arrowColor:'#97C459'
-  }
-];
+    const steps = [
+        {
+            num: 1, label: 'Hardware registered',
+            bg: '#2C2C2A', border: '#888780', numBg: '#444441', numBorder: '#888780',
+            title: 'Store hardware registered',
+            sub: 'MAC address + store ID in CMDB · BMC / IPMI enrolled in vManage',
+            detail: 'The store server\'s MAC address and store ID (e.g. NSW-042) are pre-registered in the CMDB before the hardware ships. The BMC / IPMI interface is enrolled in Cisco vManage so the device is known to the network before it powers on. This is the only human step — everything after this is automatic.',
+            tags: ['CMDB', 'vManage', 'BMC / IPMI', 'pre-registration'],
+            tagBg: '#444441', tagColor: '#D3D1C7',
+            side: null, arrowColor: '#888780'
+        },
+        {
+            num: 2, label: 'SD-WAN ZTP fires',
+            bg: '#633806', border: '#EF9F27', numBg: '#8B4A00', numBorder: '#EF9F27',
+            title: 'SD-WAN zero-touch provisioning fires',
+            sub: 'vManage pushes SD-WAN config · IPSec tunnel to DC established',
+            detail: 'The moment the server powers on and gets a DHCP lease, Cisco vManage recognises the MAC address and automatically pushes the SD-WAN configuration. An IPSec tunnel is established back to the Bella Vista DC within minutes. The device now has a secure, software-defined network path — without anyone touching a router.',
+            tags: ['Cisco vManage', 'IPSec tunnel', 'ZTP', 'MPLS + broadband'],
+            tagBg: '#633806', tagColor: '#FAC775',
+            side: { title: 'PXE / DHCP boot', sub: 'RHEL ISO served via HTTP', bg: '#2C2C2A', border: '#888780', detail: 'Simultaneously, the server PXE boots over the newly established network path. DHCP assigns an IP and points the device at the Image Builder HTTP server, which serves the signed RHEL ISO for installation.' },
+            arrowColor: '#EF9F27'
+        },
+        {
+            num: 3, label: 'RHEL image deployed',
+            bg: '#4A1B0C', border: '#F0997B', numBg: '#712B13', numBorder: '#F0997B',
+            title: 'Signed RHEL image deployed via Image Builder',
+            sub: 'Image Builder custom ISO · Kickstart + MicroShift RPMs embedded',
+            detail: 'The golden RHEL image — built from an Image Builder TOML blueprint with CIS Level 2 hardening, SELinux enforcing, LVM layout, and MicroShift RPMs pre-baked — is written to disk via Kickstart. The image is signed and immutable (ostree). If anything goes wrong, greenboot health checks trigger an automatic rollback to the previous good image in under 5 minutes.',
+            tags: ['RHEL Image Builder', 'ostree / image mode', 'Kickstart', 'MicroShift RPMs', 'SELinux enforcing', 'CIS Level 2'],
+            tagBg: '#4A1B0C', tagColor: '#F5C4B3',
+            side: { title: 'Vault bootstrap', sub: 'Node token issued :8200', bg: '#173404', border: '#97C459', detail: 'On first boot, the node calls Vault and is issued a scoped token using the store ID as the identity. All subsequent secret injection (POS credentials, DB passwords, API keys) uses this token. Zero secrets are baked into the image.' },
+            arrowColor: '#F0997B'
+        },
+        {
+            num: 4, label: 'MicroShift starts',
+            bg: '#26215C', border: '#AFA9EC', numBg: '#3C3489', numBorder: '#AFA9EC',
+            title: 'MicroShift starts — klusterlet auto-registers to ACM',
+            sub: 'klusterlet registers to ACM hub · store ID label applied to cluster',
+            detail: 'systemd starts microshift.service. Within seconds, the ACM klusterlet agent reaches out to the central ACM hub at Bella Vista DC and registers the cluster. The store ID label (e.g. store=NSW-042, tier=supermarket) is applied automatically from the Image Builder blueprint. ACM now knows this cluster exists and begins governance.',
+            tags: ['systemd', 'microshift.service', 'ACM klusterlet', 'cluster labels', 'governance'],
+            tagBg: '#26215C', tagColor: '#CECBF6',
+            side: { title: 'cert-manager', sub: 'TLS cert auto-issued', bg: '#2C2C2A', border: '#888780', detail: 'cert-manager issues a TLS certificate for the store node automatically on registration, signed by the internal PKI. All inter-service communication within the store is encrypted from first boot.' },
+            arrowColor: '#AFA9EC'
+        },
+        {
+            num: 5, label: 'ArgoCD ApplicationSet fires',
+            bg: '#04342C', border: '#5DCAA5', numBg: '#085041', numBorder: '#5DCAA5',
+            title: 'ArgoCD ApplicationSet fires — workloads targeted by label',
+            sub: 'Cluster label matched to template · store-specific Kustomize overlay rendered',
+            detail: 'ACM notifies ArgoCD that a new cluster with label store=NSW-042 has joined. The ApplicationSet generator matches it to the supermarket template and renders the store-specific Kustomize overlay from the GitHub manifest repo (stores/NSW-042/). ArgoCD begins syncing all workload manifests to the new cluster — no manual configuration.',
+            tags: ['ArgoCD ApplicationSet', 'Kustomize overlay', 'label matching', 'GitOps', 'zero manual config'],
+            tagBg: '#04342C', tagColor: '#9FE1CB',
+            side: { title: 'GitHub manifest', sub: 'stores/NSW-042 overlay', bg: '#2C2C2A', border: '#888780', detail: 'The Git repository holds Kustomize base manifests for each store tier (supermarket, metro, liquor) and a per-store overlay folder. The overlay contains store-specific config: SAP cost centre, local IP ranges, loyalty region. ArgoCD reads this and renders the final manifests.' },
+            arrowColor: '#5DCAA5'
+        },
+        {
+            num: 6, label: 'Store workloads deployed',
+            bg: '#042C53', border: '#85B7EB', numBg: '#0C447C', numBorder: '#85B7EB',
+            title: 'All store workloads deployed and running',
+            sub: 'POS · inventory · self-checkout · cold chain · loyalty · Vault secrets injected',
+            detail: 'ArgoCD deploys all containerised workloads to the MicroShift cluster: POS system (payment + till, offline-capable), inventory service (real-time stock + shelf scanning), self-checkout kiosk UI with weight sensor, cold chain monitor (fridge temp MQTT alerts on :1883), and the Everyday Rewards loyalty app. Vault automatically injects the correct secrets into each app at start-up.',
+            tags: ['POS offline-capable', 'inventory', 'self-checkout', 'cold chain MQTT', 'Everyday Rewards', 'Vault secrets'],
+            tagBg: '#042C53', tagColor: '#B5D4F4',
+            side: { title: 'Keycloak SSO', sub: 'Staff auth configured', bg: '#173404', border: '#97C459', detail: 'Keycloak configures SSO for all store staff-facing applications automatically. Store manager login, team member POS auth, and admin dashboard access all use the central identity provider — no local password management.' },
+            arrowColor: '#85B7EB'
+        },
+        {
+            num: 7, label: 'Observability activated',
+            bg: '#26215C', border: '#AFA9EC', numBg: '#3C3489', numBorder: '#AFA9EC',
+            title: 'Observability stack activates automatically',
+            sub: 'Prometheus scrapes pods → Thanos · Promtail ships logs → Loki',
+            detail: 'The metrics-collector (Prometheus + node exporter) starts scraping all pods and the RHEL OS layer. Metrics are remote_written to the regional Thanos Receive instance. Promtail ships pod and kernel logs to the Loki aggregator. Within minutes of workload deployment, this store appears on the central Grafana fleet dashboard — green, amber or red — without any manual dashboard configuration.',
+            tags: ['Prometheus', 'node exporter', 'Thanos remote_write', 'Promtail → Loki', 'Grafana fleet view', 'automatic'],
+            tagBg: '#26215C', tagColor: '#CECBF6',
+            side: { title: 'Grafana fleet view', sub: 'Store appears automatically', bg: '#26215C', border: '#AFA9EC', detail: 'The Grafana fleet dashboard uses Thanos Query to run a single PromQL query across all 3,000 store clusters simultaneously. The new store appears as a green tile the moment its first metric scrape arrives. No manual panel configuration needed.' },
+            arrowColor: '#AFA9EC'
+        },
+        {
+            num: 8, label: 'Store live — zero touch',
+            bg: '#173404', border: '#97C459', numBg: '#27500A', numBorder: '#97C459',
+            title: 'Store live — zero human touch from power-on',
+            sub: 'ACM compliance green · all workloads running · ~25 min total',
+            detail: 'The store is fully trading. ACM shows compliance: green. All workloads are running. The Grafana fleet dashboard shows the store tile as green. If anything breaks at any point, ostree rolls back the OS automatically in under 5 minutes. ArgoCD rolls back the workloads. No engineer needs to visit the store. This same process runs for every new store opening — 25 minutes from plugging in the hardware to the first transaction.',
+            tags: ['ACM compliance ✓', 'all pods running', 'Grafana green', 'ostree rollback ready', '< 5 min rollback', 'zero engineer visit'],
+            tagBg: '#173404', tagColor: '#C0DD97',
+            side: null, arrowColor: '#97C459'
+        }
+    ];
 
-let cur = 0;
+    let cur = 0;
 
-function buildFlow(){
-  const f = document.getElementById('flow');
-  f.innerHTML = '';
-  steps.forEach((s,i)=>{
-    const row = document.createElement('div');
-    row.style.cssText = 'display:flex;align-items:center;justify-content:center;width:100%;position:relative;padding-left:44px';
+    function buildFlow() {
+        const f = document.getElementById('flow');
+        f.innerHTML = '';
+        steps.forEach((s, i) => {
+            const row = document.createElement('div');
+            row.style.cssText = 'display:flex;align-items:center;justify-content:center;width:100%;position:relative;padding-left:44px';
 
-    const numEl = document.createElement('div');
-    numEl.className = 'step-num';
-    numEl.style.cssText = `background:${s.numBg};border-color:${s.numBorder};color:white`;
-    numEl.textContent = s.num;
+            const numEl = document.createElement('div');
+            numEl.className = 'step-num';
+            numEl.style.cssText = `background:${s.numBg};border-color:${s.numBorder};color:white`;
+            numEl.textContent = s.num;
 
-    const card = document.createElement('div');
-    card.className = 'step-card' + (i===cur?' active':i<cur?' done inactive':' inactive');
-    card.style.cssText = `background:${s.bg};border-color:${i===cur?'white':s.border}`;
-    card.innerHTML = `<div class="step-title" style="color:${lighten(s.border)}">${s.title}</div><div class="step-sub" style="color:${s.border}">${s.sub}</div>`;
-    card.onclick = ()=>goTo(i);
+            const card = document.createElement('div');
+            card.className = 'step-card' + (i === cur ? ' active' : i < cur ? ' done inactive' : ' inactive');
+            card.style.cssText = `background:${s.bg};border-color:${i === cur ? 'white' : s.border}`;
+            card.innerHTML = `<div class="step-title" style="color:${lighten(s.border)}">${s.title}</div><div class="step-sub" style="color:${s.border}">${s.sub}</div>`;
+            card.onclick = () => goTo(i);
 
-    const sideWrap = document.createElement('div');
-    sideWrap.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start;margin-left:10px;width:148px';
+            const sideWrap = document.createElement('div');
+            sideWrap.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start;margin-left:10px;width:148px';
 
-    if(s.side){
-      const connector = document.createElement('div');
-      connector.style.cssText = 'display:flex;align-items:center;height:36px;width:148px';
-      connector.innerHTML = `<svg width="148" height="36" style="overflow:visible"><line x1="0" y1="18" x2="118" y2="18" stroke="${s.side.border}" stroke-width="1" stroke-dasharray="4 3"/><polygon points="118,14 130,18 118,22" fill="${s.side.border}"/></svg>`;
+            if (s.side) {
+                const connector = document.createElement('div');
+                connector.style.cssText = 'display:flex;align-items:center;height:36px;width:148px';
+                connector.innerHTML = `<svg width="148" height="36" style="overflow:visible"><line x1="0" y1="18" x2="118" y2="18" stroke="${s.side.border}" stroke-width="1" stroke-dasharray="4 3"/><polygon points="118,14 130,18 118,22" fill="${s.side.border}"/></svg>`;
 
-      const sc = document.createElement('div');
-      sc.className = 'side-card' + (i===cur?'':' inactive');
-      sc.style.cssText = `background:${s.side.bg};border-color:${s.side.border}`;
-      sc.innerHTML = `<div class="side-title" style="color:${lighten(s.side.border)}">${s.side.title}</div><div class="side-sub" style="color:${s.side.border}">${s.side.sub}</div>`;
-      sc.onclick = (e)=>{e.stopPropagation();goTo(i);showSideDetail(s.side)};
-      sideWrap.appendChild(connector);
-      sideWrap.appendChild(sc);
+                const sc = document.createElement('div');
+                sc.className = 'side-card' + (i === cur ? '' : ' inactive');
+                sc.style.cssText = `background:${s.side.bg};border-color:${s.side.border}`;
+                sc.innerHTML = `<div class="side-title" style="color:${lighten(s.side.border)}">${s.side.title}</div><div class="side-sub" style="color:${s.side.border}">${s.side.sub}</div>`;
+                sc.onclick = (e) => { e.stopPropagation(); goTo(i); showSideDetail(s.side) };
+                sideWrap.appendChild(connector);
+                sideWrap.appendChild(sc);
+            }
+
+            row.appendChild(numEl);
+            row.appendChild(card);
+            row.appendChild(sideWrap);
+            f.appendChild(row);
+
+            if (i < steps.length - 1) {
+                const arrowRow = document.createElement('div');
+                arrowRow.style.cssText = 'display:flex;justify-content:center;align-items:center;height:20px;padding-left:44px;width:100%';
+                arrowRow.innerHTML = `<svg width="260" height="20"><line x1="130" y1="0" x2="130" y2="12" stroke="${s.arrowColor}" stroke-width="1.5"/><polygon points="124,10 130,20 136,10" fill="${s.arrowColor}"/></svg>`;
+                f.appendChild(arrowRow);
+            }
+        });
     }
 
-    row.appendChild(numEl);
-    row.appendChild(card);
-    row.appendChild(sideWrap);
-    f.appendChild(row);
+    function lighten(hex) { return hex }
 
-    if(i < steps.length-1){
-      const arrowRow = document.createElement('div');
-      arrowRow.style.cssText = 'display:flex;justify-content:center;align-items:center;height:20px;padding-left:44px;width:100%';
-      arrowRow.innerHTML = `<svg width="260" height="20"><line x1="130" y1="0" x2="130" y2="12" stroke="${s.arrowColor}" stroke-width="1.5"/><polygon points="124,10 130,20 136,10" fill="${s.arrowColor}"/></svg>`;
-      f.appendChild(arrowRow);
+    function buildDots() {
+        const d = document.getElementById('dots');
+        d.innerHTML = '';
+        steps.forEach((s, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === cur ? ' active' : i < cur ? ' done' : '');
+            dot.style.cssText = `background:${i <= cur ? s.numBg : 'var(--color-background-secondary)'};border-color:${i === cur ? 'white' : i < cur ? s.numBorder : 'var(--color-border-secondary)'};color:${i <= cur ? 'white' : 'var(--color-text-tertiary)'}`;
+            dot.textContent = s.num;
+            dot.title = s.label;
+            dot.onclick = () => goTo(i);
+            d.appendChild(dot);
+        });
     }
-  });
-}
 
-function lighten(hex){return hex}
+    function showDetail(s) {
+        document.getElementById('d-title').style.color = lighten(s.border);
+        document.getElementById('d-title').textContent = s.title;
+        document.getElementById('d-body').textContent = s.detail;
+        const tags = document.getElementById('d-tags');
+        tags.innerHTML = '';
+        s.tags.forEach(t => {
+            const el = document.createElement('span');
+            el.className = 'tag';
+            el.style.cssText = `background:${s.tagBg};color:${s.tagColor}`;
+            el.textContent = t;
+            tags.appendChild(el);
+        });
+    }
 
-function buildDots(){
-  const d = document.getElementById('dots');
-  d.innerHTML='';
-  steps.forEach((s,i)=>{
-    const dot = document.createElement('div');
-    dot.className='dot'+(i===cur?' active':i<cur?' done':'');
-    dot.style.cssText=`background:${i<=cur?s.numBg:'var(--color-background-secondary)'};border-color:${i===cur?'white':i<cur?s.numBorder:'var(--color-border-secondary)'};color:${i<=cur?'white':'var(--color-text-tertiary)'}`;
-    dot.textContent=s.num;
-    dot.title=s.label;
-    dot.onclick=()=>goTo(i);
-    d.appendChild(dot);
-  });
-}
+    function showSideDetail(side) {
+        document.getElementById('d-title').style.color = lighten(side.border);
+        document.getElementById('d-title').textContent = side.title + ' — side service';
+        document.getElementById('d-body').textContent = side.detail;
+        document.getElementById('d-tags').innerHTML = '';
+    }
 
-function showDetail(s){
-  document.getElementById('d-title').style.color=lighten(s.border);
-  document.getElementById('d-title').textContent=s.title;
-  document.getElementById('d-body').textContent=s.detail;
-  const tags = document.getElementById('d-tags');
-  tags.innerHTML='';
-  s.tags.forEach(t=>{
-    const el=document.createElement('span');
-    el.className='tag';
-    el.style.cssText=`background:${s.tagBg};color:${s.tagColor}`;
-    el.textContent=t;
-    tags.appendChild(el);
-  });
-}
+    function goTo(i) {
+        cur = i;
+        render();
+    }
 
-function showSideDetail(side){
-  document.getElementById('d-title').style.color=lighten(side.border);
-  document.getElementById('d-title').textContent=side.title+' — side service';
-  document.getElementById('d-body').textContent=side.detail;
-  document.getElementById('d-tags').innerHTML='';
-}
+    function move(d) {
+        cur = Math.max(0, Math.min(steps.length - 1, cur + d));
+        render();
+    }
 
-function goTo(i){
-  cur=i;
-  render();
-}
+    function render() {
+        buildFlow();
+        buildDots();
+        showDetail(steps[cur]);
+        document.getElementById('btn-prev').disabled = cur === 0;
+        document.getElementById('btn-next').disabled = cur === steps.length - 1;
+    }
 
-function move(d){
-  cur=Math.max(0,Math.min(steps.length-1,cur+d));
-  render();
-}
-
-function render(){
-  buildFlow();
-  buildDots();
-  showDetail(steps[cur]);
-  document.getElementById('btn-prev').disabled=cur===0;
-  document.getElementById('btn-next').disabled=cur===steps.length-1;
-}
-
-render();
+    render();
 </script>
