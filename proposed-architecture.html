@@ -1,0 +1,194 @@
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.wrap { font-family: var(--font-sans); padding: 1rem 0; }
+.title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.sub { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 14px; line-height: 1.5; }
+.arch { display: flex; flex-direction: column; gap: 3px; }
+.tier { border-radius: 10px; padding: 10px 14px; border: 0.5px solid transparent; }
+.tier-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.tier-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.box { border-radius: 7px; padding: 7px 11px; flex: 1; min-width: 110px; }
+.box-title { font-size: 12px; font-weight: 500; line-height: 1.3; }
+.box-sub { font-size: 11px; margin-top: 2px; line-height: 1.4; opacity: 0.8; }
+.arrow-row { text-align: center; font-size: 11px; color: var(--color-text-tertiary); padding: 1px 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; padding-top: 10px; border-top: 0.5px solid var(--color-border-tertiary); }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-secondary); }
+.leg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.new-badge { font-size: 9px; font-weight: 500; padding: 1px 5px; border-radius: 10px; background: #EAF3DE; color: #3B6D11; margin-left: 4px; vertical-align: middle; }
+</style>
+
+<div class="wrap">
+  <div class="title">Proposed WooliesX edge infrastructure — target architecture</div>
+  <div class="sub">
+    How the existing WooliesX stack (GCP, Azure, SAP, SD-WAN) connects with the new RHEL + MicroShift edge platform.
+    Green layers = new. Blue = existing cloud. Gray = network. Orange = central control. Purple = regional relays.
+  </div>
+
+  <div class="arch">
+
+    <!-- Customer -->
+    <div class="tier" style="background:#F1EFE8; border-color:#B4B2A9;">
+      <div class="tier-label" style="color:#5F5E5A;">Customer experience — layer 9</div>
+      <div class="tier-row">
+        <div class="box" style="background:#D3D1C7;">
+          <div class="box-title" style="color:#2C2C2A;">POS / 1Store</div>
+          <div class="box-sub" style="color:#444441;">self-checkout · Scan&Go</div>
+        </div>
+        <div class="box" style="background:#D3D1C7;">
+          <div class="box-title" style="color:#2C2C2A;">Woolworths app</div>
+          <div class="box-sub" style="color:#444441;">Everyday Rewards · Milkrun</div>
+        </div>
+        <div class="box" style="background:#D3D1C7;">
+          <div class="box-title" style="color:#2C2C2A;">APIs / Apigee X</div>
+          <div class="box-sub" style="color:#444441;">~180M req/month loyalty</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-row">↑ store data flows up · decisions flow down ↓</div>
+
+    <!-- GCP + Azure -->
+    <div class="tier" style="background:#E6F1FB; border-color:#85B7EB;">
+      <div class="tier-label" style="color:#185FA5;">Cloud platforms — layers 7–8 (existing)</div>
+      <div class="tier-row">
+        <div class="box" style="background:#B5D4F4;">
+          <div class="box-title" style="color:#042C53;">GCP BigQuery + Vertex AI</div>
+          <div class="box-sub" style="color:#0C447C;">~90% of data · demand forecasting · range · promo</div>
+        </div>
+        <div class="box" style="background:#B5D4F4;">
+          <div class="box-title" style="color:#042C53;">Azure — SAP S/4HANA</div>
+          <div class="box-sub" style="color:#0C447C;">inventory ERP · 75TB · ExpressRoute</div>
+        </div>
+        <div class="box" style="background:#B5D4F4%;">
+          <div class="box-title" style="color:#042C53;">Blue Yonder / Kronos</div>
+          <div class="box-sub" style="color:#0C447C;">WMS · TMS · workforce</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-row">↑ Kafka events · OData API · Pub/Sub ↓</div>
+
+    <!-- Central hub -->
+    <div class="tier" style="background:#FAECE7; border-color:#F0997B;">
+      <div class="tier-label" style="color:#993C1D;">Central hub — Bella Vista DC / Azure (new platform layer) <span class="new-badge">NEW</span></div>
+      <div class="tier-row">
+        <div class="box" style="background:#F5C4B3;">
+          <div class="box-title" style="color:#4A1B0C;">Full OCP cluster</div>
+          <div class="box-sub" style="color:#712B13;">ACM hub · ArgoCD · Vault</div>
+        </div>
+        <div class="box" style="background:#F5C4B3;">
+          <div class="box-title" style="color:#4A1B0C;">Observability <span class="new-badge">NEW</span></div>
+          <div class="box-sub" style="color:#712B13;">Thanos · Loki · Grafana · 3,000 stores one view</div>
+        </div>
+        <div class="box" style="background:#F5C4B3%;">
+          <div class="box-title" style="color:#4A1B0C;">MCP AI agent <span class="new-badge">NEW</span></div>
+          <div class="box-sub" style="color:#712B13;">auto-heal · rollback · CVE patch · wave gating</div>
+        </div>
+        <div class="box" style="background:#F5C4B3;">
+          <div class="box-title" style="color:#4A1B0C;">Image factory <span class="new-badge">NEW</span></div>
+          <div class="box-sub" style="color:#712B13;">RHEL Image Builder · signed golden images</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-row">↑ ACM klusterlet · metrics remote_write · log ship ↓</div>
+
+    <!-- Regional hubs -->
+    <div class="tier" style="background:#EEEDFB; border-color:#AFA9EC;">
+      <div class="tier-label" style="color:#3C3489;">Regional hub clusters — one per state <span class="new-badge">NEW</span></div>
+      <div class="tier-row">
+        <div class="box" style="background:#CECBF6;">
+          <div class="box-title" style="color:#26215C;">NSW / ACT</div>
+          <div class="box-sub" style="color:#3C3489;">~700 stores · SNO · Thanos relay · SD-WAN POP</div>
+        </div>
+        <div class="box" style="background:#CECBF6;">
+          <div class="box-title" style="color:#26215C;">VIC / TAS</div>
+          <div class="box-sub" style="color:#3C3489;">~600 stores · SNO · Thanos relay</div>
+        </div>
+        <div class="box" style="background:#CECBF6%;">
+          <div class="box-title" style="color:#26215C;">QLD</div>
+          <div class="box-sub" style="color:#3C3489;">~500 stores · SNO</div>
+        </div>
+        <div class="box" style="background:#CECBF6;">
+          <div class="box-title" style="color:#26215C;">WA / SA / NZ</div>
+          <div class="box-sub" style="color:#3C3489;">~600 stores · SNO</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-row">↑ Cisco SD-WAN · MPLS + broadband · 4G/5G failover ↓</div>
+
+    <!-- Low-latency local bus -->
+    <div class="tier" style="background:#FDF5E7; border-color:#F6C56E;">
+      <div class="tier-label" style="color:#8A4B06;">Low-latency device bus — in-store real-time layer <span class="new-badge">NEW</span></div>
+      <div class="tier-row">
+        <div class="box" style="background:#F9DFB3;">
+          <div class="box-title" style="color:#5A3104;">RTI DDS / MQTT hub</div>
+          <div class="box-sub" style="color:#7A4306;">sub‑ms updates for scales, scanners, AI cameras</div>
+        </div>
+        <div class="box" style="background:#F9DFB3;">
+          <div class="box-title" style="color:#5A3104;">QoS & back-pressure</div>
+          <div class="box-sub" style="color:#7A4306;">keeps POS smooth even when SD‑WAN is congested</div>
+        </div>
+        <div class="box" style="background:#F9DFB3;">
+          <div class="box-title" style="color:#5A3104;">MicroShift sidecar services</div>
+          <div class="box-sub" style="color:#7A4306;">runs alongside POS pods · hardware‑to‑API bridge</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-row">↑ device events (DDS / MQTT) · POS API calls ↓</div>
+
+    <!-- Store edge -->
+    <div class="tier" style="background:#EAF3DE; border-color:#97C459;">
+      <div class="tier-label" style="color:#27500A;">Store edge node — 3,000+ stores AU+NZ <span class="new-badge">NEW — replaces Windows VM</span></div>
+      <div class="tier-row">
+        <div class="box" style="background:#C0DD97;">
+          <div class="box-title" style="color:#173404;">RHEL 9 for Edge <span class="new-badge">NEW</span></div>
+          <div class="box-sub" style="color:#27500A;">image mode · ostree · SELinux · CIS · auto-rollback</div>
+        </div>
+        <div class="box" style="background:#C0DD97;">
+          <div class="box-title" style="color:#173404;">MicroShift / SNO <span class="new-badge">NEW</span></div>
+          <div class="box-sub" style="color:#27500A;">POS · inventory · cold chain · loyalty · offline-first</div>
+        </div>
+        <div class="box" style="background:#C0DD97;">
+          <div class="box-title" style="color:#173404;">Prometheus + Promtail <span class="new-badge">NEW</span></div>
+          <div class="box-sub" style="color:#27500A;">scrape pods · ship logs · local Alertmanager</div>
+        </div>
+        <div class="box" style="background:#C0DD97;">
+          <div class="box-title" style="color:#173404;">ACM klusterlet <span class="new-badge">NEW</span></div>
+          <div class="box-sub" style="color:#27500A;">registers with hub · GitOps sync · policy check</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Network -->
+    <div class="tier" style="background:#F1EFE8; border-color:#B4B2A9; margin-top:3px;">
+      <div class="tier-label" style="color:#5F5E5A;">Network fabric — existing</div>
+      <div class="tier-row">
+        <div class="box" style="background:#D3D1C7;">
+          <div class="box-title" style="color:#2C2C2A;">Cisco SD-WAN</div>
+          <div class="box-sub" style="color:#444441;">store ↔ DC · MPLS + broadband · ZTP</div>
+        </div>
+        <div class="box" style="background:#D3D1C7;">
+          <div class="box-title" style="color:#2C2C2A;">Azure ExpressRoute</div>
+          <div class="box-sub" style="color:#444441;">DC ↔ Azure private link</div>
+        </div>
+        <div class="box" style="background:#D3D1C7%;">
+          <div class="box-title" style="color:#2C2C2A;">GCP Interconnect</div>
+          <div class="box-sub" style="color:#444441;">DC ↔ BigQuery / Pub/Sub</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#97C459;"></div>New — RHEL + MicroShift edge platform</div>
+    <div class="leg"><div class="leg-dot" style="background:#F6C56E;"></div>New — low‑latency RTI DDS / MQTT store bus</div>
+    <div class="leg"><div class="leg-dot" style="background:#F0997B;"></div>New — central hub platform layer</div>
+    <div class="leg"><div class="leg-dot" style="background:#AFA9EC;"></div>New — regional relay hubs</div>
+    <div class="leg"><div class="leg-dot" style="background:#85B7EB;"></div>Existing — GCP + Azure cloud</div>
+    <div class="leg"><div class="leg-dot" style="background:#B4B2A9;"></div>Existing — network + SD-WAN</div>
+  </div>
+</div>
